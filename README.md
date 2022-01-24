@@ -5,4 +5,4 @@
 
 | Jason Xu                                            | Jerome Orille                                            | Niya Park                                        | Alex Ramos                                          |
 | ---------------------------------------------------- | ------------------------------------------------------- | -------------------------------------------------- | ----------------------------------------------------- |
-| [Email](jasonxu5@uw.edu) | [Email](jcorille@uw.edu) | [Email](njkpark@uw.edu) | [Email](aramos10@uw.edu) |
+| [Email](mailto:jasonxu5@uw.edu) | [Email](mailto:jcorille@uw.edu) | [Email](mailto:njkpark@uw.edu) | [Email](mailto:aramos10@uw.edu) |
