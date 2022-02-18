@@ -1,32 +1,24 @@
 import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import NavBar from './NavBar.js';
+import Health from './Health.js';
+import Messaging from './Messaging.js';
+import PlaceHolder from './Template.js';
 
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(true); // change to false after user acc implemented
+  const [headerText, setHeaderText] = useState('Overview');
   if (isSignedIn) {
     return (
-      <div>
+      <div className="flex">
         <NavBar />
         <Routes>
-          <Route path="/">
-
-          </Route>
-          <Route path="/appointments">
-
-          </Route>
-          <Route path="/messages">
-
-          </Route>
-          <Route path="/resources">
-
-          </Route>
-          <Route path="/billing">
-
-          </Route>
-          <Route path="/profile">
-
-          </Route>
+          <Route exact path="/" element={<Health />} />
+          <Route path="/appointments" element={<PlaceHolder />} />
+          <Route path="/messages" element={<Messaging />}/>
+          <Route path="/resources" element={<PlaceHolder />} />
+          <Route path="/billing" element={<PlaceHolder />} />
+          <Route path="/profile" element={<PlaceHolder />} />
         </Routes>
       </div>
     );
