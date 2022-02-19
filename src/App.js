@@ -7,10 +7,9 @@ import PlaceHolder from './Template.js';
 
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(true); // change to false after user acc implemented
-  const [headerText, setHeaderText] = useState('Overview');
   if (isSignedIn) {
     return (
-      <div className="flex">
+      <div className="flex bg-gradient-to-br from-sky-blue to-white">
         <NavBar />
         <Routes>
           <Route exact path="/" element={<Health />} />

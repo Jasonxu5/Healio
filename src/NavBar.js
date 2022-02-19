@@ -4,7 +4,7 @@ import { faSquarePlus, faCalendarCheck, faMessage, faLightbulb, faCircleDollarTo
 
 export default function NavBar() {
     return (
-        <nav className="bg-[#B5FFEC] w-48 h-screen">
+        <nav className="bg-[#B5FFEC] w-48 h-screen fixed top-0">
             <h1 className="font-heading text-3xl font-bold px-3 py-8">Healio</h1>
             <div className="flex flex-col my-20">
                 <NavLink to="/" className={({ isActive }) => isActive ? 'py-2 pl-3 pr-24 bg-[#06D6A0] font-bold' : 'py-2 px-3'}>

@@ -7,6 +7,10 @@ module.exports = {
     fontFamily: {
       sans: ['Lato', 'sans-serif'],
       heading: ['Raleway', 'sans-seif']
+    },
+    colors: {
+      'sky-blue': '#F1FAFF',
+      'white': '#FFFFFF'
     }
   },
   plugins: [],
