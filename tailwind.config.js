@@ -9,8 +9,11 @@ module.exports = {
       heading: ['Raleway', 'sans-seif']
     },
     colors: {
-      'sky-blue': '#F1FAFF',
-      'white': '#FFFFFF'
+      'light-green': '#B5FFEC',
+      'dark-green': '#06D6A0',
+      'pale-blue': '#F1FAFF',
+      'dark-blue': '#053661',
+      'light-blue': '#66C3FF'
     }
   },
   plugins: [],
