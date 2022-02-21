@@ -20,12 +20,15 @@ const HEALTH_CARD_TITLES = [
 export default function Health() {
     // Profile picture under img: "rounded-full w-8 h-8"
     // Username under p: "text-2xl ml-2"
+    // "absolute left-[235px]"
     return (
-        <div>
-            <header className="absolute flex justify-end w-[80%] left-[235px] py-8">
-                <p className="font-heading text-3xl mr-auto">Overview</p>
-                <img className="rounded-full w-8 h-8" src={katie} alt="Katie Wang" />
-                <p className="text-2xl ml-2">Katie Wang</p>
+        <div className="flex flex-col">
+            <header className="flex py-8 pl-[235px]">
+                <p className="font-heading text-3xl">Overview</p>
+                <div className="absolute right-[40px]">
+                    <img className="rounded-full inline w-10 h-10 mb-2" src={katie} alt="Katie Wang" />
+                    <p className="inline text-2xl ml-2">Katie Wang</p>
+                </div>
             </header>
             <HealthCards user={'Katie'} />
         </div>
@@ -53,7 +56,7 @@ function HealthCards(props) {
         return <SingleHealthCard title={cardTitle} body={body} count={index} user={user} key={cardTitle} />;
     });
     return (
-        <div className="flex">
+        <div className="flex flex-wrap pl-[235px] gap-4">
             {healthInfoCards}
         </div>
     );
@@ -61,15 +64,16 @@ function HealthCards(props) {
 
 function CardHasImage(props) {
     const { isIntro } = props;
+
     if (isIntro) {
         return (
-            <div>
+            <div className="">
                 <p className="pt-2">You have new notifications! Have a nice day and remember</p>
                 <p>to take care of your health!</p>
                 <div className="mt-6 text-dark-blue">
                     <Link className="absolute p-2 font-semibold bg-dark-green rounded-lg" to='/appointments'>Schedule Appointment {'>'}</Link>
                 </div>
-                <img className="absolute top-0 right-[40px]" src={doctor} alt="Doctor Clip Art" />
+                <img className="absolute top-[100px] right-[60px]" src={doctor} alt="Doctor Clip Art" />
             </div>
         );
     } else {
@@ -79,6 +83,7 @@ function CardHasImage(props) {
 
 function CardHasList(props) {
     const { hasDateOnRight } = props;
+
     if (hasDateOnRight) {
         return <p className="pt-2">This card has some text on the left and a date on the right as a list!</p>
     } else {
@@ -90,30 +95,37 @@ function CardHasList(props) {
 function SingleHealthCard(props) {
     const { title, body, count, user } = props;
 
-    let leftPxSize;
-    let topPxSize;
+    // let leftPxSize;
+    // let topPxSize;
+    let smallCardAlignment;
     let widthPxSize;
     let heightPxSize;
     let headerStyle;
 
-    // Position card based on left anchors
-    if (count <= 1 || count === 4) {
-        leftPxSize = 'left-[235px] ';
-    } else {
-        leftPxSize = 'left-[836px] ';
-    }
+    // // Position card based on left anchors
+    // if (count <= 1 || count === 4) {
+    //     leftPxSize = ''; // 'left-[235px] '
+    // } else {
+    //     leftPxSize = ''; // 'left-[836px] '
+    // }
 
-    // Position card based on top anchors
-    if (count === 0) {
-        topPxSize = 'top-[106px] ';
-    } else if (count < 3) {
-        topPxSize = 'top-[352px] ';
-    } else if (count < 4) {
-        topPxSize = 'top-[528px] ';
-    } else {
-        topPxSize = 'top-[705px] ';
-    }
+    // // Position card based on top anchors
+    // if (count === 0) {
+    //     topPxSize = ''; // 'top-[106px] '
+    // } else if (count < 3) {
+    //     topPxSize = ''; // 'top-[352px] '
+    // } else if (count < 4) {
+    //     topPxSize = ''; // 'top-[528px] '
+    // } else {
+    //     topPxSize = ''; // 'top-[705px] '
+    // }
 
+    // Align small cards together
+    if (count === 2 || count === 3) {
+        smallCardAlignment = ' ';
+    } else {
+        smallCardAlignment = '';
+    }
     // Determine card width based on position
     if (count === 0) {
         widthPxSize = 'w-[1170px] ';
@@ -145,7 +157,7 @@ function SingleHealthCard(props) {
         headerStyle = <h2 className='font-heading text-2xl'>{title}</h2>
     }
     return (
-        <div className={"absolute p-6 " + leftPxSize + topPxSize + widthPxSize + heightPxSize + "bg-white shadow-[2px_4px_20px_rgba(0,0,0,0.25)] rounded-[20px]"}>
+        <div className={"p-6 " + smallCardAlignment + widthPxSize + heightPxSize + "bg-white shadow-[2px_4px_20px_rgba(0,0,0,0.25)] rounded-[20px]"}>
             {headerStyle}
             {body}
         </div>
