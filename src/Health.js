@@ -56,7 +56,7 @@ function HealthCards(props) {
         return <SingleHealthCard title={cardTitle} body={body} count={index} user={user} key={cardTitle} />;
     });
     return (
-        <div className="flex flex-wrap pl-[235px] gap-4">
+        <div className="grid grid-cols-2 pl-[235px] gap-4">
             {healthInfoCards}
         </div>
     );
@@ -97,7 +97,8 @@ function SingleHealthCard(props) {
 
     // let leftPxSize;
     // let topPxSize;
-    let smallCardAlignment;
+    let introCardOnGrid;
+    let stackSmallCards;
     let widthPxSize;
     let heightPxSize;
     let headerStyle;
@@ -120,11 +121,20 @@ function SingleHealthCard(props) {
     //     topPxSize = ''; // 'top-[705px] '
     // }
 
-    // Align small cards together
-    if (count === 2 || count === 3) {
-        smallCardAlignment = ' ';
+    // Place intro card on the top
+    if (count === 0) {
+        introCardOnGrid = 'col-span-2 ';
     } else {
-        smallCardAlignment = '';
+        introCardOnGrid = '';
+    }
+
+    // Stack smaller cards on top of each other
+    if (count === 2) {
+        stackSmallCards = 'row-start-2 col-start-2 '
+    } else if (count === 3) {
+        stackSmallCards = 'row-start-2 col-start 2 col-end-[-1] self-end ';
+    } else {
+        stackSmallCards = '';
     }
     // Determine card width based on position
     if (count === 0) {
@@ -157,7 +167,7 @@ function SingleHealthCard(props) {
         headerStyle = <h2 className='font-heading text-2xl'>{title}</h2>
     }
     return (
-        <div className={"p-6 " + smallCardAlignment + widthPxSize + heightPxSize + "bg-white shadow-[2px_4px_20px_rgba(0,0,0,0.25)] rounded-[20px]"}>
+        <div className={"p-6 " + introCardOnGrid + stackSmallCards + widthPxSize + heightPxSize + "bg-white shadow-[2px_4px_20px_rgba(0,0,0,0.25)] rounded-[20px]"}>
             {headerStyle}
             {body}
         </div>
