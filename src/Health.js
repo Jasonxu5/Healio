@@ -61,7 +61,7 @@ function HealthCards(props) {
         } else if (index === 4) {
             body = <p className="pt-2">Mrs. Wang you are fine! I hope ...</p>;
         } else {
-            body = <CardHasList listItems={LAB_LIST_ITEMS} hasDateOnRight={true} />;
+            body = <CardHasList listItems={APP_LIST_ITEMS} hasDateOnRight={true} />;
         }
         return <SingleHealthCard title={cardTitle} body={body} count={index} user={user} key={cardTitle} />;
     });
