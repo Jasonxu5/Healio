@@ -1,12 +1,8 @@
-// Conditions
-// isIntro
-// isList -> hasDate
-// hasLink
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import katie from './img/katie.png'; // profile picture
 import doctor from './img/doctor.svg';
+
+import katie from './img/katie.png'; // profile picture
 
 const HEALTH_CARD_TITLES = [
     "Hello, ",
@@ -18,9 +14,6 @@ const HEALTH_CARD_TITLES = [
 ];
 
 export default function Health() {
-    // Profile picture under img: "rounded-full w-8 h-8"
-    // Username under p: "text-2xl ml-2"
-    // "absolute left-[235px]"
     return (
         <div className="flex flex-col">
             <header className="relative py-8 pl-[235px]">
@@ -54,7 +47,7 @@ function HealthCards(props) {
             body = <CardHasList hasDateOnRight={true} />;
         }
         return <SingleHealthCard title={cardTitle} body={body} count={index} user={user} key={cardTitle} />;
-    }); // additional rule to try: auto-rows-[minmax(min-content, max-content)]
+    });
     return (
         <div className="grid grid-cols-2 pl-[235px] gap-4">
             {healthInfoCards}
@@ -91,7 +84,6 @@ function CardHasList(props) {
     }
 }
 
-// Customize properties of each card
 function SingleHealthCard(props) {
     const { title, body, count, user } = props;
 
@@ -100,7 +92,7 @@ function SingleHealthCard(props) {
     let heightPxSize;
     let headerStyle;
 
-    // Place intro card on the top
+    // Place intro card at the top
     if (count === 0) {
         introCardOnGrid = 'col-span-2 ';
     } else {
@@ -116,7 +108,7 @@ function SingleHealthCard(props) {
         stackSmallCards = '';
     }
 
-    // Determine card height based on position
+    // Create card height depending on where it is on the grid
     if (count === 0) {
         heightPxSize = 'h-[205px] ';
     } else if (count === 1) {
@@ -127,8 +119,7 @@ function SingleHealthCard(props) {
         heightPxSize = 'h-[280px] ';
     }
 
-
-    // Header styling based on the introductory card
+    // Creates different font styles for the introductory card
     if (count === 0) {
         headerStyle = (
             <div className="font-heading text-3xl font-semibold">
@@ -139,6 +130,7 @@ function SingleHealthCard(props) {
     } else {
         headerStyle = <h2 className='font-heading text-2xl'>{title}</h2>
     }
+
     return (
         <div className={"p-6 " + introCardOnGrid + stackSmallCards + " w-full " + heightPxSize + "bg-white shadow-[2px_4px_20px_rgba(0,0,0,0.25)] rounded-[20px]"}>
             {headerStyle}
