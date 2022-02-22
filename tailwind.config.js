@@ -6,7 +6,7 @@ module.exports = {
     extend: {},
     fontFamily: {
       sans: ['Lato', 'sans-serif'],
-      heading: ['Raleway', 'sans-seif']
+      heading: ['Raleway', 'sans-serif']
     },
     colors: {
       'light-green': '#B5FFEC',
