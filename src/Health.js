@@ -5,12 +5,29 @@ import doctor from './img/doctor.svg';
 import katie from './img/katie.png'; // profile picture
 
 const HEALTH_CARD_TITLES = [
-    "Hello, ",
-    "Notifications",
-    "Lab Results",
-    "Looking for a New Provider?",
-    "Doctor's Notes",
-    "Upcoming Appointments"
+    'Hello, ',
+    'Notifications',
+    'Lab Results',
+    'Looking for a New Provider?',
+    'Doctor\'s Notes',
+    'Upcoming Appointments'
+];
+
+const NOTIF_LIST_ITEMS = [
+    'You have a new message from Dr. Osborn!',
+    'Your recent lab results have arrived!',
+    'Receipt of your payment for appointment on 02/09/22',
+    'You have a new message from Dr. Ortega!'
+];
+
+const LAB_LIST_ITEMS = [
+    { title: 'X-Ray - Katie Wong', date: '02/10/2022' },
+    { title: 'Ultrasound - Katie Wong', date: '01/04/2022' }
+];
+
+const APP_LIST_ITEMS = [
+    { title: 'Follow up with Dr. Ortega', date: '02/12/2022' },
+    { title: 'Yearly check-up with Dr. Osborn', date: '02/15/2022' }
 ];
 
 export default function Health() {
@@ -35,16 +52,16 @@ function HealthCards(props) {
         let body;
         if (index === 0) {
             body = <CardHasImage isIntro={true} />;
+        } else if (index === 1) {
+            body = <CardHasList listItems={NOTIF_LIST_ITEMS} hasDateOnRight={false} />;
+        } else if (index === 2) {
+            body = <CardHasList listItems={LAB_LIST_ITEMS} hasDateOnRight={true} />;
         } else if (index === 3) {
             body = <CardHasImage isIntro={false} />;
         } else if (index === 4) {
-            // this is logic built within a random if statement
-            // bc i'm too lazy to make a function for it shrug
             body = <p className="pt-2">Mrs. Wang you are fine! I hope ...</p>;
-        } else if (index === 1) {
-            body = <CardHasList hasDateOnRight={false} />;
         } else {
-            body = <CardHasList hasDateOnRight={true} />;
+            body = <CardHasList listItems={LAB_LIST_ITEMS} hasDateOnRight={true} />;
         }
         return <SingleHealthCard title={cardTitle} body={body} count={index} user={user} key={cardTitle} />;
     });
@@ -75,13 +92,29 @@ function CardHasImage(props) {
 }
 
 function CardHasList(props) {
-    const { hasDateOnRight } = props;
+    const { listItems, hasDateOnRight } = props;
+    let listItemsArray;
 
     if (hasDateOnRight) {
-        return <p className="pt-2">This card has some text on the left and a date on the right as a list!</p>
+        listItemsArray = listItems.map((item) => {
+            return (
+                <div key={item.title}>
+                    <p className="pt-2 float-left">{item.title}</p>
+                    <p className="pt-2 float-right">{item.date + " >"}</p>
+                </div>
+            );
+        });
     } else {
-        return <p className="pt-2">This card has some text as a list with no dates!</p>
+        listItemsArray = listItems.map((item) => {
+            return <p className="pt-2" key={item}>{item}</p>;
+        });
     }
+
+    return (
+        <ul className="grid divide-y divide-[#E5E5E5] gap-2">
+            {listItemsArray}
+        </ul>
+    );
 }
 
 function SingleHealthCard(props) {
