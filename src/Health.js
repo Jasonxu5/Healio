@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import doctor from './img/doctor.svg';
+import hospital from './img/hospital.svg';
 
 import katie from './img/katie.png'; // profile picture
 
@@ -24,6 +25,13 @@ const LAB_LIST_ITEMS = [
     { title: 'X-Ray - Katie Wong', date: '02/10/2022' },
     { title: 'Ultrasound - Katie Wong', date: '01/04/2022' }
 ];
+
+const DOCTOR_NOTES = {
+    date: '02/09/2021',
+    body: 'Mrs. Wang is a 40 year old woman with complaints of fatigue and a soar throat since yesterday morning. She has no difficulty swallowing, but doing so makes the pain worse. Reported recording a temp of 100.7 last night. ' +
+        'Probable infection, Mrs. Wang reported no allergies or sick contacts at work, but her daughter recently stayed home from school because of strep throat.',
+    doctor: 'Dr. Ortega'
+}
 
 const APP_LIST_ITEMS = [
     { title: 'Follow up with Dr. Ortega', date: '02/12/2022' },
@@ -59,7 +67,13 @@ function HealthCards(props) {
         } else if (index === 3) {
             body = <CardHasImage isIntro={false} />;
         } else if (index === 4) {
-            body = <p className="pt-2">Mrs. Wang you are fine! I hope ...</p>;
+            body = (
+                <div>
+                    <p className="pt-2 italic">{DOCTOR_NOTES.date}</p>
+                    <p className="pt-2">{DOCTOR_NOTES.body}</p>
+                    <p className="pt-2">{'- ' + DOCTOR_NOTES.doctor}</p>
+                </div>
+            );
         } else {
             body = <CardHasList listItems={APP_LIST_ITEMS} hasDateOnRight={true} />;
         }
@@ -78,8 +92,7 @@ function CardHasImage(props) {
     if (isIntro) {
         return (
             <div className="relative">
-                <p className="pt-2">You have new notifications! Have a nice day and remember</p>
-                <p>to take care of your health!</p>
+                <p className="pt-2">You have new notifications! Have a nice day and remember to take care of your health!</p>
                 <div className="mt-6 text-dark-blue">
                     <Link className="absolute p-2 font-semibold bg-dark-green rounded-lg" to='/appointments'>Schedule Appointment {'>'}</Link>
                 </div>
@@ -87,7 +100,14 @@ function CardHasImage(props) {
             </div>
         );
     } else {
-        return <p className="pt-2">This is the right place to find a new provider!</p>
+        return (
+            <div className="relative">
+                <div className="mt-4 text-dark-blue">
+                    <Link className="absolute p-2 font-semibold bg-dark-green rounded-lg" to='/'>Find Providers {'>'}</Link>
+                </div>
+                <img className="absolute top-[-72px] right-[-20px]" src={hospital} alt="Hospital Clip Art" />
+            </div>
+        );
     }
 }
 
