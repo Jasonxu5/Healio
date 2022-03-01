@@ -13,7 +13,8 @@ module.exports = {
       'dark-green': '#06D6A0',
       'pale-blue': '#F1FAFF',
       'dark-blue': '#053661',
-      'light-blue': '#66C3FF'
+      'light-blue': '#66C3FF',
+      'grey': '#E5E5E5'
     }
   },
   plugins: [],
