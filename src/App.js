@@ -7,12 +7,12 @@ import PlaceHolder from './Template.js';
 
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(true); // change to false after user acc implemented
-  const [data, setData] = useState({})
+  const [data, setData] = useState("")
 
   useEffect(() => {
     fetch('/api')
-      .then(res => res.json())
-      .then(data => setData(data.message))
+      .then((res) => res.json())
+      .then((data) => setData(data.message))
   }, [])
 
   console.log(data)
