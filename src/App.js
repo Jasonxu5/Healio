@@ -5,6 +5,29 @@ import Health from './Health.js';
 import Messaging from './Messaging.js';
 import PlaceHolder from './Template.js';
 
+import katie from './img/katie.png'; // profile picture
+
+const FAMILY_INFO = [
+  {
+    firstName: 'Katie',
+    lastName: 'Wang',
+    img: katie,
+    isAdmin: true
+  },
+  {
+    firstName: 'Daughter',
+    lastName: 'Wang',
+    img: katie,
+    isAdmin: false
+  },
+  {
+    firstName: 'Grandma',
+    lastName: 'Wang',
+    img: katie,
+    isAdmin: false
+  }
+];
+
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(true); // change to false after user acc implemented
   const [data, setData] = useState("")
@@ -22,7 +45,7 @@ function App() {
       <div className="flex bg-gradient-to-br from-pale-blue to-white">
         <NavBar />
         <Routes>
-          <Route exact path="/" element={<Health />} />
+          <Route exact path="/" element={<Health userInfo={FAMILY_INFO[0]} familyInfo={FAMILY_INFO} />} />
           <Route path="/appointments" element={<PlaceHolder />} />
           <Route path="/messages" element={<Messaging />} />
           <Route path="/resources" element={<PlaceHolder />} />

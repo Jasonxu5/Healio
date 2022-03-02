@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from './Header.js';
 import { Link } from 'react-router-dom';
 import doctor from './img/doctor.svg';
 import hospital from './img/hospital.svg';
@@ -38,17 +39,12 @@ const APP_LIST_ITEMS = [
     { title: 'Yearly check-up with Dr. Osborn', date: '02/15/2022' }
 ];
 
-export default function Health() {
+export default function Health(props) {
+    const { userInfo, familyInfo } = props;
     return (
         <div className="flex flex-col">
-            <header className="relative py-8 pl-[235px]">
-                <p className="font-heading text-3xl">Overview</p>
-                <div className="absolute bottom-[20px] right-0">
-                    <img className="rounded-full inline w-10 h-10 mb-2" src={katie} alt="Katie Wang" />
-                    <p className="inline text-2xl ml-2">Katie Wang</p>
-                </div>
-            </header>
-            <HealthCards user={'Katie'} />
+            <Header title={'Overview'} userInfo={userInfo} familyInfo={familyInfo} />
+            <HealthCards user={userInfo.firstName} />
         </div>
     );
 }
