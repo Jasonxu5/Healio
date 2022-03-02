@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function Header(props) {
     const { title, userInfo, familyInfo } = props;
-    const [showMenu, setMenu] = useState(false);
+    const [isMenuOpen, setMenu] = useState(false);
+    const ref = useRef();
     const fullName = userInfo.firstName + ' ' + userInfo.lastName;
+    
     const familyInfoArray = familyInfo.map(person => {
         let personInfo;
         if (!_.isEqual(userInfo, person)) {
@@ -14,26 +16,32 @@ export default function Header(props) {
             return personInfo;
         }
     });
-    const isClicked = () => {
-        console.log('clicked');
-        setMenu(true);
-    }
-    let signInPopup = '';
+    
+    // Set up clicking event for dropdown user accounts
+    useEffect(() => {
+        const checkIfClickedOutside = e => {
+            if (isMenuOpen && ref.current && !ref.current.contains(e.target)) {
+                setMenu(false);
+            }
+        }
+        document.addEventListener('mousedown', checkIfClickedOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', checkIfClickedOutside);
+        }
+    }, [isMenuOpen]);
 
     if (userInfo.isAdmin) {
         familyInfoArray.push(AddAnotherUser());
-    }
-    if (showMenu) {
-        signInPopup = MenuPopup(fullName, userInfo.img, familyInfoArray);
     }
 
     return (
         <header className="relative py-8 pl-[235px]">
             <p className="font-heading text-3xl">{title}</p>
-            <div className="absolute bottom-[20px] right-0" onClick={isClicked}>
+            <div className="absolute bottom-[20px] right-0" onClick={() => setMenu(true)}>
                 <img className="rounded-full inline w-10 h-10 mb-2" src={userInfo.img} alt={fullName} />
                 <p className="inline text-2xl ml-2">{fullName}</p>
-                {signInPopup}
+                {isMenuOpen ? MenuPopup(ref, fullName, userInfo.img, familyInfoArray) : null}
             </div>
         </header>
     );
@@ -59,9 +67,9 @@ function AddAnotherUser() {
     );
 }
 
-function MenuPopup(fullName, img, familyInfoArray) {
+function MenuPopup(ref, fullName, img, familyInfoArray) {
     return (
-        <div className="absolute grid gap-2 right-0 w-[424px] p-6 border-2 border-black bg-[#FFFFFF] shadow-[4px_4px_4px_rgba(0,0,0,0.25)] z-[100] rounded-[15px]">
+        <div className="absolute grid gap-2 right-0 w-[424px] p-6 border-2 border-black bg-[#FFFFFF] shadow-[4px_4px_4px_rgba(0,0,0,0.25)] z-[100] rounded-[15px]" ref={ref}>
             <div>
                 <img className="rounded-full w-20 h-20 m-auto" src={img} alt={fullName} />
                 <p className="text-2xl text-center">{fullName}</p>
