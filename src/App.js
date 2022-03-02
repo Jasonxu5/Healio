@@ -116,7 +116,7 @@ function App() {
           <Route path="/billing" element={<PlaceHolder />} />
           <Route path="/profile" element={<PlaceHolder />} />
         </Routes>
-        <p>{!data ? "Server Error" : data}</p>
+        <p>{!data ? "" : data}</p>
       </div>
 
     );
