@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
+
 import NavBar from './NavBar.js';
 import Health from './Health.js';
 import Messaging from './Messaging.js';
 import PlaceHolder from './Template.js';
+
+import LandingHeader from './LandingHeader.js';
 
 import katie from './img/katie.png'; // profile picture
 import daughter from './img/daughter.png';
@@ -123,7 +126,7 @@ function App() {
   } else {
     return (
       <div>
-
+        <LandingHeader signedIn={setIsSignedIn} />
       </div>
     )
   }
