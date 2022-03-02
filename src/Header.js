@@ -51,7 +51,6 @@ function IndividualFamilyMember(props) {
     const { familyMember, setUserCallback } = props;
     const fullName = familyMember.firstName + ' ' + familyMember.lastName;
     const handleClick = () => {
-        console.log(familyMember);
         setUserCallback(familyMember);
     }
 
