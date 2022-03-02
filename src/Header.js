@@ -4,14 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function Header(props) {
-    const { title, userInfo, familyInfo } = props;
+    const { title, currUser, familyInfo } = props;
     const [isMenuOpen, setMenu] = useState(false);
     const ref = useRef();
-    const fullName = userInfo.firstName + ' ' + userInfo.lastName;
+    const fullName = currUser.firstName + ' ' + currUser.lastName;
     
     const familyInfoArray = familyInfo.map(person => {
         let personInfo;
-        if (!_.isEqual(userInfo, person)) {
+        if (!_.isEqual(currUser, person)) {
             personInfo = <IndividualFamilyMember familyMember={person} key={person.firstName + ' ' + person.lastName} />;
             return personInfo;
         }
@@ -31,7 +31,7 @@ export default function Header(props) {
         }
     }, [isMenuOpen]);
 
-    if (userInfo.isAdmin) {
+    if (currUser.isAdmin) {
         familyInfoArray.push(AddAnotherUser());
     }
 
@@ -39,9 +39,9 @@ export default function Header(props) {
         <header className="relative py-8 pl-[235px]">
             <p className="font-heading text-3xl">{title}</p>
             <div className="absolute bottom-[20px] right-0" onClick={() => setMenu(true)}>
-                <img className="rounded-full inline w-10 h-10 mb-2" src={userInfo.img} alt={fullName} />
+                <img className="rounded-full inline w-10 h-10 mb-2" src={currUser.img} alt={fullName} />
                 <p className="inline text-2xl ml-2">{fullName}</p>
-                {isMenuOpen ? MenuPopup(ref, fullName, userInfo.img, familyInfoArray) : null}
+                {isMenuOpen ? MenuPopup(ref, fullName, currUser.img, familyInfoArray) : null}
             </div>
         </header>
     );
@@ -113,7 +113,7 @@ const FAMILY_INFO = [
   }
 ];
 
-          <Route exact path="/" element={<Health userInfo={FAMILY_INFO[0]} familyInfo={FAMILY_INFO} />} />
+          <Route exact path="/" element={<Health currUser={FAMILY_INFO[0]} familyInfo={FAMILY_INFO} />} />
 
 IN HEALTH
 
@@ -121,11 +121,11 @@ import Header from './Header.js';
 
 
 export default function Health(props) {
-    const { userInfo, familyInfo } = props;
+    const { currUser, familyInfo } = props;
     return (
         <div className="flex flex-col">
-            <Header title={'Overview'} userInfo={userInfo} familyInfo={familyInfo} />
-            <HealthCards user={userInfo.firstName} />
+            <Header title={'Overview'} currUser={currUser} familyInfo={familyInfo} />
+            <HealthCards user={currUser.firstName} />
         </div>
     );
 }

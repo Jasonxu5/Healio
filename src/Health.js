@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import doctor from './img/doctor.svg';
 import hospital from './img/hospital.svg';
 
-import katie from './img/katie.png'; // profile picture
-
 const HEALTH_CARD_TITLES = [
     'Hello, ',
     'Notifications',
@@ -15,65 +13,41 @@ const HEALTH_CARD_TITLES = [
     'Upcoming Appointments'
 ];
 
-const NOTIF_LIST_ITEMS = [
-    'You have a new message from Dr. Osborn!',
-    'Your recent lab results have arrived!',
-    'Receipt of your payment for appointment on 02/09/22',
-    'You have a new message from Dr. Ortega!'
-];
-
-const LAB_LIST_ITEMS = [
-    { title: 'X-Ray - Katie Wong', date: '02/10/2022' },
-    { title: 'Ultrasound - Katie Wong', date: '01/04/2022' }
-];
-
-const DOCTOR_NOTES = {
-    date: '02/09/2021',
-    body: 'Mrs. Wang is a 40 year old woman with complaints of fatigue and a soar throat since yesterday morning. She has no difficulty swallowing, but doing so makes the pain worse. Reported recording a temp of 100.7 last night. ' +
-        'Probable infection, Mrs. Wang reported no allergies or sick contacts at work, but her daughter recently stayed home from school because of strep throat.',
-    doctor: 'Dr. Ortega'
-}
-
-const APP_LIST_ITEMS = [
-    { title: 'Follow up with Dr. Ortega', date: '02/12/2022' },
-    { title: 'Yearly check-up with Dr. Osborn', date: '02/15/2022' }
-];
-
 export default function Health(props) {
-    const { userInfo, familyInfo } = props;
+    const { currUser, familyInfo } = props;
     return (
         <div className="flex flex-col">
-            <Header title={'Overview'} userInfo={userInfo} familyInfo={familyInfo} />
-            <HealthCards user={userInfo.firstName} />
+            <Header title={'Overview'} currUser={currUser} familyInfo={familyInfo} />
+            <HealthCards currUser={currUser} />
         </div>
     );
 }
 
 function HealthCards(props) {
-    const { user } = props;
+    const { currUser } = props;
 
     const healthInfoCards = HEALTH_CARD_TITLES.map((cardTitle, index) => {
         let body;
         if (index === 0) {
             body = <CardHasImage isIntro={true} />;
         } else if (index === 1) {
-            body = <CardHasList listItems={NOTIF_LIST_ITEMS} hasDateOnRight={false} />;
+            body = <CardHasList listItems={currUser.notifications} hasDateOnRight={false} />;
         } else if (index === 2) {
-            body = <CardHasList listItems={LAB_LIST_ITEMS} hasDateOnRight={true} />;
+            body = <CardHasList listItems={currUser.labResults} hasDateOnRight={true} />;
         } else if (index === 3) {
             body = <CardHasImage isIntro={false} />;
         } else if (index === 4) {
             body = (
                 <div>
-                    <p className="pt-2 italic">{DOCTOR_NOTES.date}</p>
-                    <p className="pt-2">{DOCTOR_NOTES.body}</p>
-                    <p className="pt-2">{'- ' + DOCTOR_NOTES.doctor}</p>
+                    <p className="pt-2 italic">{currUser.doctorNotes.date}</p>
+                    <p className="pt-2">{currUser.doctorNotes.body}</p>
+                    <p className="pt-2">{'- ' + currUser.doctorNotes.doctor}</p>
                 </div>
             );
         } else {
-            body = <CardHasList listItems={APP_LIST_ITEMS} hasDateOnRight={true} />;
+            body = <CardHasList listItems={currUser.appointments} hasDateOnRight={true} />;
         }
-        return <SingleHealthCard title={cardTitle} body={body} count={index} user={user} key={cardTitle} />;
+        return <SingleHealthCard title={cardTitle} body={body} count={index} currUserFirstName={currUser.firstName} key={cardTitle} />;
     });
     return (
         <div className="grid grid-cols-2 pl-[235px] gap-4">
@@ -134,7 +108,7 @@ function CardHasList(props) {
 }
 
 function SingleHealthCard(props) {
-    const { title, body, count, user } = props;
+    const { title, body, count, currUserFirstName } = props;
 
     let introCardOnGrid;
     let stackSmallCards;
@@ -173,7 +147,7 @@ function SingleHealthCard(props) {
         headerStyle = (
             <div className="font-heading text-3xl font-semibold">
                 <h2 className='text-dark-blue inline'>{title}</h2>
-                <h2 className='text-light-blue inline'>{user + '!'}</h2>
+                <h2 className='text-light-blue inline'>{currUserFirstName + '!'}</h2>
             </div>
         );
     } else {
