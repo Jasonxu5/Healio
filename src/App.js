@@ -6,6 +6,8 @@ import Messaging from './Messaging.js';
 import PlaceHolder from './Template.js';
 
 import katie from './img/katie.png'; // profile picture
+import daughter from './img/daughter.png';
+import grandma from './img/grandma.png';
 
 // i'm sorry but i can't parse images in json files
 const FAMILY_INFO = [
@@ -20,8 +22,8 @@ const FAMILY_INFO = [
       'You have a new message from Dr. Ortega!'
     ],
     labResults: [
-      { title: 'X-Ray - Katie Wong', date: '02/10/2022' },
-      { title: 'Ultrasound - Katie Wong', date: '01/04/2022' }
+      { title: 'X-Ray - Katie Wang', date: '02/10/2022' },
+      { title: 'Ultrasound - Katie Wang', date: '01/04/2022' }
     ],
     doctorNotes: {
       date: '02/09/2021',
@@ -38,7 +40,7 @@ const FAMILY_INFO = [
   {
     firstName: 'Daughter',
     lastName: 'Wang',
-    img: katie,
+    img: daughter,
     notifications: [
       'You have a new message from Dr. Osborn!',
       'New prescription added to your medications.',
@@ -63,7 +65,7 @@ const FAMILY_INFO = [
   {
     firstName: 'Grandma',
     lastName: 'Wang',
-    img: katie,
+    img: grandma,
     notifications: [
       'You have a new message from Dr. Osborn!',
       'New prescription added to your medications.',
@@ -107,7 +109,7 @@ function App() {
       <div className="flex bg-gradient-to-br from-pale-blue to-white">
         <NavBar />
         <Routes>
-          <Route exact path="/" element={<Health currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser}/>} />
+          <Route exact path="/" element={<Health currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />} />
           <Route path="/appointments" element={<PlaceHolder />} />
           <Route path="/messages" element={<Messaging />} />
           <Route path="/resources" element={<PlaceHolder />} />
@@ -128,3 +130,34 @@ function App() {
 }
 
 export default App;
+
+/*
+APP ROUTES
+          <Route path="/appointments" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />} />
+          <Route path="/messages" element={<Messaging currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />} />
+          <Route path="/resources" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />} />
+          <Route path="/billing" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />} />
+          <Route path="/profile" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />} />
+
+MESSAGING
+import Header from './Header.js';
+
+export default function Messaging(props) {
+    const { currUser, familyInfo, setUserCallback } = props;
+    return (
+        <Header title={'Messaging'} currUser={currUser} familyInfo={familyInfo} setUserCallback={setUserCallback}/>
+    );
+}
+
+TEMPLATE
+import Header from './Header.js';
+
+export default function PlaceHolder(props) {
+    const { currUser, familyInfo, setUserCallback } = props;
+    return (
+        <div className="flex flex-col">
+            <Header title={'To be worked on ...'} currUser={currUser} familyInfo={familyInfo} setUserCallback={setUserCallback} />
+        </div>
+    );
+}
+*/
