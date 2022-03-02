@@ -14,10 +14,10 @@ const HEALTH_CARD_TITLES = [
 ];
 
 export default function Health(props) {
-    const { currUser, familyInfo, setUserCallback } = props;
+    const { currUser, familyInfo, setUserCallback, signedIn } = props;
     return (
         <div className="flex flex-col">
-            <Header title={'Overview'} currUser={currUser} familyInfo={familyInfo} setUserCallback={setUserCallback}/>
+            <Header title={'Overview'} currUser={currUser} familyInfo={familyInfo} setUserCallback={setUserCallback} signedIn={signedIn}/>
             <HealthCards currUser={currUser} />
         </div>
     );

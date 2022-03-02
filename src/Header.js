@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function Header(props) {
-    const { title, currUser, familyInfo, setUserCallback } = props;
+    const { title, currUser, familyInfo, setUserCallback, signedIn } = props;
     const [isMenuOpen, setMenu] = useState(false);
     const ref = useRef();
     const fullName = currUser.firstName + ' ' + currUser.lastName;
@@ -41,7 +41,7 @@ export default function Header(props) {
             <div className="absolute bottom-[20px] right-0 hover:cursor-pointer" onClick={() => setMenu(true)}>
                 <img className="rounded-full inline w-10 h-10 mb-2" src={currUser.img} alt={fullName} />
                 <p className="inline text-2xl ml-2">{fullName}</p>
-                {isMenuOpen ? MenuPopup(ref, fullName, currUser.img, familyInfoArray) : null}
+                {isMenuOpen ? MenuPopup(ref, fullName, currUser.img, familyInfoArray, signedIn) : null}
             </div>
         </header>
     );
@@ -71,7 +71,7 @@ function AddAnotherUser() {
     );
 }
 
-function MenuPopup(ref, fullName, img, familyInfoArray) {
+function MenuPopup(ref, fullName, img, familyInfoArray, signedIn) {
     return (
         <div className="absolute grid gap-2 right-0 w-[424px] p-6 border-2 border-black bg-[#FFFFFF] shadow-[4px_4px_4px_rgba(0,0,0,0.25)] z-[100] rounded-[15px] cursor-auto" ref={ref}>
             <div>
@@ -83,7 +83,7 @@ function MenuPopup(ref, fullName, img, familyInfoArray) {
                 {familyInfoArray}
             </div>
             <hr className="border-grey" />
-            <div className="mx-auto py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px]">
+            <div className="mx-auto py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer" onClick={() => signedIn(false)}>
                 <p>Log Out</p>
             </div>
         </div>
