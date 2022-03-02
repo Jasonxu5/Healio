@@ -47,7 +47,7 @@ function HealthCards(props) {
         } else {
             body = <CardHasList listItems={currUser.appointments} hasDateOnRight={true} />;
         }
-        return <SingleHealthCard title={cardTitle} body={body} count={index} currUserFirstName={currUser.firstName} key={cardTitle} />;
+        return <SingleHealthCard title={cardTitle} body={body} count={index} currUserFirstName={currUser.firstName} key={index} />;
     });
     return (
         <div className="grid grid-cols-2 pl-[235px] gap-4">
@@ -86,17 +86,17 @@ function CardHasList(props) {
     let listItemsArray;
 
     if (hasDateOnRight) {
-        listItemsArray = listItems.map((item) => {
+        listItemsArray = listItems.map((item, index) => {
             return (
-                <div key={item.title}>
+                <div key={index}>
                     <p className="pt-2 float-left">{item.title}</p>
                     <p className="pt-2 float-right">{item.date + " >"}</p>
                 </div>
             );
         });
     } else {
-        listItemsArray = listItems.map((item) => {
-            return <p className="pt-2" key={item}>{item}</p>;
+        listItemsArray = listItems.map((item, index) => {
+            return <p className="pt-2" key={index}>{item}</p>;
         });
     }
 
