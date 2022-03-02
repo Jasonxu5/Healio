@@ -107,7 +107,7 @@ function App() {
       <div className="flex bg-gradient-to-br from-pale-blue to-white">
         <NavBar />
         <Routes>
-          <Route exact path="/" element={<Health currUser={currUser} familyInfo={FAMILY_INFO} />} />
+          <Route exact path="/" element={<Health currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser}/>} />
           <Route path="/appointments" element={<PlaceHolder />} />
           <Route path="/messages" element={<Messaging />} />
           <Route path="/resources" element={<PlaceHolder />} />
