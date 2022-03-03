@@ -5,7 +5,7 @@ import landingImage from './img/landingImage.svg';
 export default function LandingHeader(props) {
     const { signedIn } = props;
     return (
-        <div className="">
+        <div>
             <div className="flex mx-10 my-4 pb-4">
                 <h1 className="font-heading text-3xl font-bold mt-2">Healio</h1>
                 <div className="flex gap-10 text-xl my-1 ml-auto">

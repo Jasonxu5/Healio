@@ -38,7 +38,7 @@ export default function Header(props) {
     return (
         <header className="relative py-8 pl-[235px]">
             <p className="font-heading text-3xl">{title}</p>
-            <div className="absolute bottom-[20px] right-0 hover:cursor-pointer" onClick={() => setMenu(true)}>
+            <div className="absolute bottom-[20px] right-[30px] hover:cursor-pointer" onClick={() => setMenu(true)}>
                 <img className="rounded-full inline w-10 h-10 mb-2" src={currUser.img} alt={fullName} />
                 <p className="inline text-2xl ml-2">{fullName}</p>
                 {isMenuOpen ? MenuPopup(ref, fullName, currUser.img, familyInfoArray, signedIn) : null}

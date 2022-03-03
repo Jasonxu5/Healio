@@ -113,6 +113,7 @@ function SingleHealthCard(props) {
     let introCardOnGrid;
     let stackSmallCards;
     let heightPxSize;
+    let widthPxSize;
     let headerStyle;
 
     // Place intro card at the top
@@ -142,6 +143,13 @@ function SingleHealthCard(props) {
         heightPxSize = 'h-[280px] ';
     }
 
+    // Create card width depending on where it is on the grid
+    if (count === 0) {
+        widthPxSize = 'w-[97.5%] ';
+    } else {
+        widthPxSize = 'w-[95%] ';
+    }
+
     // Creates different font styles for the introductory card
     if (count === 0) {
         headerStyle = (
@@ -155,7 +163,7 @@ function SingleHealthCard(props) {
     }
 
     return (
-        <div className={"p-6 " + introCardOnGrid + stackSmallCards + " w-full " + heightPxSize + "bg-white shadow-[2px_4px_20px_rgba(0,0,0,0.25)] rounded-[20px]"}>
+        <div className={"p-6 " + introCardOnGrid + stackSmallCards + widthPxSize + heightPxSize + "bg-white shadow-[2px_4px_20px_rgba(0,0,0,0.25)] rounded-[20px]"}>
             {headerStyle}
             {body}
         </div>
