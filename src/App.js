@@ -95,7 +95,7 @@ const FAMILY_INFO = [
 ];
 
 function App() {
-  const [isSignedIn, setIsSignedIn] = useState(true); // change to false after user acc implemented
+  const [isSignedIn, setIsSignedIn] = useState(false);
   const [data, setData] = useState("")
   const [currUser, setCurrUser] = useState(FAMILY_INFO[0]);
 

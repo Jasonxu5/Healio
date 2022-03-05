@@ -10,10 +10,8 @@ export default function Header(props) {
     const fullName = currUser.firstName + ' ' + currUser.lastName;
     
     const familyInfoArray = familyInfo.map(person => {
-        let personInfo;
         if (!_.isEqual(currUser, person)) {
-            personInfo = <IndividualFamilyMember familyMember={person} setUserCallback={setUserCallback} key={person.firstName + ' ' + person.lastName} />;
-            return personInfo;
+            return <IndividualFamilyMember familyMember={person} setUserCallback={setUserCallback} key={person.firstName + ' ' + person.lastName} />;
         }
     });
     

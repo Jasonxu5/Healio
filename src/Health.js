@@ -73,7 +73,7 @@ function CardHasImage(props) {
         return (
             <div className="relative">
                 <div className="mt-4 text-dark-blue">
-                    <Link className="absolute p-2 font-semibold bg-dark-green rounded-lg" to='/'>Find Providers {'>'}</Link>
+                    <Link className="absolute p-2 font-semibold bg-dark-green rounded-lg" to='/resources'>Find Providers {'>'}</Link>
                 </div>
                 <img className="absolute top-[-72px] right-[-20px]" src={hospital} alt="Hospital Clip Art" />
             </div>
