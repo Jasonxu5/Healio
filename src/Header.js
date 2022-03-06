@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
@@ -81,9 +82,9 @@ function MenuPopup(ref, fullName, img, familyInfoArray, signedIn) {
                 {familyInfoArray}
             </div>
             <hr className="border-grey" />
-            <div className="mx-auto py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer" onClick={() => signedIn(false)}>
+            <Link to="/" className="mx-auto py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer" onClick={() => signedIn(false)}>
                 <p>Log Out</p>
-            </div>
+            </Link>
         </div>
     );
 }

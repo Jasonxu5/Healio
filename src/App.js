@@ -112,7 +112,7 @@ function App() {
       <div className="bg-gradient-to-br from-pale-blue to-white">
         <NavBar signedIn={setIsSignedIn} />
         <Routes>
-          <Route exact path="/" element={<Health currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
+          <Route path="/home" element={<Health currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
           <Route path="/appointments" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
           <Route path="/messages" element={<Messaging currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
           <Route path="/resources" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
@@ -126,7 +126,9 @@ function App() {
   } else {
     return (
       <div>
-        <LandingHeader signedIn={setIsSignedIn} />
+        <Routes>
+          <Route exact path="/" element={<LandingHeader signedIn={setIsSignedIn} />} />
+        </Routes>
       </div>
     )
   }

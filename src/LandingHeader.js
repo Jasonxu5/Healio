@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import landingImage from './img/landingImage.svg';
 
@@ -11,7 +12,7 @@ export default function LandingHeader(props) {
                 <div className="flex gap-10 text-xl my-1 ml-auto">
                     <p className="mt-2">Contact</p>
                     <p className="mt-2">About</p>
-                    <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 hover:cursor-pointer" onClick={() => signedIn(true)}>Login</p>
+                    <Link to="/home" className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 hover:cursor-pointer" onClick={() => signedIn(true)}>Login</Link>
                 </div>
             </div>
             <div className="bg-pale-blue">
@@ -22,7 +23,7 @@ export default function LandingHeader(props) {
                         <p>Take control of your family's</p>
                         <p>medical information today.</p>
                     </div>
-                    <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 w-[38%] hover:cursor-pointer" onClick={() => signedIn(true)}>Join Healio</p>
+                    <Link to="/home" className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 w-[38%] hover:cursor-pointer" onClick={() => signedIn(true)}>Join Healio</Link>
                 </div>
                 <img className="ml-auto" src={landingImage} alt="Patients and Doctor Clipart" />
             </div>
