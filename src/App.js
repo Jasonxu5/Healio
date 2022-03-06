@@ -109,15 +109,15 @@ function App() {
 
   if (isSignedIn) {
     return (
-      <div className="flex bg-gradient-to-br from-pale-blue to-white">
+      <div className="bg-gradient-to-br from-pale-blue to-white">
         <NavBar signedIn={setIsSignedIn} />
         <Routes>
           <Route exact path="/" element={<Health currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
-          <Route path="/appointments" element={<PlaceHolder />} />
-          <Route path="/messages" element={<Messaging />} />
-          <Route path="/resources" element={<PlaceHolder />} />
-          <Route path="/billing" element={<PlaceHolder />} />
-          <Route path="/profile" element={<PlaceHolder />} />
+          <Route path="/appointments" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
+          <Route path="/messages" element={<Messaging currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
+          <Route path="/resources" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
+          <Route path="/billing" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
+          <Route path="/profile" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
         </Routes>
         <p>{!data ? "" : data}</p>
       </div>
