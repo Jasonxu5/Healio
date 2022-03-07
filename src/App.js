@@ -165,17 +165,19 @@ function App() {
           <Route path="/billing" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/profile" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="*" element={<Navigate replace to="/home" />} />
-          <Route path="/login" element={<Login />} />
         </Routes>
         <p>{!data ? "" : data}</p>
       </div>
 
     );
   } else {
+    // moved /login to else, because the /login page is only useful for users that are signed out
+    // there was a comma on line 39, removed that and the link worked
     return (
       <div>
         <Routes>
-          <Route exact path="/" element={<LandingHeader signedIn={setIsSignedIn} />} />
+          <Route exact path="/" element={<LandingHeader />} />
+          <Route path="/login" element={<Login />} />
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
       </div>

@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 
 import landingImage from './img/landingImage.svg';
 
-export default function LandingHeader(props) {
-    const { signedIn } = props;
+export default function LandingHeader() {
     return (
         <div>
             <div className="flex mx-10 my-4 pb-4">
@@ -13,7 +12,7 @@ export default function LandingHeader(props) {
                     <p className="mt-2">Contact</p>
                     <p className="mt-2">About</p>
                     <Link to="/login">
-                        <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 hover:cursor-pointer" onClick={() => signedIn(true)}>Login</p>
+                        <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 hover:cursor-pointer">Login</p>
                     </Link>
                 </div>
             </div>
@@ -26,7 +25,7 @@ export default function LandingHeader(props) {
                         <p>medical information today.</p>
                     </div>
                     <Link to="/login">
-                        <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 w-[38%] hover:cursor-pointer" onClick={() => signedIn(true)}>Join Healio</p>
+                        <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 w-[38%] hover:cursor-pointer">Join Healio</p>
                     </Link>
                 </div>
                 <img className="ml-auto" src={landingImage} alt="Patients and Doctor Clipart" />

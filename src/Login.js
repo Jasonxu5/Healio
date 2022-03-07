@@ -27,14 +27,15 @@ const UI_CONFIG = {
     {
       provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     }
-  ],
+  ]
   // callbacks: {
   //   signInSuccessWithAuthResult: () => false
   // },
 };
 
 // h1 element not showing up
-export default function SignInScreen() {
+export default function Login() {
+  console.log('success');
   return (
     <div>
       <h1 className=''>Healio Sign In</h1>
