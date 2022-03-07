@@ -12,7 +12,9 @@ export default function LandingHeader(props) {
                 <div className="flex gap-10 text-xl my-1 ml-auto">
                     <p className="mt-2">Contact</p>
                     <p className="mt-2">About</p>
-                    <Link to="/home" className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 hover:cursor-pointer" onClick={() => signedIn(true)}>Login</Link>
+                    <Link to="/login">
+                        <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 hover:cursor-pointer" onClick={() => signedIn(true)}>Login</p>
+                    </Link>
                 </div>
             </div>
             <div className="bg-pale-blue">
@@ -23,7 +25,9 @@ export default function LandingHeader(props) {
                         <p>Take control of your family's</p>
                         <p>medical information today.</p>
                     </div>
-                    <Link to="/home" className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 w-[38%] hover:cursor-pointer" onClick={() => signedIn(true)}>Join Healio</Link>
+                    <Link to="/login">
+                        <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 w-[38%] hover:cursor-pointer" onClick={() => signedIn(true)}>Join Healio</p>
+                    </Link>
                 </div>
                 <img className="ml-auto" src={landingImage} alt="Patients and Doctor Clipart" />
             </div>
