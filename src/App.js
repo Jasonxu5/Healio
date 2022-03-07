@@ -118,6 +118,7 @@ function App() {
           <Route path="/resources" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
           <Route path="/billing" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
           <Route path="/profile" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
+          <Route path="*" element={<Navigate replace to="/home" />} />
         </Routes>
         <p>{!data ? "" : data}</p>
       </div>
