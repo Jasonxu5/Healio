@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
-
+import _ from 'lodash';
 import katie from './img/katie.png';
 import ortega from './img/ortega.png';
 import valera from './img/valera.png';
+
+const CONVERSATIONS = [
+    ['Katie', 'Daughter', 'Dr. Ortega'],
+    ['Katie', 'Grandma', 'Dr. Ortega']
+];
 
 // sry idk how to do dates
 const MESSAGES = [
@@ -10,77 +15,77 @@ const MESSAGES = [
         username: 'Katie',
         img: katie,
         content: 'Just wanted to say that these notes and your care are superb! Thank you for treating my daughter on such a short notice.',
-        conversationIndex: 1,
+        conversation: CONVERSATIONS[0],
         timestamp: 1
     },
     {
         username: 'Katie',
         img: katie,
         content: 'Hey Dr. Ortega! I had a question about my recent appointment, where can I find my doctors notes and details on the prescribed medications?',
-        conversationIndex: 1,
+        conversation: CONVERSATIONS[0],
         timestamp: 3
     },
     {
         username: 'Katie',
         img: katie,
         content: 'Thanks Dr. Ortega! The medications prescribed seem to be just what I needed!',
-        conversationIndex: 1,
+        conversation: CONVERSATIONS[0],
         timestamp: 5
     },
     {
         username: 'Katie',
         img: katie,
         content: 'Dr. Valera, I\'m writing to ask if there is anything that I should bring or keep in mind before my mother\'s upcoming appointment this week? Is it okay if she continues to take pain relievers?',
-        conversationIndex: 2,
+        conversation: CONVERSATIONS[1],
         timestamp: 1
     },
     {
         username: 'Katie',
         img: katie,
         content: 'Hello Dr. Valera! Any idea when the lab results for my mother\'s x-rays will come in? Should I call you to discuss them if I have questions?',
-        conversationIndex: 2,
+        conversation: CONVERSATIONS[1],
         timestamp: 3
     },
     {
         username: 'Katie',
         img: katie,
         content: 'Thanks Dr. Valera! I appreciate your efforts and the care provided to my mother!',
-        conversationIndex: 2,
+        conversation: CONVERSATIONS[1],
         timestamp: 5
     },
     {
         username: 'Dr. Ortega',
         img: ortega,
         content: 'You\'re welcome, Mrs. Wang! Stay healthy!',
-        conversationIndex: 1,
+        conversation: CONVERSATIONS[0],
         timestamp: 2
     },
     {
         username: 'Dr. Ortega',
         img: ortega,
         content: 'Hello Mrs. Wang! I\'ve updated your profile with doctors notes and information about your prescribed medications. Take care of yourself!',
-        conversationIndex: 1,
+        conversation: CONVERSATIONS[0],
         timestamp: 4
     },
     {
         username: 'Dr. Valera',
         img: valera,
         content: 'Good morning, Mrs. Wang! Thanks for reaching out, I’m happy to assist you. Healio’s web portal should have all the needed information and it\'s perfectly fine to continue taking the pain killers. Let me know if you have anymore questions!',
-        conversationIndex: 2,
+        conversation: CONVERSATIONS[1],
         timestamp: 2
     },
     {
         username: 'Dr. Valera',
         img: valera,
         content: 'Hello Mrs. Wang! Your mother\'s x-rays should be sent and uploaded on the patient portal shortly. Do call me if there are any questions. Stay safe!',
-        conversationIndex: 2,
+        conversation: CONVERSATIONS[1],
         timestamp: 4
     }
 ];
 
 export default function Messaging(props) {
-    const { currUser, messagingHeader} = props;
-    const [currConversationIndex, setCurrConversationIndex] = useState(1);
+    const { currUser, messagingHeader } = props;
+    const [currConversation, setCurrConversation] = useState(CONVERSATIONS[0]);
     const [currMessages, setCurrMessages] = useState(MESSAGES);
 
     return (
@@ -88,31 +93,16 @@ export default function Messaging(props) {
             {messagingHeader}
             <hr />
             <div className="flex divide-x w-[97.5%]">
-                <ChatBox currUser={currUser} currMessages={currMessages} currMessagesCallback={setCurrMessages} currConversationIndex={currConversationIndex} />
-                <ChatNav currUser={currUser} currMessages={currMessages} setConvoCallback={setCurrConversationIndex} />
+                <ChatBox currUser={currUser} currMessages={currMessages} currMessagesCallback={setCurrMessages} currConversation={currConversation} />
+                <ChatNav currUser={currUser} currMessages={currMessages} currConversation={currConversation} setConvoCallback={setCurrConversation} />
             </div>
         </div>
     );
 }
 
 function ChatBox(props) {
-    const { currUser, currMessages, currMessagesCallback, currConversationIndex } = props;
+    const { currUser, currMessages, currMessagesCallback, currConversation } = props;
     const [typedMessage, setTypedMessage] = useState('');
-
-    // // Handle enter text input for chat
-    // useEffect(() => {
-    //     const listener = event => {
-    //         if (event.code === "Enter" || event.code === "NumpadEnter") {
-    //             console.log("Enter key was pressed. Run your function.");
-    //             event.preventDefault();
-    //             setTypedMessage(event.target.value);
-    //         }
-    //     };
-    //     document.addEventListener("keydown", listener);
-    //     return () => {
-    //         document.removeEventListener("keydown", listener);
-    //     };
-    // }, [typedMessage]);
 
     const handleTextChange = (event) => {
         setTypedMessage(event.target.value);
@@ -123,15 +113,16 @@ function ChatBox(props) {
             username: currUser.firstName,
             img: currUser.img,
             content: typedMessage,
-            conversationIndex: currConversationIndex,
+            conversation: currConversation,
             timestamp: 6
         }];
         currMessagesCallback(newMessages);
+        setTypedMessage('');
     };
 
     // Filter messages to relevant conversation + order by date
     const filterCurrConvo = currMessages.filter(message => {
-        if (message.conversationIndex === currConversationIndex) {
+        if (_.isEqual(message.conversation, currConversation)) {
             return message;
         }
     });
@@ -149,7 +140,7 @@ function ChatBox(props) {
             </div>
             <form className="" onSubmit={handleTextSubmit}>
                 <label className="absolute left-[-100vw]">Type something here...</label>
-                <input onChange={handleTextChange} placeholder="Type something here..." aria-label="Send a message" autoComplete="off" />
+                <input value={typedMessage} onChange={handleTextChange} placeholder="Type something here..." aria-label="Send a message" autoComplete="off" />
             </form>
         </div>
     );
@@ -183,17 +174,16 @@ function OneMessage(props) {
 }
 
 function ChatNav(props) {
-    const { currMessages, setConvoCallback } = props;
+    const { currUser, currMessages, setConvoCallback } = props;
 
-    const allConvos = [...new Set(currMessages.map(message => message.conversationIndex))];
-    const convoArray = allConvos.map((convo, index) => <OneConversation convo={convo} key={index} />)
+    const allConvos = [...new Set(currMessages.map(message => message.conversation))];
+    const relevantConvosToUser = allConvos.filter(convo => { return convo.includes(currUser.firstName) })
+    const convoArray = relevantConvosToUser.map((convo, index) => <OneConversation convo={convo} setConvoCallback={setConvoCallback} key={index} />);
+    
 
-    const handleConvoClick = (event) => {
-        setConvoCallback(parseInt(event.target.id));
-    }
     return (
         <div className="ml-0 overflow-auto">
-            <div onClick={handleConvoClick}>
+            <div>
                 {convoArray}
             </div>
         </div>
@@ -201,6 +191,11 @@ function ChatNav(props) {
 }
 
 function OneConversation(props) {
-    const { convo } = props;
-    return <p className="hover:cursor-pointer" id={convo}>Conversation {convo}</p>;
+    const { convo, setConvoCallback } = props;
+    const userList = convo.map(user => { return user + ' ' });
+    const handleConvoClick = () => {
+        setConvoCallback(convo);
+    }
+
+    return <p className="hover:cursor-pointer" onClick={handleConvoClick}>{userList}</p>;
 }
