@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Header from './Header.js';
 
 import katie from './img/katie.png';
 import ortega from './img/ortega.png';
@@ -80,13 +79,13 @@ const MESSAGES = [
 ];
 
 export default function Messaging(props) {
-    const { currUser, familyInfo, setUserCallback, signedIn } = props;
+    const { currUser, messagingHeader} = props;
     const [currConversationIndex, setCurrConversationIndex] = useState(1);
     const [currMessages, setCurrMessages] = useState(MESSAGES);
 
     return (
         <div>
-            <Header title={'Messaging'} currUser={currUser} familyInfo={familyInfo} setUserCallback={setUserCallback} signedIn={signedIn} />
+            {messagingHeader}
             <hr />
             <div className="flex divide-x w-[97.5%]">
                 <ChatBox currUser={currUser} currMessages={currMessages} currMessagesCallback={setCurrMessages} currConversationIndex={currConversationIndex} />

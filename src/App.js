@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 
 import NavBar from './NavBar.js';
+import Header from './Header.js';
+
 import Health from './Health.js';
 import Messaging from './Messaging.js';
 import PlaceHolder from './Template.js';
@@ -107,17 +109,22 @@ function App() {
 
   console.log(data)
 
+  // Headers for each page, not sure if there's a better way to do this
+  const homeHeader = <Header title={'Overview'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={isSignedIn} />;
+  const messagingHeader = <Header title={'Messaging'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={isSignedIn} />;
+  const templateHeader = <Header title={'To be worked on ...'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={isSignedIn} />;
+
   if (isSignedIn) {
     return (
       <div className="bg-gradient-to-br from-pale-blue to-white">
         <NavBar signedIn={setIsSignedIn} />
         <Routes>
-          <Route path="/home" element={<Health currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
-          <Route path="/appointments" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
-          <Route path="/messages" element={<Messaging currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
-          <Route path="/resources" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
-          <Route path="/billing" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
-          <Route path="/profile" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
+          <Route path="/home" element={<Health currUser={currUser} homeHeader={homeHeader} />} />
+          <Route path="/appointments" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
+          <Route path="/messages" element={<Messaging currUser={currUser} messagingHeader={messagingHeader} />} />
+          <Route path="/resources" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
+          <Route path="/billing" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
+          <Route path="/profile" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="*" element={<Navigate replace to="/home" />} />
         </Routes>
         <p>{!data ? "" : data}</p>

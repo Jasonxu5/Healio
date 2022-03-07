@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from './Header.js';
 import { Link } from 'react-router-dom';
 import doctor from './img/doctor.svg';
 import hospital from './img/hospital.svg';
@@ -14,10 +13,10 @@ const HEALTH_CARD_TITLES = [
 ];
 
 export default function Health(props) {
-    const { currUser, familyInfo, setUserCallback, signedIn } = props;
+    const { currUser, homeHeader} = props;
     return (
         <div className="flex flex-col">
-            <Header title={'Overview'} currUser={currUser} familyInfo={familyInfo} setUserCallback={setUserCallback} signedIn={signedIn}/>
+            {homeHeader}
             <HealthCards currUser={currUser} />
         </div>
     );
