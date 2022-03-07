@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 
 import NavBar from './NavBar.js';
 import Health from './Health.js';
@@ -128,6 +128,7 @@ function App() {
       <div>
         <Routes>
           <Route exact path="/" element={<LandingHeader signedIn={setIsSignedIn} />} />
+          <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
       </div>
     )
