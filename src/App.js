@@ -129,12 +129,12 @@ function App() {
 
     const authUnregisterFunction = firebase.auth().onAuthStateChanged((firebaseUser) => {
       if (firebaseUser) {
-        // setIsSignedIn(true);
-        // setCurrUser(firebaseUser);
+        setIsSignedIn(true);
+        //setCurrUser(firebaseUser);
       } else {
         // only change isLoggedIn when it's true
         if (isSignedIn) {
-          // setIsSignedIn(false);
+          setIsSignedIn(false);
         }
 
         // setCurrUser(null);
