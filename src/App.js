@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
+// Import the functions you need from the SDKs you need
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
 
+import Login from './Login.js';
 import NavBar from './NavBar.js';
 import Health from './Health.js';
 import Messaging from './Messaging.js';
@@ -94,16 +98,55 @@ const FAMILY_INFO = [
   }
 ];
 
+// NOTE: Use Environement Variables once app is deployed to production
+const firebaseConfig = {
+  apiKey: "AIzaSyAGSZzesnF02c38v_XRDH0ZjtAQnxltI10",
+  authDomain: "healio-e7722.firebaseapp.com",
+  projectId: "healio-e7722",
+  storageBucket: "healio-e7722.appspot.com",
+  messagingSenderId: "920066944228",
+  appId: "1:920066944228:web:0d00c25c07d1b2c1b890f1"
+};
+
+// Initialize Firebase
+//const app = firebase.initializeApp(firebaseConfig);
+
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [data, setData] = useState("")
   const [currUser, setCurrUser] = useState(FAMILY_INFO[0]);
 
+  // useEffect(() => {
+  //   fetch('/api')
+  //     .then((res) => res.json())
+  //     .then((data) => setData(data.message))
+  // }, [])
   useEffect(() => {
-    fetch('/api')
-      .then((res) => res.json())
-      .then((data) => setData(data.message))
-  }, [])
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    } else {
+      firebase.app();
+    }
+
+    const authUnregisterFunction = firebase.auth().onAuthStateChanged((firebaseUser) => {
+      if (firebaseUser) {
+        // setIsSignedIn(true);
+        // setCurrUser(firebaseUser);
+      } else {
+        // only change isLoggedIn when it's true
+        if (isSignedIn) {
+          // setIsSignedIn(false);
+        }
+        // setCurrUser(null);
+      }
+    })
+
+    return function cleanup() {
+      authUnregisterFunction();
+    }
+  }, [isSignedIn]);
+
 
   console.log(data)
 
@@ -118,6 +161,7 @@ function App() {
           <Route path="/resources" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
           <Route path="/billing" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
           <Route path="/profile" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={setIsSignedIn} />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
         <p>{!data ? "" : data}</p>
       </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import landingImage from './img/landingImage.svg';
 
@@ -22,7 +23,9 @@ export default function LandingHeader(props) {
                         <p>Take control of your family's</p>
                         <p>medical information today.</p>
                     </div>
-                    <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 w-[38%] hover:cursor-pointer" onClick={() => signedIn(true)}>Join Healio</p>
+                    <Link to="/login">
+                        <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 w-[38%] hover:cursor-pointer" onClick={() => signedIn(true)}>Join Healio</p>
+                    </Link>
                 </div>
                 <img className="ml-auto" src={landingImage} alt="Patients and Doctor Clipart" />
             </div>
