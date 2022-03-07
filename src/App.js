@@ -149,14 +149,14 @@ function App() {
   console.log(data)
 
   // Headers for each page, not sure if there's a better way to do this
-  const homeHeader = <Header title={'Overview'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={isSignedIn} />;
-  const messagingHeader = <Header title={'Messaging'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={isSignedIn} />;
-  const templateHeader = <Header title={'To be worked on ...'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} signedIn={isSignedIn} />;
+  const homeHeader = <Header title={'Overview'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
+  const messagingHeader = <Header title={'Messaging'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
+  const templateHeader = <Header title={'To be worked on ...'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
 
   if (isSignedIn) {
     return (
       <div className="bg-gradient-to-br from-pale-blue to-white">
-        <NavBar signedIn={setIsSignedIn} />
+        <NavBar />
         <Routes>
           <Route path="/home" element={<Health currUser={currUser} homeHeader={homeHeader} />} />
           <Route path="/appointments" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />

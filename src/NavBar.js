@@ -4,8 +4,7 @@ import { faSquarePlus, faCalendarCheck, faMessage, faLightbulb, faCircleDollarTo
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 
-export default function NavBar(props) {
-    const { signedIn } = props;
+export default function NavBar() {
     const handleSignOut = () => {
         firebase.auth().signOut();
     }

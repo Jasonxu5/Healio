@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
 
 export default function Header(props) {
-    const { title, currUser, familyInfo, setUserCallback, signedIn } = props;
+    const { title, currUser, familyInfo, setUserCallback } = props;
     const [isMenuOpen, setMenu] = useState(false);
     const ref = useRef();
     const fullName = currUser.firstName + ' ' + currUser.lastName;
@@ -40,7 +42,7 @@ export default function Header(props) {
             <div className="absolute bottom-[20px] right-[30px] hover:cursor-pointer" onClick={() => setMenu(true)}>
                 <img className="rounded-full inline w-10 h-10 mb-2" src={currUser.img} alt={fullName} />
                 <p className="inline text-2xl ml-2">{fullName}</p>
-                {isMenuOpen ? MenuPopup(ref, fullName, currUser.img, familyInfoArray, signedIn) : null}
+                {isMenuOpen ? MenuPopup(ref, fullName, currUser.img, familyInfoArray) : null}
             </div>
         </header>
     );
@@ -70,7 +72,11 @@ function AddAnotherUser() {
     );
 }
 
-function MenuPopup(ref, fullName, img, familyInfoArray, signedIn) {
+function MenuPopup(ref, fullName, img, familyInfoArray) {
+    const handleSignOut = () => {
+        firebase.auth().signOut();
+    }
+
     return (
         <div className="absolute grid gap-2 right-0 w-[424px] p-6 border-2 border-black bg-[#FFFFFF] shadow-[4px_4px_4px_rgba(0,0,0,0.25)] z-[100] rounded-[15px] cursor-auto" ref={ref}>
             <div>
@@ -82,7 +88,7 @@ function MenuPopup(ref, fullName, img, familyInfoArray, signedIn) {
                 {familyInfoArray}
             </div>
             <hr className="border-grey" />
-            <Link to="/" className="mx-auto py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer" onClick={() => signedIn(false)}>
+            <Link to="/" className="mx-auto py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer" onClick={handleSignOut}>
                 <p>Log Out</p>
             </Link>
         </div>
