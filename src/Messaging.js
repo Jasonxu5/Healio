@@ -27,70 +27,70 @@ const MESSAGES = [
         img: katie,
         content: 'Just wanted to say that these notes and your care are superb! Thank you for treating my daughter on such a short notice.',
         conversation: CONVERSATIONS[0],
-        timestamp: new Date('February 06, 2022 11:13')
+        timestamp: new Date('February 6, 2022 11:13:00')
     },
     {
         username: 'Katie',
         img: katie,
         content: 'Hey Dr. Ortega! I had a question about my recent appointment, where can I find my doctors notes and details on the prescribed medications?',
         conversation: CONVERSATIONS[0],
-        timestamp: new Date('February 17, 2022 13:34')
+        timestamp: new Date('February 17, 2022 13:34:00')
     },
     {
         username: 'Katie',
         img: katie,
         content: 'Thanks Dr. Ortega! The medications prescribed seem to be just what I needed!',
         conversation: CONVERSATIONS[0],
-        timestamp: new Date('February 17, 2022 14:20')
+        timestamp: new Date('February 17, 2022 14:20:00')
     },
     {
         username: 'Katie',
         img: katie,
         content: 'Dr. Valera, I\'m writing to ask if there is anything that I should bring or keep in mind before my mother\'s upcoming appointment this week? Is it okay if she continues to take pain relievers?',
         conversation: CONVERSATIONS[1],
-        timestamp: new Date('February 06, 2022 11:13')
+        timestamp: new Date('February 6, 2022 11:13:00')
     },
     {
         username: 'Katie',
         img: katie,
         content: 'Hello Dr. Valera! Any idea when the lab results for my mother\'s x-rays will come in? Should I call you to discuss them if I have questions?',
         conversation: CONVERSATIONS[1],
-        timestamp: new Date('February 08, 2022 06:02')
+        timestamp: new Date('February 8, 2022 06:02:00')
     },
     {
         username: 'Katie',
         img: katie,
         content: 'Thanks Dr. Valera! I appreciate your efforts and the care provided to my mother!',
         conversation: CONVERSATIONS[1],
-        timestamp: new Date('February 08, 2022 08:28')
+        timestamp: new Date('February 8, 2022 08:28:00')
     },
     {
         username: 'Dr. Ortega',
         img: ortega,
         content: 'You\'re welcome, Mrs. Wang! Stay healthy!',
         conversation: CONVERSATIONS[0],
-        timestamp: new Date('February 06, 2022 11:15')
+        timestamp: new Date('February 6, 2022 11:15:00')
     },
     {
         username: 'Dr. Ortega',
         img: ortega,
         content: 'Hello Mrs. Wang! I\'ve updated your profile with doctors notes and information about your prescribed medications. Take care of yourself!',
         conversation: CONVERSATIONS[0],
-        timestamp: new Date('February 17, 2022 13:41')
+        timestamp: new Date('February 17, 2022 13:41:00')
     },
     {
         username: 'Dr. Valera',
         img: valera,
         content: 'Good morning, Mrs. Wang! Thanks for reaching out, I’m happy to assist you. Healio’s web portal should have all the needed information and it\'s perfectly fine to continue taking the pain killers. Let me know if you have anymore questions!',
         conversation: CONVERSATIONS[1],
-        timestamp: new Date('February 06, 2022 11:14')
+        timestamp: new Date('February 6, 2022 11:14:00')
     },
     {
         username: 'Dr. Valera',
         img: valera,
         content: 'Hello Mrs. Wang! Your mother\'s x-rays should be sent and uploaded on the patient portal shortly. Do call me if there are any questions. Stay safe!',
         conversation: CONVERSATIONS[1],
-        timestamp: new Date('February 08, 2022 08:20')
+        timestamp: new Date('February 8, 2022 08:20:00')
     }
 ];
 
@@ -167,23 +167,61 @@ function OneMessage(props) {
     let messageStyling;
     let imgStyling;
 
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    const monthIndex = message.timestamp.getMonth();
+    const day = message.timestamp.getDate();
+    const year = message.timestamp.getFullYear();
+
+    let fullTimestamp = monthNames[monthIndex] + ' ' + day.toString() + ', ' + year.toString();
+    const currDate = new Date();
+    const currDateTimestamp = monthNames[currDate.getMonth()] + ' ' + currDate.getDate().toString() + ', ' + currDate.getFullYear().toString();
+    if (fullTimestamp === currDateTimestamp) {
+        const hour = message.timestamp.getHours();
+        const minutes = message.timestamp.getMinutes();
+        let hourString;
+        let timePeriod;
+        if (hour >= 12) {
+            if (hour === 12) {
+                hourString = hour.toString();
+            } else {
+                hourString = (hour - 12).toString();
+            }
+            timePeriod = 'PM';
+        } else {
+            if (hour === 0) {
+                hourString = '12';
+            } else {
+                hourString = hour.toString();
+            }
+            timePeriod = 'AM';
+        }
+        fullTimestamp = 'Today at ' + hourString + ':' + minutes + ' ' + timePeriod;
+    }
     // Style message text and image based on current user
     if (currUser.firstName === message.username) {
         messageStyling = 'ml-auto bg-light-green rounded-[15px_15px_0_15px]';
         imgStyling = 'mr-[45px]';
         return (
-            <div className="flex gap-2">
-                <p className={messageStyling + " max-w-[627px] p-[12px] my-[10px]"}>{message.content}</p>
-                <img className={imgStyling + " rounded-full inline w-10 h-10 self-end"} src={message.img} />
+            <div>
+                <p className="text-dark-grey text-center my-2">{fullTimestamp}</p>
+                <div className="flex gap-2">
+                    <p className={messageStyling + " max-w-[627px] p-[12px] my-[10px]"}>{message.content}</p>
+                    <img className={imgStyling + " rounded-full inline w-10 h-10 self-end"} src={message.img} />
+                </div>
             </div>
         );
     } else {
         messageStyling = 'bg-grey rounded-[15px_15px_15px_0]';
         imgStyling = '';
         return (
-            <div className="flex gap-2">
-                <img className={imgStyling + " rounded-full inline w-10 h-10 self-end"} src={message.img} />
-                <p className={messageStyling + " max-w-[627px] p-[12px] my-[10px]"}>{message.content}</p>
+            <div>
+                <p className="text-dark-grey text-center mt-2">{fullTimestamp}</p>
+                <div className="flex gap-2">
+                    <img className={imgStyling + " rounded-full inline w-10 h-10 self-end"} src={message.img} />
+                    <p className={messageStyling + " max-w-[627px] p-[12px] my-[10px]"}>{message.content}</p>
+                </div>
             </div>
         );
     }
@@ -219,7 +257,8 @@ function OneConversation(props) {
             return <UserInConversation user={user} key={index} />;
         };
     });
-    const relevantUserNames = userNamesInConvo.slice(0, -1);
+    // remove comma and space
+    userNamesInConvo = userNamesInConvo.slice(0, -2);
     const handleConvoClick = () => {
         setConvoCallback(convo);
     };
@@ -229,7 +268,7 @@ function OneConversation(props) {
             <div className="">
                 {userImgArray}
             </div>
-            <p>{relevantUserNames}</p>
+            <p>{userNamesInConvo}</p>
         </div>
     );
 }
