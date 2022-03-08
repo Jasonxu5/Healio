@@ -1,85 +1,96 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faImage, faPaperclip, faFaceSmile } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
 import katie from './img/katie.png';
+import daughter from './img/daughter.png';
+import grandma from './img/grandma.png';
 import ortega from './img/ortega.png';
 import valera from './img/valera.png';
 
+// necessary so that the MESSAGES point to the same CONVERSATION array object
+// if there's a better way to implement this feel free to do so!
 const CONVERSATIONS = [
-    ['Katie', 'Daughter', 'Dr. Ortega'],
-    ['Katie', 'Grandma', 'Dr. Ortega']
+    {
+        participants: ['Katie', 'Daughter', 'Dr. Ortega'],
+        images: [katie, daughter, ortega]
+    },
+    {
+        participants: ['Katie', 'Grandma', 'Dr. Valera'],
+        images: [katie, grandma, valera]
+    }
 ];
 
-// sry idk how to do dates
 const MESSAGES = [
     {
         username: 'Katie',
         img: katie,
         content: 'Just wanted to say that these notes and your care are superb! Thank you for treating my daughter on such a short notice.',
         conversation: CONVERSATIONS[0],
-        timestamp: 1
+        timestamp: new Date('February 06, 2022 11:13')
     },
     {
         username: 'Katie',
         img: katie,
         content: 'Hey Dr. Ortega! I had a question about my recent appointment, where can I find my doctors notes and details on the prescribed medications?',
         conversation: CONVERSATIONS[0],
-        timestamp: 3
+        timestamp: new Date('February 17, 2022 13:34')
     },
     {
         username: 'Katie',
         img: katie,
         content: 'Thanks Dr. Ortega! The medications prescribed seem to be just what I needed!',
         conversation: CONVERSATIONS[0],
-        timestamp: 5
+        timestamp: new Date('February 17, 2022 14:20')
     },
     {
         username: 'Katie',
         img: katie,
         content: 'Dr. Valera, I\'m writing to ask if there is anything that I should bring or keep in mind before my mother\'s upcoming appointment this week? Is it okay if she continues to take pain relievers?',
         conversation: CONVERSATIONS[1],
-        timestamp: 1
+        timestamp: new Date('February 06, 2022 11:13')
     },
     {
         username: 'Katie',
         img: katie,
         content: 'Hello Dr. Valera! Any idea when the lab results for my mother\'s x-rays will come in? Should I call you to discuss them if I have questions?',
         conversation: CONVERSATIONS[1],
-        timestamp: 3
+        timestamp: new Date('February 08, 2022 06:02')
     },
     {
         username: 'Katie',
         img: katie,
         content: 'Thanks Dr. Valera! I appreciate your efforts and the care provided to my mother!',
         conversation: CONVERSATIONS[1],
-        timestamp: 5
+        timestamp: new Date('February 08, 2022 08:28')
     },
     {
         username: 'Dr. Ortega',
         img: ortega,
         content: 'You\'re welcome, Mrs. Wang! Stay healthy!',
         conversation: CONVERSATIONS[0],
-        timestamp: 2
+        timestamp: new Date('February 06, 2022 11:15')
     },
     {
         username: 'Dr. Ortega',
         img: ortega,
         content: 'Hello Mrs. Wang! I\'ve updated your profile with doctors notes and information about your prescribed medications. Take care of yourself!',
         conversation: CONVERSATIONS[0],
-        timestamp: 4
+        timestamp: new Date('February 17, 2022 13:41')
     },
     {
         username: 'Dr. Valera',
         img: valera,
         content: 'Good morning, Mrs. Wang! Thanks for reaching out, I’m happy to assist you. Healio’s web portal should have all the needed information and it\'s perfectly fine to continue taking the pain killers. Let me know if you have anymore questions!',
         conversation: CONVERSATIONS[1],
-        timestamp: 2
+        timestamp: new Date('February 06, 2022 11:14')
     },
     {
         username: 'Dr. Valera',
         img: valera,
         content: 'Hello Mrs. Wang! Your mother\'s x-rays should be sent and uploaded on the patient portal shortly. Do call me if there are any questions. Stay safe!',
         conversation: CONVERSATIONS[1],
-        timestamp: 4
+        timestamp: new Date('February 08, 2022 08:20')
     }
 ];
 
@@ -114,7 +125,7 @@ function ChatBox(props) {
             img: currUser.img,
             content: typedMessage,
             conversation: currConversation,
-            timestamp: 6
+            timestamp: new Date()
         }];
         currMessagesCallback(newMessages);
         setTypedMessage('');
@@ -133,14 +144,19 @@ function ChatBox(props) {
     const convoArray = filterCurrConvo.map((message, index) => {
         return <OneMessage currUser={currUser} message={message} key={index} />;
     });
+    // Label property has css rules that hide it from non-screen readers
     return (
-        <div className="grow pl-[235px]">
-            <div className="flex flex-col overflow-auto">
+        <div className="grow-[2] pl-[235px]">
+            <div className="">
                 {convoArray}
             </div>
-            <form className="" onSubmit={handleTextSubmit}>
+            <form className="flex gap-3 justify-center" onSubmit={handleTextSubmit}>
                 <label className="absolute left-[-100vw]">Type something here...</label>
-                <input value={typedMessage} onChange={handleTextChange} placeholder="Type something here..." aria-label="Send a message" autoComplete="off" />
+                <FontAwesomeIcon className="my-auto text-dark-grey" icon={faImage} size="lg" aria-label="Attach an image here" />
+                <FontAwesomeIcon className="my-auto text-dark-grey" icon={faPaperclip} size="lg" aria-label="Attach a document here" />
+                <input className="p-[12px] w-[75%] rounded-[15px] bg-grey" value={typedMessage}
+                    onChange={handleTextChange} placeholder="Type something here..." aria-label="Send a message" autoComplete="off" />
+                <FontAwesomeIcon className="my-auto text-dark-grey" icon={faFaceSmile} size="lg" aria-label="Send an emoji" />
             </form>
         </div>
     );
@@ -177,25 +193,50 @@ function ChatNav(props) {
     const { currUser, currMessages, setConvoCallback } = props;
 
     const allConvos = [...new Set(currMessages.map(message => message.conversation))];
-    const relevantConvosToUser = allConvos.filter(convo => { return convo.includes(currUser.firstName) })
-    const convoArray = relevantConvosToUser.map((convo, index) => <OneConversation convo={convo} setConvoCallback={setConvoCallback} key={index} />);
-    
+    const relevantConvosToUser = allConvos.filter(convo => { return convo.participants.includes(currUser.firstName) })
+    const convoArray = relevantConvosToUser.map((convo, index) => <OneConversation currUser={currUser} convo={convo} setConvoCallback={setConvoCallback} key={index} />);
 
     return (
-        <div className="ml-0 overflow-auto">
-            <div>
-                {convoArray}
-            </div>
+        <div className="grow flex flex-col">
+            {convoArray}
         </div>
     );
 }
 
 function OneConversation(props) {
-    const { convo, setConvoCallback } = props;
-    const userList = convo.map(user => { return user + ' ' });
+    const { currUser, convo, setConvoCallback } = props;
+    let userNamesInConvo = '';
+    const userArray = convo.images.map((userImg, index) => {
+        let userObj = {};
+        userObj[convo.participants[index]] = userImg;
+        return userObj;
+    });
+    const userImgArray = userArray.map((user, index) => {
+        const userImg = user[Object.keys(user)[0]];
+        if (!_.isEqual(currUser.img, userImg)) {
+            const userName = Object.keys(user)[0];
+            userNamesInConvo += userName + ', ';
+            return <UserInConversation user={user} key={index} />;
+        };
+    });
+    const relevantUserNames = userNamesInConvo.slice(0, -1);
     const handleConvoClick = () => {
         setConvoCallback(convo);
-    }
+    };
 
-    return <p className="hover:cursor-pointer" onClick={handleConvoClick}>{userList}</p>;
+    return (
+        <div className="flex gap-2 ml-[20px] mt-[20px] hover:cursor-pointer" onClick={handleConvoClick}>
+            <div className="">
+                {userImgArray}
+            </div>
+            <p>{relevantUserNames}</p>
+        </div>
+    );
+}
+
+function UserInConversation(props) {
+    const { user } = props;
+    const userName = Object.keys(user)[0];
+    const userImg = user[userName];
+    return <img className="rounded-full inline w-10 h-10 mb-2" src={userImg} alt={userName} />
 }
