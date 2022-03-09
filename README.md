@@ -6,6 +6,7 @@ Our project for the Informatics Capstone is the design and development of a more
 
 - Run `npm i` in the root directory
 - Run `npm run start` in the root directory
+- Run `node www.js` in the server directory to start server
 
 ## Team
 
