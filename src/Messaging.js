@@ -104,7 +104,7 @@ export default function Messaging(props) {
             {messagingHeader}
             <hr />
             <div className="flex divide-x w-[97.5%] h-screen">
-                <ChatBox currUser={currUser} currMessages={currMessages} currMessagesCallback={setCurrMessages} currConversation={currConversation} />
+                <ChatBox currUser={currUser} currMessages={currMessages} currMessagesCallback={setCurrMessages} currConversation={currConversation} setConvoCallback={setCurrConversation} />
                 <ChatNav currUser={currUser} currMessages={currMessages} currConversation={currConversation} setConvoCallback={setCurrConversation} />
             </div>
         </div>
@@ -112,8 +112,14 @@ export default function Messaging(props) {
 }
 
 function ChatBox(props) {
-    const { currUser, currMessages, currMessagesCallback, currConversation } = props;
+    const { currUser, currMessages, currMessagesCallback, currConversation, setConvoCallback } = props;
     const [typedMessage, setTypedMessage] = useState('');
+
+    if (!currConversation.participants.includes(currUser.firstName)) {
+        const allConvos = [...new Set(currMessages.map(message => message.conversation))];
+        const relevantConvosToUser = allConvos.filter(convo => { return convo.participants.includes(currUser.firstName) });
+        setConvoCallback(relevantConvosToUser[0]);
+    }
 
     // Scrolling hook that activates when a message is sent using a dummy div element
     const ref = useRef();
@@ -269,7 +275,7 @@ function OneConversation(props) {
         if (!_.isEqual(currUser.img, userImg)) {
             const userName = Object.keys(user)[0];
             userNamesInConvo += userName + ', ';
-            return <UserInConversation user={user} key={index} />;
+            return <UserInConversation user={user} index={index} key={index} />;
         };
     });
     // remove comma and space
@@ -289,8 +295,12 @@ function OneConversation(props) {
 }
 
 function UserInConversation(props) {
-    const { user } = props;
+    const { user, index } = props;
     const userName = Object.keys(user)[0];
     const userImg = user[userName];
-    return <img className="rounded-full inline w-10 h-10 mb-2" src={userImg} alt={userName} />
+    let overlapStyle = '';
+    if (index > 1) {
+        overlapStyle = ' relative left-[-10px]';
+    }
+    return <img className={'rounded-full inline w-10 h-10 mb-2' + overlapStyle} src={userImg} alt={userName} />
 }
