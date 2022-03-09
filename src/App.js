@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 
@@ -10,7 +10,7 @@ import Health from './Health.js';
 import Messaging from './Messaging.js';
 import PlaceHolder from './Template.js';
 
-import LandingHeader from './LandingHeader.js';
+import Landing from './Landing.js';
 import Login from './Login.js';
 
 import katie from './img/katie.png'; // profile picture
@@ -114,7 +114,6 @@ function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [data, setData] = useState("");
   const [currUser, setCurrUser] = useState(FAMILY_INFO[0]);
-
   useEffect(() => {
     fetch('/api')
       .then((res) => res.json())
@@ -148,6 +147,13 @@ function App() {
 
   console.log(data)
 
+  // Scroll lock on messages
+  if (useLocation().pathname === '/messages') {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = '';
+  }
+
   // Headers for each page, not sure if there's a better way to do this
   const homeHeader = <Header title={'Overview'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
   const messagingHeader = <Header title={'Messaging'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
@@ -176,7 +182,7 @@ function App() {
     return (
       <div>
         <Routes>
-          <Route exact path="/" element={<LandingHeader />} />
+          <Route exact path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>

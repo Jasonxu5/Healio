@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import landingImage from './img/landingImage.svg';
 
-export default function LandingHeader() {
+export default function Landing() {
     return (
         <div>
             <div className="flex mx-10 my-4 pb-4">

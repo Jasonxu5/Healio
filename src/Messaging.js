@@ -103,7 +103,7 @@ export default function Messaging(props) {
         <div>
             {messagingHeader}
             <hr />
-            <div className="flex divide-x w-[97.5%]">
+            <div className="flex divide-x w-[97.5%] h-screen">
                 <ChatBox currUser={currUser} currMessages={currMessages} currMessagesCallback={setCurrMessages} currConversation={currConversation} />
                 <ChatNav currUser={currUser} currMessages={currMessages} currConversation={currConversation} setConvoCallback={setCurrConversation} />
             </div>
@@ -146,8 +146,8 @@ function ChatBox(props) {
     });
     // Label property has css rules that hide it from non-screen readers
     return (
-        <div className="grow-[2] pl-[235px]">
-            <div className="">
+        <div className="grow-[2] pl-[235px] overflow-hidden">
+            <div className="h-[75%] overflow-scroll">
                 {convoArray}
             </div>
             <form className="flex gap-3 justify-center" onSubmit={handleTextSubmit}>
@@ -177,10 +177,13 @@ function OneMessage(props) {
     let fullTimestamp = monthNames[monthIndex] + ' ' + day.toString() + ', ' + year.toString();
     const currDate = new Date();
     const currDateTimestamp = monthNames[currDate.getMonth()] + ' ' + currDate.getDate().toString() + ', ' + currDate.getFullYear().toString();
+
+    // Today at ...
     if (fullTimestamp === currDateTimestamp) {
         const hour = message.timestamp.getHours();
         const minutes = message.timestamp.getMinutes();
         let hourString;
+        let minutesString;
         let timePeriod;
         if (hour >= 12) {
             if (hour === 12) {
@@ -197,7 +200,12 @@ function OneMessage(props) {
             }
             timePeriod = 'AM';
         }
-        fullTimestamp = 'Today at ' + hourString + ':' + minutes + ' ' + timePeriod;
+        if (minutes < 10) {
+            minutesString = '0' + minutes.toString();
+        } else {
+            minutesString = minutes.toString();
+        }
+        fullTimestamp = 'Today at ' + hourString + ':' + minutesString + ' ' + timePeriod;
     }
     // Style message text and image based on current user
     if (currUser.firstName === message.username) {
@@ -235,7 +243,7 @@ function ChatNav(props) {
     const convoArray = relevantConvosToUser.map((convo, index) => <OneConversation currUser={currUser} convo={convo} setConvoCallback={setConvoCallback} key={index} />);
 
     return (
-        <div className="grow flex flex-col">
+        <div className="grow flex flex-col overflow-hidden">
             {convoArray}
         </div>
     );
@@ -264,7 +272,7 @@ function OneConversation(props) {
     };
 
     return (
-        <div className="flex gap-2 ml-[20px] mt-[20px] hover:cursor-pointer" onClick={handleConvoClick}>
+        <div className="flex gap-2 ml-[20px] mt-[20px] hover:cursor-pointer overflow-scroll" onClick={handleConvoClick}>
             <div className="">
                 {userImgArray}
             </div>
