@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faPaperclip, faFaceSmile } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
@@ -115,6 +115,12 @@ function ChatBox(props) {
     const { currUser, currMessages, currMessagesCallback, currConversation } = props;
     const [typedMessage, setTypedMessage] = useState('');
 
+    // Scrolling hook that activates when a message is sent using a dummy div element
+    const ref = useRef();
+    useEffect(() => {
+        ref.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+    }, [currMessages]);
+
     const handleTextChange = (event) => {
         setTypedMessage(event.target.value);
     };
@@ -144,11 +150,12 @@ function ChatBox(props) {
     const convoArray = filterCurrConvo.map((message, index) => {
         return <OneMessage currUser={currUser} message={message} key={index} />;
     });
-    // Label property has css rules that hide it from non-screen readers
+    // Label element has css rules that hide it from non-screen readers
     return (
-        <div className="grow-[2] pl-[235px] overflow-hidden">
+        <div className="grow-[2] pl-[235px]">
             <div className="h-[75%] overflow-scroll">
                 {convoArray}
+                <div ref={ref} />
             </div>
             <form className="flex gap-3 justify-center" onSubmit={handleTextSubmit}>
                 <label className="absolute left-[-100vw]">Type something here...</label>
@@ -243,7 +250,7 @@ function ChatNav(props) {
     const convoArray = relevantConvosToUser.map((convo, index) => <OneConversation currUser={currUser} convo={convo} setConvoCallback={setConvoCallback} key={index} />);
 
     return (
-        <div className="grow flex flex-col overflow-hidden">
+        <div className="grow flex flex-col">
             {convoArray}
         </div>
     );
