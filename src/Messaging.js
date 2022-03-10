@@ -256,7 +256,7 @@ function ChatNav(props) {
     const convoArray = relevantConvosToUser.map((convo, index) => <OneConversation currUser={currUser} convo={convo} setConvoCallback={setConvoCallback} key={index} />);
 
     return (
-        <div className="grow flex flex-col">
+        <div className="grow flex flex-col overflow-scroll">
             {convoArray}
         </div>
     );
@@ -285,7 +285,7 @@ function OneConversation(props) {
     };
 
     return (
-        <div className="flex gap-2 ml-[20px] mt-[20px] hover:cursor-pointer overflow-scroll" onClick={handleConvoClick}>
+        <div className="flex gap-2 ml-[20px] mt-[20px] hover:cursor-pointer" onClick={handleConvoClick}>
             <div className="">
                 {userImgArray}
             </div>
