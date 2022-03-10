@@ -28,7 +28,7 @@ export default function Landing() {
                         <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 w-[40%] hover:cursor-pointer">Join Healio</p>
                     </Link>
                 </div>
-                <img className="ml-auto h-[88vh]" src={landingImage} alt="Patients and Doctor Clipart" />
+                <img className="ml-auto h-[90vh]" src={landingImage} alt="Patients and Doctor Clipart" />
             </div>
         </div>
     );
