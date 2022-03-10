@@ -65,7 +65,7 @@ function CardHasImage(props) {
                 <div className="mt-6 text-dark-blue">
                     <Link className="absolute p-2 font-semibold bg-dark-green rounded-lg" to='/appointments'>Schedule Appointment {'>'}</Link>
                 </div>
-                <img className="absolute top-[-60px] right-0" src={doctor} alt="Doctor Clip Art" />
+                <img className="absolute top-[-79px] h-[14rem] right-0" src={doctor} alt="Doctor Clip Art" />
             </div>
         );
     } else {

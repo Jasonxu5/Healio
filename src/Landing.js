@@ -17,7 +17,7 @@ export default function Landing() {
                 </div>
             </div>
             <div className="bg-pale-blue">
-                <div className="flex flex-col gap-4 absolute mx-10 mt-[300px]">
+                <div className="flex flex-col gap-4 absolute mx-10 mt-[200px]">
                     <h2 className="font-heading text-5xl font-bold">Healio</h2>
                     <div className="text-2xl">
                         <p>Son, Daughter, Parent, <p className="text-light-blue inline">You.</p></p>
@@ -28,7 +28,7 @@ export default function Landing() {
                         <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 w-[38%] hover:cursor-pointer">Join Healio</p>
                     </Link>
                 </div>
-                <img className="ml-auto" src={landingImage} alt="Patients and Doctor Clipart" />
+                <img className="ml-auto h-[590px]" src={landingImage} alt="Patients and Doctor Clipart" />
             </div>
         </div>
     );
