@@ -159,7 +159,7 @@ function ChatBox(props) {
     // Label element has css rules that hide it from non-screen readers
     return (
         <div className="grow-[2] pl-[235px]">
-            <div className="h-[75%] overflow-scroll">
+            <div className="h-[75%] overflow-y-auto">
                 {convoArray}
                 <div ref={ref} />
             </div>
@@ -256,7 +256,7 @@ function ChatNav(props) {
     const convoArray = relevantConvosToUser.map((convo, index) => <OneConversation currUser={currUser} convo={convo} setConvoCallback={setConvoCallback} key={index} />);
 
     return (
-        <div className="grow flex flex-col overflow-scroll">
+        <div className="grow flex flex-col overflow-y-auto">
             {convoArray}
         </div>
     );
