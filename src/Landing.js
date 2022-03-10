@@ -6,7 +6,7 @@ import landingImage from './img/landingImage.svg';
 export default function Landing() {
     return (
         <div>
-            <div className="flex mx-10 my-4 pb-4">
+            <div className="flex mx-10 mt-4 pb-4">
                 <h1 className="font-heading text-3xl font-bold mt-2">Healio</h1>
                 <div className="flex gap-10 text-xl my-1 ml-auto">
                     <p className="mt-2">Contact</p>
@@ -28,7 +28,7 @@ export default function Landing() {
                         <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 w-[40%] hover:cursor-pointer">Join Healio</p>
                     </Link>
                 </div>
-                <img className="ml-auto h-[100vh]" src={landingImage} alt="Patients and Doctor Clipart" />
+                <img className="ml-auto h-[88vh]" src={landingImage} alt="Patients and Doctor Clipart" />
             </div>
         </div>
     );
