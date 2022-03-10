@@ -25,10 +25,10 @@ export default function Landing() {
                         <p>medical information today.</p>
                     </div>
                     <Link to="/login">
-                        <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 w-[38%] hover:cursor-pointer">Join Healio</p>
+                        <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 w-[40%] hover:cursor-pointer">Join Healio</p>
                     </Link>
                 </div>
-                <img className="ml-auto h-[590px]" src={landingImage} alt="Patients and Doctor Clipart" />
+                <img className="ml-auto h-[100vh]" src={landingImage} alt="Patients and Doctor Clipart" />
             </div>
         </div>
     );
