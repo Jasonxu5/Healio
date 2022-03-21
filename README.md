@@ -4,8 +4,8 @@ Our project for the Informatics Capstone is the design and development of a more
 
 ## Build and Deploy
 
-- Run `npm i` in the root directory
-- Run `npm run start` in the root directory
+- Run `npm i` in the client directory
+- Run `npm run start` in the client directory
 - Run `node www.js` in the server directory to start server
 
 ## Team
