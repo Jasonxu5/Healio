@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faUserPlus, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 
@@ -36,12 +36,13 @@ export default function Header(props) {
         familyInfoArray.push(AddAnotherUser());
     }
 
+    // Need to flex container for Font Awesome Icon
     return (
         <header className="relative py-8 pl-[235px]">
             <p className="font-heading text-3xl">{title}</p>
-            <div className="absolute bottom-[20px] right-[30px] hover:cursor-pointer" onClick={() => setMenu(true)}>
-                <img className="rounded-full inline w-10 h-10 mb-2" src={currUser.img} alt={fullName} />
-                <p className="inline text-2xl ml-2">{fullName}</p>
+            <div className="absolute flex bottom-[20px] right-[30px] hover:cursor-pointer bg-light-green rounded-full mb-2 pr-3" onClick={() => setMenu(true)}>
+                <img className="rounded-full inline w-12 h-12" src={currUser.img} alt={fullName} />
+                <FontAwesomeIcon className="self-center text-2xl ml-3" icon={faAngleDown} size="lg" aria-label="Down arrow for choosing a user in the family" />
                 {isMenuOpen ? MenuPopup(ref, fullName, currUser.img, familyInfoArray) : null}
             </div>
         </header>
@@ -78,7 +79,7 @@ function MenuPopup(ref, fullName, img, familyInfoArray) {
     }
 
     return (
-        <div className="absolute grid gap-2 right-0 w-[424px] p-6 border-2 border-black bg-[#FFFFFF] shadow-[4px_4px_4px_rgba(0,0,0,0.25)] z-[100] rounded-[15px] cursor-auto" ref={ref}>
+        <div className="absolute grid gap-2 right-0 top-[50px] w-[424px] p-6 border-2 border-black bg-[#FFFFFF] shadow-[4px_4px_4px_rgba(0,0,0,0.25)] z-[100] rounded-[15px] cursor-auto" ref={ref}>
             <div>
                 <img className="rounded-full w-20 h-20 m-auto" src={img} alt={fullName} />
                 <p className="text-2xl text-center">{fullName}</p>
