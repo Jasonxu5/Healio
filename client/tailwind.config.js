@@ -3,6 +3,9 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
+    screens: {
+      'sm': { 'max': '768px' }
+    },
     extend: {},
     fontFamily: {
       sans: ['Lato', 'sans-serif'],
