@@ -1,16 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import landingImage from './img/landingImage.svg';
 
 export default function Landing() {
+    const [isMenuOpen, setMenuOpen] = useState(false);
+    const ref = useRef();
+
+    // Set up clicking event for mobile hamburger menu
+    useEffect(() => {
+        const checkIfClickedOutside = e => {
+            if (isMenuOpen && ref.current && !ref.current.contains(e.target)) {
+                setMenuOpen(false);
+            }
+        }
+        document.addEventListener('mousedown', checkIfClickedOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', checkIfClickedOutside);
+        }
+    }, [isMenuOpen]);
+    console.log(isMenuOpen);
+    const openNav = (<div className="absolute right-[35px] mt-2 flex gap-5 text-xl p-5 bg-white rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" ref={ref}>
+        <p className="mt-2">Contact</p>
+        <p className="mt-2">About</p>
+        <Link to="/login">
+            <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 hover:cursor-pointer">Login</p>
+        </Link>
+    </div>);
     return (
         <div className="flex flex-col">
             <div className="flex mx-10 mt-4 pb-4">
                 <h1 className="font-heading text-3xl font-bold mt-2">Healio</h1>
-                <div className="sm:inline my-4 ml-auto hidden">
-                    <FontAwesomeIcon className="text-2xl ml-3 cursor-pointer" icon={faBars} size="lg" aria-label="Hamburger menu for extra icons" />
+                <div className="sm:inline my-3 ml-auto hidden">
+                    <FontAwesomeIcon className="text-3xl ml-3 cursor-pointer hover:animate-wiggle" onClick={() => { setMenuOpen(true) }} icon={faBars} size="lg" aria-label="Hamburger menu for extra icons" />
+                    {isMenuOpen ? openNav : null}
                 </div>
                 <div className="sm:hidden flex gap-10 text-xl my-1 ml-auto">
                     <p className="mt-2">Contact</p>
