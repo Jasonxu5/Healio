@@ -21,7 +21,6 @@ export default function Landing() {
             document.removeEventListener('mousedown', checkIfClickedOutside);
         }
     }, [isMenuOpen]);
-    console.log(isMenuOpen);
     const openNav = (<div className="absolute right-[35px] mt-2 flex gap-5 text-xl p-5 bg-white rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" ref={ref}>
         <p className="mt-2">Contact</p>
         <p className="mt-2">About</p>
@@ -35,15 +34,9 @@ export default function Landing() {
                 <h1 className="font-heading text-3xl font-bold mt-2">Healio</h1>
                 <div className="sm:inline my-3 ml-auto hidden">
                     <FontAwesomeIcon className="text-3xl ml-3 cursor-pointer hover:animate-wiggle" onClick={() => { setMenuOpen(true) }} icon={faBars} size="lg" aria-label="Hamburger menu for extra icons" />
-                    {isMenuOpen ? openNav : null}
+                    {isMenuOpen ? NavBar("absolute right-[35px] mt-2 flex gap-5 text-xl p-5 bg-white rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]", ref) : null}
                 </div>
-                <div className="sm:hidden flex gap-10 text-xl my-1 ml-auto">
-                    <p className="mt-2">Contact</p>
-                    <p className="mt-2">About</p>
-                    <Link to="/login">
-                        <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 hover:cursor-pointer">Login</p>
-                    </Link>
-                </div>
+                {NavBar("sm:hidden flex gap-10 text-xl my-1 ml-auto", null)}
             </div>
             <div className="sm:mx-auto sm:w-full bg-pale-blue h-[90vh]">
                 <img className="sm:hidden absolute right-0 ml-auto h-[90vh]" src={landingImage} alt="Patients and Doctor Clipart" />
@@ -61,4 +54,16 @@ export default function Landing() {
             </div>
         </div>
     );
+}
+
+function NavBar(css, ref) {
+    return (
+        <div className={css} ref={ref}>
+            <p className="mt-2">Contact</p>
+            <p className="mt-2">About</p>
+            <Link to="/login">
+                <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 hover:cursor-pointer">Login</p>
+            </Link>
+        </div>
+    )
 }
