@@ -21,13 +21,7 @@ export default function Landing() {
             document.removeEventListener('mousedown', checkIfClickedOutside);
         }
     }, [isMenuOpen]);
-    const openNav = (<div className="absolute right-[35px] mt-2 flex gap-5 text-xl p-5 bg-white rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" ref={ref}>
-        <p className="mt-2">Contact</p>
-        <p className="mt-2">About</p>
-        <Link to="/login">
-            <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 hover:cursor-pointer">Login</p>
-        </Link>
-    </div>);
+
     return (
         <div className="flex flex-col">
             <div className="flex mx-10 mt-4 pb-4">
