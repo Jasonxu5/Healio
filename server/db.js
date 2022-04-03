@@ -10,7 +10,7 @@ async function dbConnect() {
   console.log("connected to the database!")
 
   const UserSchema = new mongoose.Schema({
-    username: String,
+    user_id: String,
     type: String
   })
 

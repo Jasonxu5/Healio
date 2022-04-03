@@ -18,6 +18,8 @@ import daughter from './img/daughter.png';
 import grandma from './img/grandma.png';
 import { FirebaseError } from 'firebase/app';
 
+const apiEndpoint = "http://localhost:5000/api/v1/"
+
 // i'm sorry but i can't parse images in json files
 const FAMILY_INFO = [
   {
@@ -114,18 +116,35 @@ function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [data, setData] = useState("");
   const [currUser, setCurrUser] = useState(FAMILY_INFO[0]);
+
   useEffect(() => {
-    fetch('/api')
-      .then((res) => res.json())
-      .then((data) => setData(data.message))
-      .catch((error) => { console.log(error) });
+    // fetch('/api')
+    //   .then((res) => res.json())
+    //   .then((data) => setData(data.message))
+    //   .catch((error) => { console.log(error) });
 
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     } else {
       firebase.app();
     }
-
+    const getUser = async () => {
+      try {
+        const token = await firebase.auth().currentUser.getIdToken(true);
+        // console.log(firebase.auth.currentUser);
+        const req = await fetch(apiEndpoint + "user", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(req);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getUser();
     const authUnregisterFunction = firebase.auth().onAuthStateChanged((firebaseUser) => {
       if (firebaseUser) {
         setIsSignedIn(true);
@@ -145,7 +164,7 @@ function App() {
     }
   }, [isSignedIn])
 
-  console.log(data)
+  // console.log(data)
 
   // Scroll lock on messages
   if (useLocation().pathname === '/messages') {
