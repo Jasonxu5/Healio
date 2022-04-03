@@ -29,10 +29,6 @@ export default function NavBar() {
                     <FontAwesomeIcon className="mr-2" icon={faLightbulb} size="lg" aria-label="Resources" />
                     <p className="inline ml-2">Resources</p>
                 </NavLink>
-                <NavLink to="/billing" className={({ isActive }) => isActive ? 'py-2 pl-3 pr-24 bg-dark-green font-bold' : 'py-2 px-3'}>
-                    <FontAwesomeIcon className="mr-2" icon={faCircleDollarToSlot} size="lg" aria-label="Billing" />
-                    <p className="inline ml-1">Billing</p>
-                </NavLink>
                 <NavLink to="/profile" className={({ isActive }) => isActive ? 'py-2 pl-3 pr-24 bg-dark-green font-bold' : 'py-2 px-3'}>
                     <FontAwesomeIcon className="mr-2" icon={faUser} size="lg" aria-label="Profile" />
                     <p className="inline ml-2">Profile</p>

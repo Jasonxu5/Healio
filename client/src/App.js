@@ -187,7 +187,6 @@ function App() {
           <Route path="/appointments" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/messages" element={<Messaging currUser={currUser} messagingHeader={messagingHeader} />} />
           <Route path="/resources" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
-          <Route path="/billing" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/profile" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="*" element={<Navigate replace to="/home" />} />
         </Routes>
