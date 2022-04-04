@@ -174,7 +174,7 @@ function App() {
   }
 
   // Headers for each page, not sure if there's a better way to do this
-  const homeHeader = <Header title={'Overview'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
+  const healthHeader = <Header title={'Overview'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
   const messagingHeader = <Header title={'Messaging'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
   const templateHeader = <Header title={'To be worked on ...'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
 
@@ -182,12 +182,24 @@ function App() {
     return (
       <div className="bg-gradient-to-br from-pale-blue to-white">
         <Routes>
-          <Route path="/home" element={<Health currUser={currUser} homeHeader={homeHeader} />} />
+          <Route path="/health" element={<Health currUser={currUser} healthHeader={healthHeader} />} />
+          <Route path="/health/overview" element={<Health currUser={currUser} healthHeader={healthHeader} />} />
+          <Route path="/health/lab_results" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
+          <Route path="/health/medications" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
+          <Route path="/health/vaccines" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
+          <Route path="/health/allergies" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
+          <Route path="/health/surgical_history" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/appointments" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
+          <Route path="/appointments/upcoming_appointments" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
+          <Route path="/appointments/schedule_appointments" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
+          <Route path="/appointments/past_appointments" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/messages" element={<Messaging currUser={currUser} messagingHeader={messagingHeader} />} />
           <Route path="/resources" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
+          <Route path="/resources/find_hospitals" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
+          <Route path="/resources/find_providers" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
+          <Route path="/resources/educational_providers" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/profile" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
-          <Route path="*" element={<Navigate replace to="/home" />} />
+          <Route path="*" element={<Navigate replace to="/health" />} />
         </Routes>
         <NavBar />
         <p>{!data ? "" : data}</p>

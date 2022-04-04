@@ -7,7 +7,7 @@ import 'firebase/compat/auth';
 
 const CATEGORIES = [
     {
-        queryLink: '/home',
+        queryLink: '/health',
         icon: faSquarePlus,
         iconSize: 'lg',
         name: 'Health',
@@ -96,10 +96,10 @@ function Category(props) {
     const [isMouseHovered, setIsMouseHovered] = useState(false);
 
     const subCategories = hoverOptions.map((option, index) => {
-        return <SubCategory subCategoryName={option} key={index} />
+        return <SubCategory subCategoryName={option} categoryQueryLink={queryLink} key={index} />
     });
     return (
-        <div className={'relative py-2 pl-3 hover:cursor-pointer' + (isCategorySelected ? ' bg-dark-green font-bold text-dark-blue' : '')}
+        <div className={'relative py-2 pl-3 hover:cursor-pointer' + (isMouseHovered || isCategorySelected ? ' bg-dark-green font-bold text-dark-blue' : '')}
             onMouseEnter={() => setIsMouseHovered(true)}
             onMouseLeave={() => setIsMouseHovered(false)}>
             <NavLink to={queryLink} className={({ isActive }) => isActive ? setIsCategorySelected(true) : setIsCategorySelected(false)}>
@@ -112,11 +112,12 @@ function Category(props) {
 }
 
 function SubCategory(props) {
-    const { subCategoryName } = props;
+    const { subCategoryName, categoryQueryLink } = props;
+    const queryLink = categoryQueryLink + '/' + subCategoryName.toLowerCase().split(' ').join('_');
     return (
-        <div className="">
+        <NavLink to={queryLink} className="" >
             {subCategoryName}
-        </div>
+        </NavLink>
     )
 }
 
