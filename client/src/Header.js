@@ -89,7 +89,7 @@ function MenuPopup(ref, fullName, img, familyInfoArray) {
                 {familyInfoArray}
             </div>
             <hr className="border-grey" />
-            <Link to="/" className="mx-auto py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer" onClick={handleSignOut}>
+            <Link to="/" className="mx-auto py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={handleSignOut}>
                 <p>Log Out</p>
             </Link>
         </div>

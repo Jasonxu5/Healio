@@ -99,23 +99,29 @@ function Category(props) {
         return <SubCategory subCategoryName={option} categoryQueryLink={queryLink} key={index} />
     });
     return (
-        <div className={'relative py-2 pl-3 hover:cursor-pointer' + (isMouseHovered || isCategorySelected ? ' bg-dark-green font-bold text-dark-blue' : '')}
+        <NavLink to={queryLink} className={'relative' +
+            (isMouseHovered || isCategorySelected ? ' bg-dark-green font-bold text-dark-blue' : '') +
+            (({ isActive }) => isActive ? setIsCategorySelected(true) : setIsCategorySelected(false))}
             onMouseEnter={() => setIsMouseHovered(true)}
             onMouseLeave={() => setIsMouseHovered(false)}>
-            <NavLink to={queryLink} className={({ isActive }) => isActive ? setIsCategorySelected(true) : setIsCategorySelected(false)}>
+            <div className="py-2 pl-3">
                 <FontAwesomeIcon className="mr-2" icon={icon} size={iconSize} aria-label={categoryName} />
                 <p className="inline ml-2">{categoryName} </p>
-            </NavLink>
+            </div>
             {isMouseHovered && hoverOptions.length !== 0 ? <SubCategoryPopup subCategories={subCategories} /> : ''}
-        </div>
+        </NavLink>
     );
 }
 
 function SubCategory(props) {
     const { subCategoryName, categoryQueryLink } = props;
+    const [isMouseHovered, setIsMouseHovered] = useState(false);
+
     const queryLink = categoryQueryLink + '/' + subCategoryName.toLowerCase().split(' ').join('_');
     return (
-        <NavLink to={queryLink} className="" >
+        <NavLink to={queryLink} className={isMouseHovered ? 'font-bold bg-light-blue pl-4 py-2' : 'pl-4 py-2'}
+            onMouseEnter={() => setIsMouseHovered(true)}
+            onMouseLeave={() => setIsMouseHovered(false)}>
             {subCategoryName}
         </NavLink>
     )
@@ -124,16 +130,36 @@ function SubCategory(props) {
 function SubCategoryPopup(props) {
     const { subCategories } = props;
     return (
-        <div className="absolute left-[192px] top-0 w-[200px] border-2 border-black pl-4 py-2 bg-white flex flex-col gap-2 z-10">
+        <div className="absolute left-[192px] top-0 w-[200px] border-2 border-black bg-white flex flex-col">
             {subCategories}
         </div>
     );
 }
 /*
-SUBCATEGORY
+NEW (clickable space, but active pages aren't highlighted)
 
-- user hovers over category
-- category then displays subcategories
-- user can choose to click category or subcategory
-- when user mouses out, the subcategories close
+<NavLink to={queryLink} className={'relative' +
+            (isMouseHovered || isCategorySelected ? ' bg-dark-green font-bold text-dark-blue' : '') +
+            (({ isActive }) => isActive ? setIsCategorySelected(true) : setIsCategorySelected(false))}
+            onMouseEnter={() => setIsMouseHovered(true)}
+            onMouseLeave={() => setIsMouseHovered(false)}>
+            <div className="py-2 pl-3">
+                <FontAwesomeIcon className="mr-2" icon={icon} size={iconSize} aria-label={categoryName} />
+                <p className="inline ml-2">{categoryName} </p>
+            </div>
+            {isMouseHovered && hoverOptions.length !== 0 ? <SubCategoryPopup subCategories={subCategories} /> : ''}
+        </NavLink>
+
+
+OLD (not clickable space, but active pages are highlighted)
+
+<div className={'relative py-2 pl-3 hover:cursor-pointer' + (isMouseHovered || isCategorySelected ? ' bg-dark-green font-bold text-dark-blue' : '')}
+            onMouseEnter={() => setIsMouseHovered(true)}
+            onMouseLeave={() => setIsMouseHovered(false)}>
+            <NavLink to={queryLink} className={({ isActive }) => isActive ? setIsCategorySelected(true) : setIsCategorySelected(false)}>
+                <FontAwesomeIcon className="mr-2" icon={icon} size={iconSize} aria-label={categoryName} />
+                <p className="inline ml-2">{categoryName} </p>
+            </NavLink>
+            {isMouseHovered && hoverOptions.length !== 0 ? <SubCategoryPopup subCategories={subCategories} /> : ''}
+        </div>
 */
