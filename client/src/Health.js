@@ -15,7 +15,7 @@ const HEALTH_CARD_TITLES = [
 export default function Health(props) {
     const { currUser, healthHeader} = props;
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col pl-[235px]">
             {healthHeader}
             <HealthCards currUser={currUser} />
         </div>
@@ -49,7 +49,7 @@ function HealthCards(props) {
         return <SingleHealthCard title={cardTitle} body={body} count={index} currUserFirstName={currUser.firstName} key={index} />;
     });
     return (
-        <div className="grid grid-cols-2 pl-[235px] gap-4">
+        <div className="grid grid-cols-2 gap-4">
             {healthInfoCards}
         </div>
     );

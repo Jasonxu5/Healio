@@ -38,7 +38,7 @@ export default function Header(props) {
 
     // Need to flex container for Font Awesome Icon
     return (
-        <header className="relative py-8 pl-[235px]">
+        <header className="relative py-8">
             <p className="font-heading text-3xl">{title}</p>
             <div className="absolute flex bottom-[20px] right-[30px] hover:cursor-pointer bg-light-green rounded-full mb-2 pr-3" onClick={() => setMenu(true)}>
                 <img className="rounded-full inline w-12 h-12" src={currUser.img} alt={fullName} />

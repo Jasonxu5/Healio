@@ -7,6 +7,7 @@ import NavBar from './NavBar.js';
 import Header from './Header.js';
 
 import Health from './Health.js';
+import PatientInfo from './PatientInfo.js';
 import Messaging from './Messaging.js';
 import PlaceHolder from './Template.js';
 
@@ -175,17 +176,21 @@ function App() {
 
   // Headers for each page, not sure if there's a better way to do this
   const healthHeader = <Header title={'Overview'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
-  const messagingHeader = <Header title={'Messaging'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
-  const templateHeader = <Header title={'To be worked on ...'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
+  const labResultsHeader = <Header title={'Lab Results'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />
+  const medicationsHeader = <Header title={'Medications'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />
 
+  const messagingHeader = <Header title={'Messaging'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
+
+  const templateHeader = <Header title={'To be worked on ...'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
+  
   if (isSignedIn) {
     return (
       <div className="bg-gradient-to-br from-pale-blue to-white">
         <Routes>
           <Route path="/health" element={<Health currUser={currUser} healthHeader={healthHeader} />} />
           <Route path="/health/overview" element={<Health currUser={currUser} healthHeader={healthHeader} />} />
-          <Route path="/health/lab_results" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
-          <Route path="/health/medications" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
+          <Route path="/health/lab_results" element={<PatientInfo currUser={currUser} infoHeader={labResultsHeader} />} />
+          <Route path="/health/medications" element={<PatientInfo currUser={currUser} infoHeader={medicationsHeader} />} />
           <Route path="/health/vaccines" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/health/allergies" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/health/surgical_history" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />

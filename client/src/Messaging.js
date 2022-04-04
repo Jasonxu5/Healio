@@ -101,9 +101,11 @@ export default function Messaging(props) {
 
     return (
         <div>
-            {messagingHeader}
-            <hr />
-            <div className="flex divide-x w-[97.5%] h-screen">
+            <div className="pl-[235px]">
+                {messagingHeader}
+            </div>
+            <hr className="pl-0" />
+            <div className="flex divide-x w-[97.5%] h-screen pl-[235px]">
                 <ChatBox currUser={currUser} currMessages={currMessages} currMessagesCallback={setCurrMessages} currConversation={currConversation} setConvoCallback={setCurrConversation} />
                 <ChatNav currUser={currUser} currMessages={currMessages} currConversation={currConversation} setConvoCallback={setCurrConversation} />
             </div>
@@ -158,7 +160,7 @@ function ChatBox(props) {
     });
     // Label element has css rules that hide it from non-screen readers
     return (
-        <div className="grow-[2] pl-[235px]">
+        <div className="grow-[2]">
             <div className="h-[75%] overflow-y-auto">
                 {convoArray}
                 <div ref={ref} />
