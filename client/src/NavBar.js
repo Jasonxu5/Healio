@@ -106,7 +106,7 @@ function Category(props) {
                 <FontAwesomeIcon className="mr-2" icon={icon} size={iconSize} aria-label={categoryName} />
                 <p className="inline ml-2">{categoryName} </p>
             </NavLink>
-                {isMouseHovered && hoverOptions.length !== 0 ? <SubCategoryPopup subCategories={subCategories} /> : ''}
+            {isMouseHovered && hoverOptions.length !== 0 ? <SubCategoryPopup subCategories={subCategories} /> : ''}
         </div>
     );
 }
