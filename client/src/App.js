@@ -181,7 +181,6 @@ function App() {
   if (isSignedIn) {
     return (
       <div className="bg-gradient-to-br from-pale-blue to-white">
-        <NavBar />
         <Routes>
           <Route path="/home" element={<Health currUser={currUser} homeHeader={homeHeader} />} />
           <Route path="/appointments" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
@@ -190,13 +189,12 @@ function App() {
           <Route path="/profile" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="*" element={<Navigate replace to="/home" />} />
         </Routes>
+        <NavBar />
         <p>{!data ? "" : data}</p>
       </div>
 
     );
   } else {
-    // moved /login to else, because the /login page is only useful for users that are signed out
-    // there was a comma on line 39, removed that and the link worked
     return (
       <div>
         <Routes>
