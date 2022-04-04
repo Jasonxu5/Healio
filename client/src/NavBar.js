@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquarePlus, faCalendarCheck, faMessage, faLightbulb, faUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
@@ -98,18 +98,19 @@ function Category(props) {
     const subCategories = hoverOptions.map((option, index) => {
         return <SubCategory subCategoryName={option} categoryQueryLink={queryLink} key={index} />
     });
+    // div -> NavLink might be a bug later on sry
     return (
-        <NavLink to={queryLink} className={'relative' +
-            (isMouseHovered || isCategorySelected ? ' bg-dark-green font-bold text-dark-blue' : '') +
-            (({ isActive }) => isActive ? setIsCategorySelected(true) : setIsCategorySelected(false))}
+        <div className="relative"
             onMouseEnter={() => setIsMouseHovered(true)}
             onMouseLeave={() => setIsMouseHovered(false)}>
-            <div className="py-2 pl-3">
-                <FontAwesomeIcon className="mr-2" icon={icon} size={iconSize} aria-label={categoryName} />
-                <p className="inline ml-2">{categoryName} </p>
-            </div>
+            <NavLink to={queryLink} className={({ isActive }) => isActive ? setIsCategorySelected(true) : setIsCategorySelected(false)}>
+                <div className={(isMouseHovered || isCategorySelected ? 'bg-dark-green font-bold text-dark-blue ' : '') + 'py-2 pl-3'}>
+                    <FontAwesomeIcon className="mr-2" icon={icon} size={iconSize} aria-label={categoryName} />
+                    <p className="inline ml-2">{categoryName} </p>
+                </div>
+            </NavLink>
             {isMouseHovered && hoverOptions.length !== 0 ? <SubCategoryPopup subCategories={subCategories} /> : ''}
-        </NavLink>
+        </div>
     );
 }
 
@@ -135,31 +136,3 @@ function SubCategoryPopup(props) {
         </div>
     );
 }
-/*
-NEW (clickable space, but active pages aren't highlighted)
-
-<NavLink to={queryLink} className={'relative' +
-            (isMouseHovered || isCategorySelected ? ' bg-dark-green font-bold text-dark-blue' : '') +
-            (({ isActive }) => isActive ? setIsCategorySelected(true) : setIsCategorySelected(false))}
-            onMouseEnter={() => setIsMouseHovered(true)}
-            onMouseLeave={() => setIsMouseHovered(false)}>
-            <div className="py-2 pl-3">
-                <FontAwesomeIcon className="mr-2" icon={icon} size={iconSize} aria-label={categoryName} />
-                <p className="inline ml-2">{categoryName} </p>
-            </div>
-            {isMouseHovered && hoverOptions.length !== 0 ? <SubCategoryPopup subCategories={subCategories} /> : ''}
-        </NavLink>
-
-
-OLD (not clickable space, but active pages are highlighted)
-
-<div className={'relative py-2 pl-3 hover:cursor-pointer' + (isMouseHovered || isCategorySelected ? ' bg-dark-green font-bold text-dark-blue' : '')}
-            onMouseEnter={() => setIsMouseHovered(true)}
-            onMouseLeave={() => setIsMouseHovered(false)}>
-            <NavLink to={queryLink} className={({ isActive }) => isActive ? setIsCategorySelected(true) : setIsCategorySelected(false)}>
-                <FontAwesomeIcon className="mr-2" icon={icon} size={iconSize} aria-label={categoryName} />
-                <p className="inline ml-2">{categoryName} </p>
-            </NavLink>
-            {isMouseHovered && hoverOptions.length !== 0 ? <SubCategoryPopup subCategories={subCategories} /> : ''}
-        </div>
-*/
