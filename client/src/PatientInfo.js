@@ -67,13 +67,28 @@ export default function PatientInfo(props) {
     return (
         <div className="flex flex-col pl-[235px]">
             {infoHeader}
+            <FilterOptions />
             <InfoBody currUser={currUser} infoType={infoType} />
         </div>
     )
 }
 
 function FilterOptions() {
-
+    return (
+        <div>
+            <form className="flex gap-3 mt-5 mb-10">
+                <label className="absolute left-[-100vw]">Type something here...</label>
+                <input className="p-[12px] w-[250px] rounded-[15px] bg-grey placeholder:text-black"
+                    placeholder="Search here..." aria-label="Filter your health information" autoComplete="off" />
+                <select className="p-[12px] w-[200px] rounded-[15px] bg-grey">
+                    <option value="volvo">Filter by status...</option>
+                    <option value="saab">Saab</option>
+                    <option value="mercedes">Mercedes</option>
+                    <option value="audi">Audi</option>
+                </select>
+            </form>
+        </div>
+    )
 }
 
 function InfoBody(props) {
@@ -112,9 +127,9 @@ function InfoBody(props) {
             <div>
                 <div className="flex relative mb-4 ml-5 justify-between font-heading text-2xl text-dark-blue">
                     <p className="">Date</p>
-                    <p className="absolute left-[180px]">{infoType.substring(0, infoType.length - 1)}</p>
-                    <p className="absolute left-[580px]">Doctor</p>
-                    <p className="absolute left-[880px]">Status</p>
+                    <p className="absolute right-[660px]">{infoType.substring(0, infoType.length - 1)}</p>
+                    <p className="absolute right-[360px]">Doctor</p>
+                    <p className="absolute right-[110px]">Status</p>
                 </div>
                 <div className="grid gap-8">
                     {healthInfoArray}
@@ -139,11 +154,11 @@ function SingleHealthInfoItem(props) {
     const date = month + '/' + day + '/' + year;
 
     return (
-        <div className="flex relative justify-between font-heading text-2xl p-[20px] bg-white shadow-[2px_4px_20px_rgba(0,0,0,0.25)] rounded-[20px]">
+        <div className="flex relative justify-between font-heading text-2xl w-[95%] p-[20px] bg-white shadow-[2px_4px_20px_rgba(0,0,0,0.25)] rounded-[20px]">
             <p className="">{date}</p>
-            <p className="absolute left-[200px]">{name}</p>
-            <p className="absolute left-[600px]">{doctor}</p>
-            <p className="absolute left-[900px]">{status}</p>
+            <p className="absolute right-[600px]">{name}</p>
+            <p className="absolute right-[300px]">{doctor}</p>
+            <p className="absolute right-[50px]">{status}</p>
         </div>
     );
 }
