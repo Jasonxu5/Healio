@@ -34,8 +34,38 @@ const FAMILY_INFO = [
       'You have a new message from Dr. Ortega!'
     ],
     labResults: [
-      { title: 'X-Ray - Katie Wang', date: '02/10/2022' },
-      { title: 'Ultrasound - Katie Wang', date: '01/04/2022' }
+      {
+        date: new Date('February 10, 2022'),
+        name: 'Radiology - Chest X Ray',
+        doctor: 'Dr. Ortega',
+        status: 'Available'
+      },
+      {
+        date: new Date('January 4, 2022'),
+        name: 'Sonography - Ultrasound',
+        doctor: 'Dr. Montgomery',
+        status: 'Complete'
+      }
+    ],
+    medications: [
+      {
+        date: new Date('February 9, 2022'),
+        name: 'Amoxicillin (Amoxil)',
+        doctor: 'Dr. Ortega',
+        status: 'Active'
+      },
+      {
+        date: new Date('January 17, 2022'),
+        name: 'Fluoxetine (Prozac)',
+        doctor: 'Dr. Cain',
+        status: 'Active'
+      },
+      {
+        date: new Date('November 21, 2021'),
+        name: 'Doxyxycline',
+        doctor: 'Dr. Martinez',
+        status: 'Inactive'
+      }
     ],
     doctorNotes: {
       date: '02/09/2021',
@@ -44,8 +74,8 @@ const FAMILY_INFO = [
       doctor: 'Dr. Ortega'
     },
     appointments: [
-      { title: 'Follow up with Dr. Ortega', date: '02/12/2022' },
-      { title: 'Yearly check-up with Dr. Osborn', date: '02/15/2022' }
+      { name: 'Follow up with Dr. Ortega', date: new Date('February 12, 2022') },
+      { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022') }
     ],
     isAdmin: true
   },
@@ -60,9 +90,14 @@ const FAMILY_INFO = [
       'You have a new message from Dr. Ortega!'
     ],
     labResults: [
-      { title: 'Allergen Testing - Daughter Wang', date: '01/15/2022' },
-      { title: 'X-Ray - Daughter Wang', date: '12/28/2021' }
+      {
+        date: new Date('February 5, 2022'),
+        name: 'Allergen Testing',
+        doctor: 'Dr. Ortega',
+        status: 'Active'
+      }
     ],
+    medications: [],
     doctorNotes: {
       date: '02/06/2022',
       body: 'Daughter Wang came home from school yesterday with a very sore throat and recorded a fever that night. She reported no other symptoms and has been taking ibuprofen for the fever. ' +
@@ -70,7 +105,7 @@ const FAMILY_INFO = [
       doctor: 'Dr. Ortega'
     },
     appointments: [
-      { title: 'Yearly check-up with Dr. Osborn', date: '02/15/2022' }
+      { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022') }
     ],
     isAdmin: false
   },
@@ -86,8 +121,14 @@ const FAMILY_INFO = [
       'You have a new message from Dr. Ortega!',
       'New prescription added to your medications.'
     ],
-    labResults: [
-      { title: 'X-Ray - Grandma Wang', date: '02/08/2022' }
+    labResults: [],
+    medications: [
+        {
+            date: new Date('February 5, 2022'),
+            name: 'Acetaminophen',
+            doctor: 'Dr. Valera',
+            status: 'Active'
+        }
     ],
     doctorNotes: {
       date: '02/08/2021',
@@ -96,8 +137,8 @@ const FAMILY_INFO = [
       doctor: 'Dr. Valera'
     },
     appointments: [
-      { title: 'Yearly check-up with Dr. Osborn', date: '02/15/2022' },
-      { title: 'Follow up with Dr. Valera', date: '02/21/2022' }
+      { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022') },
+      { name: 'Follow up with Dr. Valera', date: new Date('February 21, 2022') }
     ],
     isAdmin: false
   }
@@ -182,15 +223,15 @@ function App() {
   const messagingHeader = <Header title={'Messaging'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
 
   const templateHeader = <Header title={'To be worked on ...'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
-  
+
   if (isSignedIn) {
     return (
       <div className="bg-gradient-to-br from-pale-blue to-white">
         <Routes>
           <Route path="/health" element={<Health currUser={currUser} healthHeader={healthHeader} />} />
           <Route path="/health/overview" element={<Health currUser={currUser} healthHeader={healthHeader} />} />
-          <Route path="/health/lab_results" element={<PatientInfo currUser={currUser} infoHeader={labResultsHeader} />} />
-          <Route path="/health/medications" element={<PatientInfo currUser={currUser} infoHeader={medicationsHeader} />} />
+          <Route path="/health/lab_results" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.labResults} infoHeader={labResultsHeader} />} />
+          <Route path="/health/medications" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.medications} infoHeader={medicationsHeader} />} />
           <Route path="/health/vaccines" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/health/allergies" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/health/surgical_history" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />

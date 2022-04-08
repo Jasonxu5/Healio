@@ -1,74 +1,13 @@
 import React from 'react';
 
-const KATIE_INFO = {
-    lab_results: [
-        {
-            date: new Date('February 10, 2022'),
-            name: 'Radiology - Chest X Ray',
-            doctor: 'Dr. Ortega',
-            status: 'Available'
-        },
-        {
-            date: new Date('January 4, 2022'),
-            name: 'Sonography - Ultrasound',
-            doctor: 'Dr. Montgomery',
-            status: 'Complete'
-        }
-    ],
-    medications: [
-        {
-            date: new Date('February 9, 2022'),
-            name: 'Amoxicillin (Amoxil)',
-            doctor: 'Dr. Ortega',
-            status: 'Active'
-        },
-        {
-            date: new Date('January 17, 2022'),
-            name: 'Fluoxetine (Prozac)',
-            doctor: 'Dr. Cain',
-            status: 'Active'
-        },
-        {
-            date: new Date('November 21, 2021'),
-            name: 'Doxyxycline',
-            doctor: 'Dr. Martinez',
-            status: 'Inactive'
-        }
-    ]
-}
-
-const DAUGHTER_INFO = {
-    lab_results: [
-        {
-            date: new Date('February 5, 2022'),
-            name: 'Allergen Testing',
-            doctor: 'Dr. Ortega',
-            status: 'Active'
-        }
-    ],
-    medications: []
-}
-
-const GRANDMA_INFO = {
-    lab_results: [],
-    medications: [
-        {
-            date: new Date('February 5, 2022'),
-            name: 'Acetaminophen',
-            doctor: 'Dr. Valera',
-            status: 'Active'
-        }
-    ]
-}
-
 export default function PatientInfo(props) {
-    const { currUser, infoHeader } = props;
+    const { currUser, userHealthInfo, infoHeader } = props;
     const infoType = infoHeader.props.title;
     return (
         <div className="flex flex-col pl-[235px]">
             {infoHeader}
             <FilterOptions />
-            <InfoBody currUser={currUser} infoType={infoType} />
+            <InfoBody currUser={currUser} userHealthInfo={userHealthInfo} infoType={infoType} />
         </div>
     )
 }
@@ -92,30 +31,13 @@ function FilterOptions() {
 }
 
 function InfoBody(props) {
-    const { currUser, infoType } = props;
-    const userFirstName = currUser.firstName;
-    let userHealthInfo;
-    let targetedHealthInfo;
+    const { currUser, userHealthInfo, infoType } = props;
 
-    // This JavaScript file handles two different components
-    // Therefore, several conditionals will be put into place
-    if (userFirstName === 'Katie') {
-        userHealthInfo = KATIE_INFO;
-    } else if (userFirstName === 'Daughter') {
-        userHealthInfo = DAUGHTER_INFO;
-    } else {
-        userHealthInfo = GRANDMA_INFO;
-    }
-    if (infoType === 'Lab Results') {
-        targetedHealthInfo = userHealthInfo.lab_results;
-    } else {
-        targetedHealthInfo = userHealthInfo.medications;
-    }
 
-    if (targetedHealthInfo.length === 0) {
+    if (userHealthInfo.length === 0) {
         return <p>No {infoType.toLowerCase()} are available for {currUser.firstName}.</p>
     } else {
-        const healthInfoArray = targetedHealthInfo.map((item, index) => {
+        const healthInfoArray = userHealthInfo.map((item, index) => {
             return <SingleHealthInfoItem
                 dateObject={item.date}
                 name={item.name}

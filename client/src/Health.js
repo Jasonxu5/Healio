@@ -13,7 +13,7 @@ const HEALTH_CARD_TITLES = [
 ];
 
 export default function Health(props) {
-    const { currUser, healthHeader} = props;
+    const { currUser, healthHeader } = props;
     return (
         <div className="flex flex-col pl-[235px]">
             {healthHeader}
@@ -86,10 +86,22 @@ function CardHasList(props) {
 
     if (hasDateOnRight) {
         listItemsArray = listItems.map((item, index) => {
+            const dateObject = item.date;
+            let month = dateObject.getMonth() + 1;
+            let day = dateObject.getDate();
+            const year = dateObject.getFullYear();
+            if (month < 10) {
+                month = '0' + month;
+            }
+            if (day < 10) {
+                day = '0' + day;
+            }
+            const date = month + '/' + day + '/' + year;
+
             return (
                 <div key={index}>
-                    <p className="pt-2 float-left">{item.title}</p>
-                    <p className="pt-2 float-right">{item.date + " >"}</p>
+                    <p className="pt-2 float-left">{item.name}</p>
+                    <p className="pt-2 float-right">{date + " >"}</p>
                 </div>
             );
         });
@@ -99,11 +111,17 @@ function CardHasList(props) {
         });
     }
 
-    return (
-        <ul className="grid divide-y divide-[#E5E5E5] gap-2">
-            {listItemsArray}
-        </ul>
-    );
+    if (listItemsArray.length === 0) {
+        return (
+            <div className="mt-2">No items found.</div>
+        )
+    } else {
+        return (
+            <ul className="grid divide-y divide-[#E5E5E5] gap-2">
+                {listItemsArray}
+            </ul>
+        );
+    }
 }
 
 function SingleHealthCard(props) {
