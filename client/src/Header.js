@@ -12,9 +12,9 @@ export default function Header(props) {
     const ref = useRef();
     const fullName = currUser.firstName + ' ' + currUser.lastName;
     
-    const familyInfoArray = familyInfo.map(person => {
+    const familyInfoArray = familyInfo.map((person, index) => {
         if (!_.isEqual(currUser, person)) {
-            return <IndividualFamilyMember familyMember={person} setUserCallback={setUserCallback} key={person.firstName + ' ' + person.lastName} />;
+            return <IndividualFamilyMember familyMember={person} setUserCallback={setUserCallback} key={index} />;
         }
     });
     

@@ -9,6 +9,7 @@ import Header from './Header.js';
 import Health from './Health.js';
 import PatientInfo from './PatientInfo.js';
 import Messaging from './Messaging.js';
+import Profile from './Profile.js';
 import PlaceHolder from './Template.js';
 
 import Landing from './Landing.js';
@@ -222,6 +223,8 @@ function App() {
 
   const messagingHeader = <Header title={'Messaging'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
 
+  const profileHeader = <Header title={'Your Profile'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
+
   const templateHeader = <Header title={'To be worked on ...'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
 
   if (isSignedIn) {
@@ -244,7 +247,7 @@ function App() {
           <Route path="/resources/find_hospitals" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/resources/find_providers" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/resources/educational_providers" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
-          <Route path="/profile" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
+          <Route path="/profile" element={<Profile currUser={currUser} familyInfo={FAMILY_INFO} profileHeader={profileHeader} />} />
           <Route path="*" element={<Navigate replace to="/health" />} />
         </Routes>
         <NavBar />
