@@ -30,9 +30,9 @@ function HealthCards(props) {
         if (index === 0) {
             body = <CardHasImage isIntro={true} />;
         } else if (index === 1) {
-            body = <CardHasList listItems={currUser.notifications} hasDateOnRight={false} />;
+            body = <CardHasList listItems={currUser.notifications} hasDateOnRight={false} link={''} />; // we hab to change this link
         } else if (index === 2) {
-            body = <CardHasList listItems={currUser.labResults} hasDateOnRight={true} />;
+            body = <CardHasList listItems={currUser.labResults} hasDateOnRight={true} link={'/health/lab_results'} />;
         } else if (index === 3) {
             body = <CardHasImage isIntro={false} />;
         } else if (index === 4) {
@@ -44,7 +44,7 @@ function HealthCards(props) {
                 </div>
             );
         } else {
-            body = <CardHasList listItems={currUser.appointments} hasDateOnRight={true} />;
+            body = <CardHasList listItems={currUser.appointments} hasDateOnRight={true} link={'/appointments'}/>;
         }
         return <SingleHealthCard title={cardTitle} body={body} count={index} currUserFirstName={currUser.firstName} key={index} />;
     });
@@ -81,7 +81,7 @@ function CardHasImage(props) {
 }
 
 function CardHasList(props) {
-    const { listItems, hasDateOnRight } = props;
+    const { listItems, hasDateOnRight, link } = props;
     let listItemsArray;
 
     if (hasDateOnRight) {
@@ -117,9 +117,9 @@ function CardHasList(props) {
         )
     } else {
         return (
-            <ul className="grid divide-y divide-[#E5E5E5] gap-2">
+            <Link to={link} className="grid divide-y divide-[#E5E5E5] gap-2">
                 {listItemsArray}
-            </ul>
+            </Link>
         );
     }
 }
