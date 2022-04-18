@@ -60,7 +60,7 @@ export default function Signup() {
     );
 }
 
-function SingleFormInput(props) {
+export function SingleFormInput(props) {
     const { input } = props;
     let inputType;
     if (input === 'Password') {
@@ -91,7 +91,7 @@ function SingleFormInput(props) {
                     </div>
                     <div>
                         <input type="radio" name="admin-access" value="no" />
-                        <label className="ml-2" for="no">No</label>
+                        <label className="ml-2" htmlFor="no">No</label>
                     </div>
                 </form>
             </div>
