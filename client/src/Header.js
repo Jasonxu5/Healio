@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,15 +11,16 @@ import 'firebase/compat/auth';
 export default function Header(props) {
     const { title, currUser, familyInfo, setUserCallback } = props;
     const [isMenuOpen, setMenu] = useState(false);
+    const [isAddUserClicked, setIsAdduserClicked] = useState(false);
     const ref = useRef();
     const fullName = currUser.firstName + ' ' + currUser.lastName;
-    
+
     const familyInfoArray = familyInfo.map((person, index) => {
         if (!_.isEqual(currUser, person)) {
             return <IndividualFamilyMember familyMember={person} setUserCallback={setUserCallback} key={index} />;
         }
     });
-    
+
     // Set up clicking event for dropdown user accounts
     useEffect(() => {
         const checkIfClickedOutside = e => {
@@ -33,12 +36,23 @@ export default function Header(props) {
     }, [isMenuOpen]);
 
     if (currUser.isAdmin) {
-        familyInfoArray.push(AddAnotherUser());
+        familyInfoArray.push(AddAnotherUser(setIsAdduserClicked));
     }
+
+    const handleClose = () => setIsAdduserClicked(false);
 
     // Need to flex container for Font Awesome Icon
     return (
         <header className="relative py-8">
+            <Modal className="absolute" show={isAddUserClicked}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+            </Modal>
             <p className="font-heading text-3xl">{title}</p>
             <div className="absolute flex bottom-[20px] right-[30px] hover:cursor-pointer bg-light-green rounded-full mb-2 pr-3" onClick={() => setMenu(true)}>
                 <img className="rounded-full inline w-12 h-12" src={currUser.img} alt={fullName} />
@@ -64,9 +78,11 @@ function IndividualFamilyMember(props) {
     );
 }
 
-function AddAnotherUser() {
+function AddAnotherUser(addUserCallback) {
+    const handleShow = () => addUserCallback(true);
+
     return (
-        <div className="p-1" key="add">
+        <div className="p-1" key="add" onClick={handleShow}>
             <FontAwesomeIcon className="ml-3" icon={faUserPlus} size="lg" aria-label="Authorize another user" />
             <p className="inline ml-4">Authorize another user</p>
         </div>
