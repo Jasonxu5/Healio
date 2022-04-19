@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserPlus, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faUserPlus, faAngleDown, faX } from '@fortawesome/free-solid-svg-icons';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 
@@ -44,13 +44,20 @@ export default function Header(props) {
     // Need to flex container for Font Awesome Icon
     return (
         <header className="relative py-8">
-            <Modal className="absolute" show={isAddUserClicked}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+            <Modal className="absolute left-[25%] top-[40%] w-[750px] p-5 bg-white border-2 border-black rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" show={isAddUserClicked}>
+                <Button onClick={handleClose}>
+                    <FontAwesomeIcon className="text-2xl mb-2 hover:text-[#FF0000]" icon={faX} size="lg" aria-label="Close icon" />
+                </Button>
+                <Modal.Header className="text-center" closeButton>
+                    <Modal.Title className="font-header text-3xl">Add a family member</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
+                <div className="flex flex-col">
+                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                </div>
+                <Button >
+                    <p className="py-3 px-6 mt-2 text-center border-2 border-light-blue rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold">Add to Family</p>
                 </Button>
             </Modal>
             <p className="font-heading text-3xl">{title}</p>
