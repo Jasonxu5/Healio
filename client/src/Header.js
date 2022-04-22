@@ -139,22 +139,10 @@ const USER_INFO = [
         ],
         labResults: [],
         medications: [
-            {
-                date: new Date('February 5, 2022'),
-                name: 'Acetaminophen',
-                doctor: 'Dr. Valera',
-                status: 'Active'
-            }
         ],
         doctorNotes: {
-            date: '02/08/2021',
-            body: 'Grandma Wang was accompanied by her daughter Katie who reported that Mrs. Wang has been experiencing pain, stiffness, and decreased range of motion in her joints. She has been taking tylenol for the pain and vitamins for her health. ' +
-                'Possible arthritis, follow up x-rays will be taken to determine the cause.',
-            doctor: 'Dr. Valera'
         },
         appointments: [
-            { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022') },
-            { name: 'Follow up with Dr. Valera', date: new Date('February 21, 2022') }
         ],
         isAdmin: false
     },
@@ -162,27 +150,11 @@ const USER_INFO = [
         firstName: 'Sus',
         lastName: 'Grandma',
         img: grandma,
-        notifications: [
-        ],
+        notifications: [],
         labResults: [],
-        medications: [
-            {
-                date: new Date('February 5, 2022'),
-                name: 'Acetaminophen',
-                doctor: 'Dr. Valera',
-                status: 'Active'
-            }
-        ],
-        doctorNotes: {
-            date: '02/08/2021',
-            body: 'Grandma Wang was accompanied by her daughter Katie who reported that Mrs. Wang has been experiencing pain, stiffness, and decreased range of motion in her joints. She has been taking tylenol for the pain and vitamins for her health. ' +
-                'Possible arthritis, follow up x-rays will be taken to determine the cause.',
-            doctor: 'Dr. Valera'
-        },
-        appointments: [
-            { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022') },
-            { name: 'Follow up with Dr. Valera', date: new Date('February 21, 2022') }
-        ],
+        medications: [],
+        doctorNotes: {},
+        appointments: [],
         isAdmin: false
     },
     {
@@ -192,24 +164,9 @@ const USER_INFO = [
         notifications: [
         ],
         labResults: [],
-        medications: [
-            {
-                date: new Date('February 5, 2022'),
-                name: 'Acetaminophen',
-                doctor: 'Dr. Valera',
-                status: 'Active'
-            }
-        ],
-        doctorNotes: {
-            date: '02/08/2021',
-            body: 'Grandma Wang was accompanied by her daughter Katie who reported that Mrs. Wang has been experiencing pain, stiffness, and decreased range of motion in her joints. She has been taking tylenol for the pain and vitamins for her health. ' +
-                'Possible arthritis, follow up x-rays will be taken to determine the cause.',
-            doctor: 'Dr. Valera'
-        },
-        appointments: [
-            { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022') },
-            { name: 'Follow up with Dr. Valera', date: new Date('February 21, 2022') }
-        ],
+        medications: [],
+        doctorNotes: {},
+        appointments: [],
         isAdmin: false
     },
     {
@@ -220,22 +177,10 @@ const USER_INFO = [
         ],
         labResults: [],
         medications: [
-            {
-                date: new Date('February 5, 2022'),
-                name: 'Acetaminophen',
-                doctor: 'Dr. Valera',
-                status: 'Active'
-            }
         ],
         doctorNotes: {
-            date: '02/08/2021',
-            body: 'Grandma Wang was accompanied by her daughter Katie who reported that Mrs. Wang has been experiencing pain, stiffness, and decreased range of motion in her joints. She has been taking tylenol for the pain and vitamins for her health. ' +
-                'Possible arthritis, follow up x-rays will be taken to determine the cause.',
-            doctor: 'Dr. Valera'
         },
         appointments: [
-            { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022') },
-            { name: 'Follow up with Dr. Valera', date: new Date('February 21, 2022') }
         ],
         isAdmin: false
     },
@@ -243,27 +188,11 @@ const USER_INFO = [
         firstName: 'Sus',
         lastName: 'Grandma',
         img: grandma,
-        notifications: [
-        ],
+        notifications: [],
         labResults: [],
-        medications: [
-            {
-                date: new Date('February 5, 2022'),
-                name: 'Acetaminophen',
-                doctor: 'Dr. Valera',
-                status: 'Active'
-            }
-        ],
-        doctorNotes: {
-            date: '02/08/2021',
-            body: 'Grandma Wang was accompanied by her daughter Katie who reported that Mrs. Wang has been experiencing pain, stiffness, and decreased range of motion in her joints. She has been taking tylenol for the pain and vitamins for her health. ' +
-                'Possible arthritis, follow up x-rays will be taken to determine the cause.',
-            doctor: 'Dr. Valera'
-        },
-        appointments: [
-            { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022') },
-            { name: 'Follow up with Dr. Valera', date: new Date('February 21, 2022') }
-        ],
+        medications: [],
+        doctorNotes: {},
+        appointments: [],
         isAdmin: false
     },
     {
@@ -273,30 +202,15 @@ const USER_INFO = [
         notifications: [
         ],
         labResults: [],
-        medications: [
-            {
-                date: new Date('February 5, 2022'),
-                name: 'Acetaminophen',
-                doctor: 'Dr. Valera',
-                status: 'Active'
-            }
-        ],
-        doctorNotes: {
-            date: '02/08/2021',
-            body: 'Grandma Wang was accompanied by her daughter Katie who reported that Mrs. Wang has been experiencing pain, stiffness, and decreased range of motion in her joints. She has been taking tylenol for the pain and vitamins for her health. ' +
-                'Possible arthritis, follow up x-rays will be taken to determine the cause.',
-            doctor: 'Dr. Valera'
-        },
-        appointments: [
-            { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022') },
-            { name: 'Follow up with Dr. Valera', date: new Date('February 21, 2022') }
-        ],
+        medications: [],
+        doctorNotes: {},
+        appointments: [],
         isAdmin: false
     }
 ];
 
 export default function Header(props) {
-    const { title, currUser, familyInfo, setUserCallback } = props;
+    const { title, currUser, setUserCallback, familyInfo, familyInfoCallback } = props;
     const [isMenuOpen, setMenu] = useState(false);
     const [isAddUserClicked, setIsAddUserClicked] = useState(false);
     const ref = useRef();
@@ -330,7 +244,7 @@ export default function Header(props) {
     // Need to flex container for Font Awesome Icon
     return (
         <header className="relative py-8">
-            <AddUserModal userInfo={USER_INFO} familyInfo={familyInfo} isAddUserClicked={isAddUserClicked} addUserCallback={setIsAddUserClicked} />
+            <AddUserModal userInfo={USER_INFO} familyInfo={familyInfo} familyInfoCallback={familyInfoCallback} isAddUserClicked={isAddUserClicked} addUserCallback={setIsAddUserClicked} />
             <p className="font-heading text-3xl">{title}</p>
             <div className="absolute flex bottom-[20px] right-[30px] hover:cursor-pointer bg-light-green rounded-full mb-2 pr-3" onClick={() => setMenu(true)}>
                 <img className="rounded-full inline w-12 h-12" src={currUser.img} alt={fullName} />

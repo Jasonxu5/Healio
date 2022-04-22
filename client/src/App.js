@@ -160,6 +160,7 @@ function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [data, setData] = useState("");
   const [currUser, setCurrUser] = useState(FAMILY_INFO[0]);
+  const [familyInfo, setFamilyInfo] = useState(FAMILY_INFO);
 
   useEffect(() => {
     // fetch('/api')
@@ -218,15 +219,15 @@ function App() {
   }
 
   // Headers for each page, not sure if there's a better way to do this
-  const healthHeader = <Header title={'Overview'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
-  const labResultsHeader = <Header title={'Lab Results'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />
-  const medicationsHeader = <Header title={'Medications'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />
+  const healthHeader = <Header title={'Overview'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
+  const labResultsHeader = <Header title={'Lab Results'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />
+  const medicationsHeader = <Header title={'Medications'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />
 
-  const messagingHeader = <Header title={'Messaging'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
+  const messagingHeader = <Header title={'Messaging'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo}/>;
 
-  const profileHeader = <Header title={'Your Profile'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
+  const profileHeader = <Header title={'Your Profile'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo}/>;
 
-  const templateHeader = <Header title={'To be worked on ...'} currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />;
+  const templateHeader = <Header title={'To be worked on ...'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo}/>;
 
   if (isSignedIn) {
     return (
@@ -248,7 +249,7 @@ function App() {
           <Route path="/resources/find_hospitals" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/resources/find_providers" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/resources/educational_providers" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
-          <Route path="/profile" element={<Profile currUser={currUser} familyInfo={FAMILY_INFO} profileHeader={profileHeader} />} />
+          <Route path="/profile" element={<Profile currUser={currUser} familyInfo={familyInfo} profileHeader={profileHeader} />} />
           <Route path="*" element={<Navigate replace to="/health" />} />
         </Routes>
         <NavBar />
@@ -271,34 +272,3 @@ function App() {
 }
 
 export default App;
-
-/*
-APP ROUTES
-          <Route path="/appointments" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />} />
-          <Route path="/messages" element={<Messaging currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />} />
-          <Route path="/resources" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />} />
-          <Route path="/billing" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />} />
-          <Route path="/profile" element={<PlaceHolder currUser={currUser} familyInfo={FAMILY_INFO} setUserCallback={setCurrUser} />} />
-
-MESSAGING
-import Header from './Header.js';
-
-export default function Messaging(props) {
-    const { currUser, familyInfo, setUserCallback } = props;
-    return (
-        <Header title={'Messaging'} currUser={currUser} familyInfo={familyInfo} setUserCallback={setUserCallback}/>
-    );
-}
-
-TEMPLATE
-import Header from './Header.js';
-
-export default function PlaceHolder(props) {
-    const { currUser, familyInfo, setUserCallback } = props;
-    return (
-        <div className="flex flex-col">
-            <Header title={'To be worked on ...'} currUser={currUser} familyInfo={familyInfo} setUserCallback={setUserCallback} />
-        </div>
-    );
-}
-*/

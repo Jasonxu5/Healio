@@ -36,13 +36,18 @@ function HealthCards(props) {
         } else if (index === 3) {
             body = <CardHasImage isIntro={false} />;
         } else if (index === 4) {
-            body = (
-                <div>
-                    <p className="pt-2 italic">{currUser.doctorNotes.date}</p>
-                    <p className="pt-2">{currUser.doctorNotes.body}</p>
-                    <p className="pt-2">{'- ' + currUser.doctorNotes.doctor}</p>
-                </div>
-            );
+            const doctorNotesLength = Object.keys(currUser.doctorNotes).length;
+            if (doctorNotesLength === 0) {
+                body = <div className="mt-2">No items found.</div>;
+            } else {
+                body = (
+                    <div>
+                        <p className="pt-2 italic">{currUser.doctorNotes.date}</p>
+                        <p className="pt-2">{currUser.doctorNotes.body}</p>
+                        <p className="pt-2">{'- ' + currUser.doctorNotes.doctor}</p>
+                    </div>
+                );
+            }
         } else {
             body = <CardHasList listItems={currUser.appointments} hasDateOnRight={true} link={'/appointments'}/>;
         }

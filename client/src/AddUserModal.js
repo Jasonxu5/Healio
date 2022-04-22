@@ -4,22 +4,31 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
 export default function AddUserModal(props) {
-    const { userInfo, familyInfo, isAddUserClicked, addUserCallback } = props;
+    const { userInfo, familyInfo, familyInfoCallback, isAddUserClicked, addUserCallback } = props;
     const [typedName, setTypedName] = useState('');
-
+    const [currUsersAdded, setCurrUsersAdded] = useState([]);
+    
     const familyInfoArray = familyInfo.map(person => {
+
+        // Replace with index of person.
         return person.firstName + ' ' + person.lastName;
     });
     const userInfoArray = userInfo.map((person, index) => {
         const personFullName = person.firstName + ' ' + person.lastName;
         const lowerCaseFullName = personFullName.toLowerCase();
+
+        // Change the check to see if the family array includes the person's index.
         if (!familyInfoArray.includes(personFullName) && lowerCaseFullName.includes(typedName)) {
-            return <IndividualUser user={person} key={index} />;
+            return <IndividualUser user={person} currUsersAdded={currUsersAdded} currUsersAddedCallback={setCurrUsersAdded} key={index} />;
         }
     });
-
     const handleTextChange = (event) => {
         setTypedName(event.target.value.toLowerCase());
+    };
+ 
+    const handleFamilyUpdate = () => {
+        addUserCallback(false);
+        familyInfoCallback([...familyInfo, ...currUsersAdded]);
     };
 
     return (
@@ -33,20 +42,25 @@ export default function AddUserModal(props) {
                 <input className="p-[12px] w-[75%] rounded-[15px] bg-grey" onChange={handleTextChange} value={typedName} placeholder="Search for family member..." autoComplete="off" />
             </form>
             <div className="grid grid-cols-3">
-                {userInfoArray}
+                {!(userInfoArray.every((person) => person === undefined)) ? userInfoArray : <p>No users found.</p>}
             </div>
-            <p className="py-3 px-6 mx-auto w-[150px] mt-2 border-2 border-light-blue rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold">Add to Family</p>
+            <p className="py-3 px-6 mx-auto w-[150px] mt-2 border-2 border-light-blue rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={handleFamilyUpdate}>Add to Family</p>
         </Modal>
     )
 }
 
 function IndividualUser(props) {
-    const { user } = props;
+    const { user, currUsersAdded, currUsersAddedCallback } = props;
+    const [isAdded, setIsAdded] = useState(false);
     const fullName = user.firstName + ' ' + user.lastName;
 
+    const handleClick = () => {
+        setIsAdded(!isAdded);
+        currUsersAddedCallback([...currUsersAdded, user]);
+    };
     return (
-        <div className="p-1">
-            <img className="rounded-full inline w-10 h-10 mb-2" src={user.img} alt={fullName} />
+        <div className={'hover:cursor-pointer' + (isAdded ? ' bg-light-blue' : '')} onClick={handleClick}>
+            <img className="rounded-full inline mb-1 w-10 h-10" src={user.img} alt={fullName} />
             <p className="inline pl-3">{fullName}</p>
         </div>
     );
