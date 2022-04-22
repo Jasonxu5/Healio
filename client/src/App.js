@@ -249,7 +249,7 @@ function App() {
           <Route path="/resources/find_hospitals" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/resources/find_providers" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/resources/educational_providers" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
-          <Route path="/profile" element={<Profile currUser={currUser} familyInfo={familyInfo} profileHeader={profileHeader} />} />
+          <Route path="/profile" element={<Profile currUser={currUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} profileHeader={profileHeader} />} />
           <Route path="*" element={<Navigate replace to="/health" />} />
         </Routes>
         <NavBar />

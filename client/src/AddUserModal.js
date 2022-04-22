@@ -29,6 +29,7 @@ export default function AddUserModal(props) {
     const handleFamilyUpdate = () => {
         addUserCallback(false);
         familyInfoCallback([...familyInfo, ...currUsersAdded]);
+        setCurrUsersAdded([]);
     };
 
     return (

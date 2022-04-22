@@ -4,11 +4,11 @@ import { faPenToSquare, faXmark, faCheck } from '@fortawesome/free-solid-svg-ico
 import _ from 'lodash';
 
 export default function Profile(props) {
-    const { currUser, familyInfo, profileHeader } = props;
+    const { currUser, familyInfo, familyInfoCallback, profileHeader } = props;
     const [isUserEditing, setIsUserEditing] = useState(false);
     let profileLayout = <ProfileInformation currUser={currUser} familyInfo={familyInfo} />;
     if (isUserEditing) {
-        profileLayout = <EditProfile currUser={currUser} familyInfo={familyInfo} userEditCallback={setIsUserEditing} />;;
+        profileLayout = <EditProfile currUser={currUser} familyInfo={familyInfo} familyInfoCallback={familyInfoCallback} userEditCallback={setIsUserEditing} />;;
     }
     return (
         <div>
@@ -51,13 +51,14 @@ function ProfileInformation(props) {
 }
 
 function EditProfile(props) {
-    const { currUser, familyInfo, userEditCallback } = props;
+    const { currUser, familyInfo, familyInfoCallback, userEditCallback } = props;
     const [newFirstName, setNewFirstName] = useState(currUser.firstName);
     const [newLastName, setNewLastName] = useState(currUser.lastName);
+    const [newFamilyInfo, setNewFamilyInfo] = useState([...familyInfo]);
 
     const familyInfoArray = familyInfo.map((person, index) => {
         if (!_.isEqual(currUser, person)) {
-            return <IndividualFamilyMember currUser={currUser} familyMember={person} isEditing={true} key={index} />;
+            return <IndividualFamilyMember currUser={currUser} familyMember={person} newFamilyInfo={newFamilyInfo} newFamilyInfoCallback={setNewFamilyInfo} isEditing={true} key={index} />;
         }
     });
 
@@ -89,6 +90,9 @@ function EditProfile(props) {
             currUser.firstName = newFirstName;
             currUser.lastName = newLastName;
             userEditCallback(false);
+            const newFamilyArray = newFamilyInfo.map(person => { return person.firstName + ' ' + person.lastName + ' ' });
+            console.log('New family info is now ' + newFamilyArray);
+            familyInfoCallback([...newFamilyInfo]);
         }
     }
 
@@ -103,8 +107,8 @@ function EditProfile(props) {
             </div>
             <div className="flex flex-col gap-6 font-heading text-2xl">
                 <div className="flex gap-6">
-                        <input className="p-[12px] rounded-[15px] bg-grey" placeholder="New first name..." aria-label="Change first name" autoComplete="off" onChange={handleFirstNameChange} />
-                        <input className="p-[12px] rounded-[15px] bg-grey" placeholder="New last name..." aria-label="Change last name" autoComplete="off" onChange={handleLastNameChange} />
+                    <input className="p-[12px] rounded-[15px] bg-grey" placeholder="New first name..." aria-label="Change first name" autoComplete="off" onChange={handleFirstNameChange} />
+                    <input className="p-[12px] rounded-[15px] bg-grey" placeholder="New last name..." aria-label="Change last name" autoComplete="off" onChange={handleLastNameChange} />
                 </div>
                 <div>
                     <h1 className="mb-4">Family Information</h1>
@@ -123,14 +127,22 @@ function EditProfile(props) {
 }
 
 function IndividualFamilyMember(props) {
-    const { currUser, familyMember, isEditing } = props;
+    const { currUser, familyMember, newFamilyInfo, newFamilyInfoCallback, isEditing } = props;
     const [isRemoved, setIsRemoved] = useState(false);
     const fullName = familyMember.firstName + ' ' + familyMember.lastName;
     let removeSymbol = '';
 
     const handleRemoveFamilyMember = () => {
         setIsRemoved(!isRemoved);
-        console.log('Goodbye ' + fullName + '!');
+        let editedFamilyInfo = [...newFamilyInfo];
+        if (!isRemoved) {
+            editedFamilyInfo = newFamilyInfo.filter(person => {
+
+                // Might be buggy. Replace with index?
+                return !_.isEqual(familyMember, person);
+            });
+        }
+        newFamilyInfoCallback([...editedFamilyInfo]);
     }
 
     if (isEditing && currUser.isAdmin) {
