@@ -10,8 +10,11 @@ async function dbConnect() {
   console.log("connected to the database!")
 
   const UserSchema = new mongoose.Schema({
-    user_id: String,
-    type: String
+    first_name: String,
+    last_name: String,
+    email: String,
+    password: String,
+    is_family_manager: Boolean
   })
 
   db.User = mongoose.model('User', UserSchema)

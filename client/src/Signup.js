@@ -5,6 +5,8 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 
+const apiEndpoint = "http://localhost:5000/api/v1/"
+
 // Configure FirebaseUI.
 // const uiConfig = {
 //   // Popup signin flow rather than redirect flow.
@@ -52,12 +54,54 @@ export default function Signup() {
             <div>
                 {formInputArray}
             </div>
-            <p className="mx-auto py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold">
+            <p className="mx-auto py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={createUser}>
                 Create Account
             </p>
             <p className="text-center pb-3 mt-2">Already have an account? <Link className="text-light-blue underline" to="/login">Log in here!</Link></p>
         </div>
     );
+}
+
+export async function createUser() {
+    // refactor this later if there's time otherwise it works fine
+    let first = document.querySelector("#root > div > div > div > form:nth-child(1) > input").value;
+    let last = document.querySelector("#root > div > div > div > form:nth-child(2) > input").value;
+    let email = document.querySelector("#root > div > div > div > form:nth-child(3) > input").value;
+    let pass = document.querySelector("#root > div > div > div > form:nth-child(4) > input").value;
+    let isManager = undefined
+    if (document.querySelector("#root > div > div > div > div > form > div:nth-child(1) > input[type=radio]").checked) {
+        isManager = true;
+    }
+    isManager = false;
+
+    let array = [first, last, email, pass, isManager]
+
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] === '') {
+            // See Line 96 for suggested improvement
+            document.querySelector("#root > div > div > p.mx-auto.py-3.px-6.border-2.border-light-blue.bg-\\[\\#FFFFFF\\].rounded-\\[15px\\].hover\\:cursor-pointer.hover\\:bg-light-blue.hover\\:font-bold").textContent = "One or more fields are empty"
+            return;
+        }
+    }
+
+    try {
+        let response = await fetch(apiEndpoint + "user", {
+            method: "POST",
+            body: JSON.stringify({ first_name: first, last_name: last, email: email, password: pass, isFamilyManager: isManager }),
+            headers: { 'Content-Type': 'application/json' }
+        })
+        let responseJSON = await response.json();
+        let string = JSON.stringify(responseJSON);
+        if (string.includes('Error')) {
+            document.querySelector("#root > div > div > p.mx-auto.py-3.px-6.border-2.border-light-blue.bg-\\[\\#FFFFFF\\].rounded-\\[15px\\].hover\\:cursor-pointer.hover\\:bg-light-blue.hover\\:font-bold").textContent = "Another account already exists with this email"
+            // Try to display a <p> Element instead: return (<div><p>Error: Another account already exists with this email.</p></div>)
+        } else { // {status : success}
+            // Redirect page to Login Page
+        }
+
+    } catch (error) {
+        console.log("Error" + error);
+    }
 }
 
 export function SingleFormInput(props) {
@@ -70,7 +114,6 @@ export function SingleFormInput(props) {
     } else {
         inputType = '';
     }
-
 
     if (input !== 'Admin') {
         return (
