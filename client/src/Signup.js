@@ -71,8 +71,9 @@ export async function createUser() {
     let isManager = undefined
     if (document.querySelector("#root > div > div > div > div > form > div:nth-child(1) > input[type=radio]").checked) {
         isManager = true;
+    } else {
+        isManager = false;
     }
-    isManager = false;
 
     let array = [first, last, email, pass, isManager]
 
@@ -85,6 +86,7 @@ export async function createUser() {
     }
 
     try {
+        console.log(isManager);
         let response = await fetch(apiEndpoint + "user", {
             method: "POST",
             body: JSON.stringify({ first_name: first, last_name: last, email: email, password: pass, isFamilyManager: isManager }),
@@ -96,6 +98,7 @@ export async function createUser() {
             document.querySelector("#root > div > div > p.mx-auto.py-3.px-6.border-2.border-light-blue.bg-\\[\\#FFFFFF\\].rounded-\\[15px\\].hover\\:cursor-pointer.hover\\:bg-light-blue.hover\\:font-bold").textContent = "Another account already exists with this email"
             // Try to display a <p> Element instead: return (<div><p>Error: Another account already exists with this email.</p></div>)
         } else { // {status : success}
+            document.querySelector("#root > div > div > p.mx-auto.py-3.px-6.border-2.border-light-blue.bg-\\[\\#FFFFFF\\].rounded-\\[15px\\].hover\\:cursor-pointer.hover\\:bg-light-blue.hover\\:font-bold").textContent = "Success!"
             // Redirect page to Login Page
         }
 
