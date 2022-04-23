@@ -79,7 +79,7 @@ router.post('/user', async function (req, res, next) {
         last_name: req.body.last_name,
         email: req.body.email,
         password: hash,
-        isFamilyManager: req.body.isFamilyManager
+        is_family_manager: req.body.isFamilyManager
       })
 
       await newUser.save()

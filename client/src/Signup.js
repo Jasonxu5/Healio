@@ -86,7 +86,6 @@ export async function createUser() {
     }
 
     try {
-        console.log(isManager);
         let response = await fetch(apiEndpoint + "user", {
             method: "POST",
             body: JSON.stringify({ first_name: first, last_name: last, email: email, password: pass, isFamilyManager: isManager }),
