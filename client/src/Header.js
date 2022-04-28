@@ -245,7 +245,7 @@ export default function Header(props) {
     return (
         <header className="relative py-8">
             <AddUserModal userInfo={USER_INFO} familyInfo={familyInfo} familyInfoCallback={familyInfoCallback} isAddUserClicked={isAddUserClicked} addUserCallback={setIsAddUserClicked} />
-            <p className="font-heading text-3xl">{title}</p>
+            <p className="md:text-center font-heading text-3xl">{title}</p>
             <div className="absolute flex bottom-[20px] right-[30px] hover:cursor-pointer bg-light-green rounded-full mb-2 pr-3" onClick={() => setMenu(true)}>
                 <img className="rounded-full inline w-12 h-12" src={currUser.img} alt={fullName} />
                 <FontAwesomeIcon className="self-center text-2xl ml-3" icon={faAngleDown} size="lg" aria-label="Down arrow for choosing a user in the family" />
