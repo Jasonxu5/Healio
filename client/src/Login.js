@@ -49,10 +49,10 @@ export default function Login() {
   });
 
   return (
-    <div className="bg-light-green w-[25%] py-4 mx-auto">
+    <div className="flex flex-col bg-light-green w-[50%] py-4 mx-auto">
       <h1 className="text-center font-heading text-3xl pb-3">Sign In</h1>
       <p className="text-center text-2xl pb-3">Please choose a sign-in method:</p>
-      {/* <StyledFirebaseAuth uiConfig={UI_CONFIG} firebaseAuth={firebase.auth()} /> */}
+      <StyledFirebaseAuth uiConfig={UI_CONFIG} firebaseAuth={firebase.auth()} />
       <div>
         {formInputArray}
       </div>

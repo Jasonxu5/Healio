@@ -18,6 +18,7 @@ export default function AddUserModal(props) {
         const lowerCaseFullName = personFullName.toLowerCase();
 
         // Change the check to see if the family array includes the person's index.
+        // This will cause a bug if the user changes their name, so we need to compare for index instead.
         if (!familyInfoArray.includes(personFullName) && lowerCaseFullName.includes(typedName)) {
             return <IndividualUser user={person} currUsersAdded={currUsersAdded} currUsersAddedCallback={setCurrUsersAdded} key={index} />;
         }
@@ -33,7 +34,7 @@ export default function AddUserModal(props) {
     };
 
     return (
-        <Modal className="absolute left-[25%] top-[40%] w-[750px] p-5 bg-white border-2 border-black rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" show={isAddUserClicked}>
+        <Modal className="sm:w-[250px] md:w-[500px] absolute left-[25%] top-[40%] w-[750px] p-5 bg-white border-2 border-black rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" show={isAddUserClicked}>
             <FontAwesomeIcon className="text-2xl mb-2 hover:text-[#FF0000] hover:cursor-pointer" onClick={() => addUserCallback(false)} icon={faX} size="lg" aria-label="Close icon" />
             <Modal.Header className="text-center" closeButton>
                 <Modal.Title className="font-header text-3xl">Add a family member</Modal.Title>
@@ -42,7 +43,7 @@ export default function AddUserModal(props) {
                 <label className="absolute left-[-100vw]">Search for family member...</label>
                 <input className="p-[12px] w-[75%] rounded-[15px] bg-grey" onChange={handleTextChange} value={typedName} placeholder="Search for family member..." autoComplete="off" />
             </form>
-            <div className="grid grid-cols-3">
+            <div className="sm:grid-cols-1 md:grid-cols-2 grid grid-cols-3 overflow-auto-y">
                 {!(userInfoArray.every((person) => person === undefined)) ? userInfoArray : <p>No users found.</p>}
             </div>
             <p className="py-3 px-6 mx-auto w-[150px] mt-2 border-2 border-light-blue rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={handleFamilyUpdate}>Add to Family</p>

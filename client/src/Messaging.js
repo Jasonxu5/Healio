@@ -101,11 +101,11 @@ export default function Messaging(props) {
 
     return (
         <div>
-            <div className="pl-[235px]">
+            <div className="md:pl-[25px] pl-[235px]">
                 {messagingHeader}
             </div>
             <hr className="pl-0" />
-            <div className="flex divide-x w-[97.5%] h-screen pl-[235px]">
+            <div className="md:pl-[25px] flex divide-x w-[97.5%] h-screen pl-[235px]">
                 <ChatBox currUser={currUser} currMessages={currMessages} currMessagesCallback={setCurrMessages} currConversation={currConversation} setConvoCallback={setCurrConversation} />
                 <ChatNav currUser={currUser} currMessages={currMessages} currConversation={currConversation} setConvoCallback={setCurrConversation} />
             </div>
@@ -291,7 +291,7 @@ function OneConversation(props) {
             <div className="">
                 {userImgArray}
             </div>
-            <p>{userNamesInConvo}</p>
+            <p className="md:hidden">{userNamesInConvo}</p>
         </div>
     );
 }
@@ -302,7 +302,7 @@ function UserInConversation(props) {
     const userImg = user[userName];
     let overlapStyle = '';
     if (index > 1) {
-        overlapStyle = ' relative left-[-10px]';
+        overlapStyle = ' sm:top-[-20px] sm:left-0 relative left-[-10px]';
     }
-    return <img className={'rounded-full inline w-10 h-10 mb-2' + overlapStyle} src={userImg} alt={userName} />
+    return <img className={'sm:divide-y rounded-full inline w-10 h-10 mb-2' + overlapStyle} src={userImg} alt={userName} />
 }

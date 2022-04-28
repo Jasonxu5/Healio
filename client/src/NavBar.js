@@ -75,7 +75,7 @@ export default function NavBar() {
     });
 
     return (
-        <nav className="bg-light-green w-48 h-screen fixed top-0">
+        <nav className="md:hidden bg-light-green w-48 h-screen fixed top-0">
             <h1 className="font-heading text-3xl font-bold px-3 py-8">Healio</h1>
             <div className="flex flex-col my-20">
                 {categoriesArray}

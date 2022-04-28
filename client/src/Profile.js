@@ -12,7 +12,7 @@ export default function Profile(props) {
     }
     return (
         <div>
-            <div className="flex flex-col pl-[235px]">
+            <div className="md:pl-[25px] flex flex-col pl-[235px]">
                 {profileHeader}
                 {profileLayout}
             </div>
@@ -35,7 +35,7 @@ function ProfileInformation(props) {
     });
 
     return (
-        <div className="flex gap-6">
+        <div className="sm:flex-col flex gap-6">
             <img src={currUser.img} className="rounded-full w-36 h-36 border-2" />
             <div className="flex flex-col gap-6 font-heading text-2xl">
                 <h1>{currUser.firstName + ' ' + currUser.lastName}</h1>
@@ -97,7 +97,7 @@ function EditProfile(props) {
     }
 
     return (
-        <div className="flex gap-6">
+        <div className="sm:flex-col flex gap-6">
             <div>
                 <img src={currUser.img} className="rounded-full w-36 h-36 border-2" />
                 <form className="relative">
@@ -105,10 +105,10 @@ function EditProfile(props) {
                     <input className="absolute file:visible file:py-3 file:px-6 file:border-light-blue bg-[#FFFFFF] file:rounded-[15px] file:hover:cursor-pointer file:hover:bg-light-blue hover:font-bold invisible left-[5px] top-[5px]" type="file" name="img" accept="image/*" />
                 </form>
             </div>
-            <div className="flex flex-col gap-6 font-heading text-2xl">
-                <div className="flex gap-6">
-                    <input className="p-[12px] rounded-[15px] bg-grey" placeholder="New first name..." aria-label="Change first name" autoComplete="off" onChange={handleFirstNameChange} />
-                    <input className="p-[12px] rounded-[15px] bg-grey" placeholder="New last name..." aria-label="Change last name" autoComplete="off" onChange={handleLastNameChange} />
+            <div className="sm:mt-20 flex flex-col gap-6 font-heading text-2xl">
+                <div className="md:flex-col flex gap-6">
+                    <input className="sm:w-[460px] p-[12px] rounded-[15px] bg-grey" placeholder="New first name..." aria-label="Change first name" autoComplete="off" onChange={handleFirstNameChange} />
+                    <input className="sm:w-[460px] p-[12px] rounded-[15px] bg-grey" placeholder="New last name..." aria-label="Change last name" autoComplete="off" onChange={handleLastNameChange} />
                 </div>
                 <div>
                     <h1 className="mb-4">Family Information</h1>

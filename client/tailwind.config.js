@@ -4,7 +4,8 @@ module.exports = {
   ],
   theme: {
     screens: {
-      'sm': { 'max': '768px' }
+      'md': { 'max': '1040px' },
+      'sm': { 'max': '768px'}
     },
     extend: {
       keyframes: {

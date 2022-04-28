@@ -1,3 +1,5 @@
+// how do you add overflow to each card?
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import doctor from './img/doctor.svg';
@@ -15,7 +17,7 @@ const HEALTH_CARD_TITLES = [
 export default function Health(props) {
     const { currUser, healthHeader } = props;
     return (
-        <div className="flex flex-col pl-[235px]">
+        <div className="md:pl-[25px] flex flex-col pl-[235px]">
             {healthHeader}
             <HealthCards currUser={currUser} />
         </div>
@@ -54,7 +56,7 @@ function HealthCards(props) {
         return <SingleHealthCard title={cardTitle} body={body} count={index} currUserFirstName={currUser.firstName} key={index} />;
     });
     return (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="sm:flex sm:flex-col grid grid-cols-2 gap-4">
             {healthInfoCards}
         </div>
     );
@@ -70,7 +72,7 @@ function CardHasImage(props) {
                 <div className="mt-6 text-dark-blue">
                     <Link className="absolute p-2 font-semibold bg-dark-green rounded-lg" to='/appointments'>Schedule Appointment {'>'}</Link>
                 </div>
-                <img className="absolute top-[-79px] h-[14rem] right-0" src={doctor} alt="Doctor Clip Art" />
+                <img className="md:hidden absolute top-[-79px] h-[14rem] right-0" src={doctor} alt="Doctor Clip Art" />
             </div>
         );
     } else {
@@ -79,7 +81,7 @@ function CardHasImage(props) {
                 <div className="mt-4 text-dark-blue">
                     <Link className="absolute p-2 font-semibold bg-dark-green rounded-lg" to='/resources'>Find Providers {'>'}</Link>
                 </div>
-                <img className="absolute top-[-72px] right-[-20px]" src={hospital} alt="Hospital Clip Art" />
+                <img className="md:hidden absolute top-[-72px] right-[-20px]" src={hospital} alt="Hospital Clip Art" />
             </div>
         );
     }
@@ -149,7 +151,7 @@ function SingleHealthCard(props) {
     if (count === 2) {
         stackSmallCards = 'row-start-2 col-start-2 '
     } else if (count === 3) {
-        stackSmallCards = 'row-start-2 col-start 2 col-end-[-1] self-end ';
+        stackSmallCards = 'sm:self-start row-start-2 col-start 2 col-end-[-1] self-end ';
     } else {
         stackSmallCards = '';
     }
@@ -167,7 +169,7 @@ function SingleHealthCard(props) {
 
     // Create card width depending on where it is on the grid
     if (count === 0) {
-        widthPxSize = 'w-[97.5%] ';
+        widthPxSize = 'sm:w-[95%] w-[97.5%] ';
     } else {
         widthPxSize = 'w-[95%] ';
     }
