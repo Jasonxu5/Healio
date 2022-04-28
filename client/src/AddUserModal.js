@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
@@ -33,8 +34,13 @@ export default function AddUserModal(props) {
         setCurrUsersAdded([]);
     };
 
+    // modal is a piece of garbage that blocks scrolling
+    if (useLocation().pathname !== '/messages' && isAddUserClicked) {
+        document.body.style.overflow = '';
+    }
+    
     return (
-        <Modal className="sm:w-[250px] md:w-[500px] absolute left-[25%] top-[40%] w-[750px] p-5 bg-white border-2 border-black rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" show={isAddUserClicked}>
+        <Modal className="sm:w-[250px] sm:top-[10%] md:w-[500px] absolute left-[25%] top-[40%] w-[750px] p-5 bg-white border-2 border-black rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" show={isAddUserClicked}>
             <FontAwesomeIcon className="text-2xl mb-2 hover:text-[#FF0000] hover:cursor-pointer" onClick={() => addUserCallback(false)} icon={faX} size="lg" aria-label="Close icon" />
             <Modal.Header className="text-center" closeButton>
                 <Modal.Title className="font-header text-3xl">Add a family member</Modal.Title>
