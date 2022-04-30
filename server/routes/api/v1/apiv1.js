@@ -33,9 +33,34 @@ async function verifyAuthToken(req, res, next) {
 }
 
 router.get('/logout', async function (req, res, next) {
-  res.cookie("jwt", "", { maxAge: "1" })
+  console.log(req.cookies);
+  res.cookie("jwt", "", { maxAge: "1" }) // overwrite the existing jwt token
   console.log("Login Session Cookie deleted")
   res.json({ "Status": "Logged out" })
+})
+
+router.get('/currentCookie', async function (req, res, next) {
+  const decode = jwt.decode(req.cookies.jwt, jwtSecret);
+  console.log(decode);
+  const token = req.cookies.jwt
+  console.log(token);
+  if (token) {
+    jwt.verify(token, jwtSecret, (err) => {
+      if (err) {
+        res.json({ "Error": err })
+        return;
+      }
+      res.json({ "Status": "Success" })
+      return;
+    })
+  } else {
+    res.json({ "Error": "Unauthorized, no token found" })
+    return;
+  }
+})
+
+router.get('/isLoggedIn', async function (req, res, next) {
+  return;
 })
 
 router.post('/userlogin', async function (req, res, next) {
@@ -48,8 +73,7 @@ router.post('/userlogin', async function (req, res, next) {
   //     }
   //   })
   // }
-
-  console.log("hello", req.cookies.jwt); // Do this after login credentials are determined to be correct. Check if the token matches the account when going to dashboard page
+  // console.log("hello world: ", req.cookies.jwt); // Do this after login credentials are determined to be correct. Check if the token matches the account when going to dashboard page
 
   let email = req.body.email;
   let password = req.body.password;
@@ -116,6 +140,7 @@ function createToken(res, user) {
     const token = jwt.sign(
       {
         id: user._id,
+        email: user.email,
         is_admin: user.is_family_manager
       },
       jwtSecret,
@@ -123,13 +148,12 @@ function createToken(res, user) {
         expiresIn: maxAge,
       }
     );
-    console.log(token);
-    res.cookie('jwt', token, {
+    let cookie = res.cookie('jwt', token, {
       httpOnly: true, // only allows server to access this cookie for security, not stored on browser (client-side)
       maxAge: maxAge * 1000, // 1 hour in milliseconds
     });
 
-    return 1
+    return cookie
   } catch (error) {
     console.log(error);
   }
