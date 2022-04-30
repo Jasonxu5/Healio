@@ -43,7 +43,7 @@ const INPUTS = [
   'Password'
 ];
 
-export default function Login() {
+export default function Login(props) {
   const formInputArray = INPUTS.map((input, index) => {
     return <SingleFormInput input={input} key={index} />
   });
@@ -52,11 +52,12 @@ export default function Login() {
     <div className="flex flex-col bg-light-green w-[50%] py-4 mx-auto">
       <h1 className="text-center font-heading text-3xl pb-3">Sign In</h1>
       <p className="text-center text-2xl pb-3">Please choose a sign-in method:</p>
-      <StyledFirebaseAuth uiConfig={UI_CONFIG} firebaseAuth={firebase.auth()} />
+      {/* <StyledFirebaseAuth uiConfig={UI_CONFIG} firebaseAuth={firebase.auth()} /> */}
       <div>
         {formInputArray}
       </div>
-      <p className="mx-auto py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={userLogin}>
+      <p className="mx-auto error_message bg-red"></p>
+      <p className="mx-auto py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={() => userLogin(props)}>
         Sign In
       </p>
       <p className="text-center pb-3">Don't have an account? <Link className="text-light-blue underline" to="/signup">Sign up here!</Link></p>
@@ -64,7 +65,7 @@ export default function Login() {
   );
 }
 
-async function userLogin() {
+async function userLogin(props) {
   let email = document.querySelector("#root > div > div > div > form:nth-child(1) > input").value;
   let password = document.querySelector("#root > div > div > div > form:nth-child(2) > input").value;
 
@@ -79,12 +80,15 @@ async function userLogin() {
     let string = JSON.stringify(responseJSON);
 
     if (string.includes('Error')) {
-      console.log(string);
+      document.querySelector("#root > div > div > p.mx-auto.error_message.bg-red").textContent = string;
     }
 
     if (string.includes('success')) {
       console.log("Login Successful");
       // Redirect to dashboard page
+      props.setSignedInTrue();
+
+      // Check current token here
     }
   } catch (error) {
     console.log(error)

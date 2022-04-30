@@ -1,6 +1,10 @@
 import express from "express";
 import firebaseAdmin from "../../../firebaseAdmin.js";
-import bcrypt from 'bcryptjs'
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { jwtSecret } from "../../../jwtSecret.js";
+
+// import { userAuth } from "../../../app.js"
 
 var router = express.Router();
 
@@ -28,13 +32,27 @@ async function verifyAuthToken(req, res, next) {
   }
 }
 
+router.get('/logout', async function (req, res, next) {
+  res.cookie("jwt", "", { maxAge: "1" })
+  console.log("Login Session Cookie deleted")
+  res.json({ "Status": "Logged out" })
+})
+
 router.post('/userlogin', async function (req, res, next) {
   // console.log(req.headers.authorization);
+  // const token = req.cookies.jwt;
+  // if (token) {
+  //   jwt.verify(token, jwtSecret, (err) => {
+  //     if (err) {
+  //       res.json({ Error: "Unauthorized User! Please create an account or sign in." })
+  //     }
+  //   })
+  // }
+
+  console.log("hello", req.cookies.jwt); // Do this after login credentials are determined to be correct. Check if the token matches the account when going to dashboard page
 
   let email = req.body.email;
   let password = req.body.password;
-
-  console.log(email);
 
   if (!email || !password) {
     res.json({ "Error: ": "No email or password provided" })
@@ -49,12 +67,13 @@ router.post('/userlogin', async function (req, res, next) {
 
   bcrypt.compare(password, user.password)
     .then(function (result) {
-      console.log(result)
       if (result) {
+        createToken(res, user)
         res.json({ "status": "success" })
         return;
+      } else {
+        res.json({ "Error: ": "Incorrect email or password" })
       }
-      res.json({ "Error: ": "Login not successful" })
     })
 })
 
@@ -83,11 +102,37 @@ router.post('/user', async function (req, res, next) {
       })
 
       await newUser.save()
+      createToken(res, newUser)
       res.json({ "status": "success" })
     } catch (error) {
       res.json({ "Error": error })
     }
   })
 })
+
+function createToken(res, user) {
+  try {
+    const maxAge = 60 * 60 // 1 hour in seconds
+    const token = jwt.sign(
+      {
+        id: user._id,
+        is_admin: user.is_family_manager
+      },
+      jwtSecret,
+      {
+        expiresIn: maxAge,
+      }
+    );
+    console.log(token);
+    res.cookie('jwt', token, {
+      httpOnly: true, // only allows server to access this cookie for security, not stored on browser (client-side)
+      maxAge: maxAge * 1000, // 1 hour in milliseconds
+    });
+
+    return 1
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export default router;

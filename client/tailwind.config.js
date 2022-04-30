@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     screens: {
       'md': { 'max': '1040px' },
-      'sm': { 'max': '768px'}
+      'sm': { 'max': '768px' }
     },
     extend: {
       keyframes: {
@@ -31,7 +31,8 @@ module.exports = {
       'grey': '#E5E5E5',
       'dark-grey': '#8E8E8E',
       'white': '#FFFFFF',
-      'black': '#000000'
+      'black': '#000000',
+      'red': '#FDE8E8'
     }
   },
   plugins: [],

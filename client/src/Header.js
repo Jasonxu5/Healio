@@ -11,6 +11,8 @@ import katie from './img/katie.png'; // profile picture
 import daughter from './img/daughter.png';
 import grandma from './img/grandma.png';
 
+const apiEndpoint = "http://localhost:5000/api/v1/"
+
 const USER_INFO = [
     {
         firstName: 'Katie',
@@ -210,7 +212,7 @@ const USER_INFO = [
 ];
 
 export default function Header(props) {
-    const { title, currUser, setUserCallback, familyInfo, familyInfoCallback } = props;
+    const { title, currUser, setUserCallback, familyInfo, familyInfoCallback, setSignedInFalse } = props;
     const [isMenuOpen, setMenu] = useState(false);
     const [isAddUserClicked, setIsAddUserClicked] = useState(false);
     const ref = useRef();
@@ -249,7 +251,7 @@ export default function Header(props) {
             <div className="absolute flex bottom-[20px] right-[30px] hover:cursor-pointer bg-light-green rounded-full mb-2 pr-3" onClick={() => setMenu(true)}>
                 <img className="rounded-full inline w-12 h-12" src={currUser.img} alt={fullName} />
                 <FontAwesomeIcon className="self-center text-2xl ml-3" icon={faAngleDown} size="lg" aria-label="Down arrow for choosing a user in the family" />
-                {isMenuOpen ? MenuPopup(ref, fullName, currUser.img, familyInfoArray) : null}
+                {isMenuOpen ? MenuPopup(ref, fullName, currUser.img, familyInfoArray, props) : null}
             </div>
         </header>
     );
@@ -281,9 +283,12 @@ function AddAnotherUser(addUserCallback) {
     );
 }
 
-function MenuPopup(ref, fullName, img, familyInfoArray) {
-    const handleSignOut = () => {
-        firebase.auth().signOut();
+function MenuPopup(ref, fullName, img, familyInfoArray, props) {
+    const handleSignOut = async () => {
+        // firebase.auth().signOut();
+        await fetch(apiEndpoint + "logout");
+        console.log('logging out')
+        props.setSignedInFalse();
     }
 
     return (

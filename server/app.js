@@ -3,6 +3,8 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors';
+import jwt from 'jsonwebtoken';
+import { jwtSecret } from "./jwtSecret.js";
 
 import db from "./db.js";
 import indexRouter from './routes/index.js';
@@ -17,7 +19,7 @@ const __dirname = dirname(__filename);
 
 let app = express();
 
-app.use(cors());
+app.use(cors({ credentials: true }));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -28,6 +30,21 @@ app.use(function (req, res, next) {
   req.db = db;
   next();
 })
+
+// export function userAuth(req, res, next) {
+//   const token = req.cookies.jwt;
+//   console.log("hello", token);
+//   if (token) {
+//     jwt.verify(token, jwtSecret, (err) => {
+//       if (err) {
+//         res.json({ Error: "Unauthorized User! Please create an account or sign in." })
+//       }
+//       next();
+//     });
+//   } else {
+//     res.json({ Error: "Authorization Error! No Token Found." })
+//   }
+// }
 
 app.use('/api/v1', apiRouter);
 //app.use('/users', usersRouter);

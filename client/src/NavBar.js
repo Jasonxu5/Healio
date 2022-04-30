@@ -5,6 +5,8 @@ import { faSquarePlus, faCalendarCheck, faMessage, faLightbulb, faUser, faRightF
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 
+const apiEndpoint = "http://localhost:5000/api/v1/"
+
 const CATEGORIES = [
     {
         queryLink: '/health',
@@ -58,9 +60,11 @@ const CATEGORIES = [
     }
 ];
 
-export default function NavBar() {
-    const handleSignOut = () => {
-        firebase.auth().signOut();
+export default function NavBar(props) {
+    const handleSignOut = async () => {
+        await fetch(apiEndpoint + "logout");
+        console.log('logging out')
+        props.setSignedInFalse();
     }
 
     const [isMenuOpen, setMenuOpen] = useState(false);

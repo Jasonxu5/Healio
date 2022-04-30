@@ -54,6 +54,7 @@ export default function Signup() {
             <div>
                 {formInputArray}
             </div>
+            <p className="mx-auto error_message bg-red"></p>
             <p className="mx-auto py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={createUser}>
                 Create Account
             </p>
@@ -79,8 +80,7 @@ export async function createUser() {
 
     for (let i = 0; i < array.length; i++) {
         if (array[i] === '') {
-            // See Line 96 for suggested improvement
-            document.querySelector("#root > div > div > p.mx-auto.py-3.px-6.border-2.border-light-blue.bg-\\[\\#FFFFFF\\].rounded-\\[15px\\].hover\\:cursor-pointer.hover\\:bg-light-blue.hover\\:font-bold").textContent = "One or more fields are empty"
+            document.querySelector("#root > div > div > p.mx-auto.error_message").textContent = "One or more fields are empty"
             return;
         }
     }
@@ -94,11 +94,11 @@ export async function createUser() {
         let responseJSON = await response.json();
         let string = JSON.stringify(responseJSON);
         if (string.includes('Error')) {
-            document.querySelector("#root > div > div > p.mx-auto.py-3.px-6.border-2.border-light-blue.bg-\\[\\#FFFFFF\\].rounded-\\[15px\\].hover\\:cursor-pointer.hover\\:bg-light-blue.hover\\:font-bold").textContent = "Another account already exists with this email"
-            // Try to display a <p> Element instead: return (<div><p>Error: Another account already exists with this email.</p></div>)
+            document.querySelector("#root > div > div > p.mx-auto.error_message").textContent = "Another account already exists with this email"
         } else { // {status : success}
-            document.querySelector("#root > div > div > p.mx-auto.py-3.px-6.border-2.border-light-blue.bg-\\[\\#FFFFFF\\].rounded-\\[15px\\].hover\\:cursor-pointer.hover\\:bg-light-blue.hover\\:font-bold").textContent = "Success!"
+            document.querySelector("#root > div > div > p.mx-auto.error_message").textContent = "Success!";
             // Redirect page to Login Page
+            window.location.replace('/login');
         }
 
     } catch (error) {

@@ -125,12 +125,12 @@ const FAMILY_INFO = [
     ],
     labResults: [],
     medications: [
-        {
-            date: new Date('February 5, 2022'),
-            name: 'Acetaminophen',
-            doctor: 'Dr. Valera',
-            status: 'Active'
-        }
+      {
+        date: new Date('February 5, 2022'),
+        name: 'Acetaminophen',
+        doctor: 'Dr. Valera',
+        status: 'Active'
+      }
     ],
     doctorNotes: {
       date: '02/08/2021',
@@ -162,54 +162,63 @@ function App() {
   const [currUser, setCurrUser] = useState(FAMILY_INFO[0]);
   const [familyInfo, setFamilyInfo] = useState(FAMILY_INFO);
 
-  useEffect(() => {
-    // fetch('/api')
-    //   .then((res) => res.json())
-    //   .then((data) => setData(data.message))
-    //   .catch((error) => { console.log(error) });
+  // useEffect(() => {
+  // fetch('/api')
+  //   .then((res) => res.json())
+  //   .then((data) => setData(data.message))
+  //   .catch((error) => { console.log(error) });
 
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-    } else {
-      firebase.app();
-    }
-    const getUser = async () => {
-      try {
-        const token = await firebase.auth().currentUser.getIdToken(true);
-        // console.log(firebase.auth.currentUser);
-        const req = await fetch(apiEndpoint + "user", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: `Bearer ${token}`,
-          },
-        });
-        console.log(req);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    getUser();
-    const authUnregisterFunction = firebase.auth().onAuthStateChanged((firebaseUser) => {
-      if (firebaseUser) {
-        setIsSignedIn(true);
-        //setCurrUser(firebaseUser);
-      } else {
-        // only change isLoggedIn when it's true
-        if (isSignedIn) {
-          setIsSignedIn(false);
-        }
+  //   if (!firebase.apps.length) {
+  //     firebase.initializeApp(firebaseConfig);
+  //   } else {
+  //     firebase.app();
+  //   }
+  //   const getUser = async () => {
+  //     try {
+  //       const token = await firebase.auth().currentUser.getIdToken(true);
+  //       // console.log(firebase.auth.currentUser);
+  //       const req = await fetch(apiEndpoint + "user", {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           authorization: `Bearer ${token}`,
+  //         },
+  //       });
+  //       console.log(req);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   getUser();
+  //   const authUnregisterFunction = firebase.auth().onAuthStateChanged((firebaseUser) => {
+  //     if (firebaseUser) {
+  //       setIsSignedIn(true);
+  //       //setCurrUser(firebaseUser);
+  //     } else {
+  //       // only change isLoggedIn when it's true
+  //       if (isSignedIn) {
+  //         setIsSignedIn(false);
+  //       }
 
-        // setCurrUser(null);
-      }
-    })
+  //       // setCurrUser(null);
+  //     }
+  //   })
 
-    return function cleanup() {
-      authUnregisterFunction();
-    }
-  }, [isSignedIn])
+  //   return function cleanup() {
+  //     authUnregisterFunction();
+  //   }
+  // }, [isSignedIn])
 
   // console.log(data)
+
+  function setSignedInTrue() {
+    setIsSignedIn(true);
+  }
+
+  function setSignedInFalse() {
+    console.log("logging out")
+    setIsSignedIn(false);
+  }
 
   // Scroll lock on messages
   if (useLocation().pathname === '/messages') {
@@ -219,15 +228,15 @@ function App() {
   }
 
   // Headers for each page, not sure if there's a better way to do this
-  const healthHeader = <Header title={'Overview'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
+  const healthHeader = <Header title={'Overview'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} setSignedInFalse={setSignedInFalse} />;
   const labResultsHeader = <Header title={'Lab Results'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />
   const medicationsHeader = <Header title={'Medications'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />
 
-  const messagingHeader = <Header title={'Messaging'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo}/>;
+  const messagingHeader = <Header title={'Messaging'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
 
-  const profileHeader = <Header title={'Your Profile'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo}/>;
+  const profileHeader = <Header title={'Your Profile'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
 
-  const templateHeader = <Header title={'To be worked on ...'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo}/>;
+  const templateHeader = <Header title={'To be worked on ...'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
 
   if (isSignedIn) {
     return (
@@ -252,7 +261,7 @@ function App() {
           <Route path="/profile" element={<Profile currUser={currUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} profileHeader={profileHeader} />} />
           <Route path="*" element={<Navigate replace to="/health" />} />
         </Routes>
-        <NavBar />
+        <NavBar setSignedInFalse={setSignedInFalse} />
         <p>{!data ? "" : data}</p>
       </div>
 
@@ -262,7 +271,7 @@ function App() {
       <div>
         <Routes>
           <Route exact path="/" element={<Landing />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login setSignedInTrue={setSignedInTrue} />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
