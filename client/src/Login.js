@@ -8,34 +8,14 @@ import 'firebase/compat/auth';
 
 const apiEndpoint = "http://localhost:5000/api/v1/"
 
-
-// Configure FirebaseUI.
-// const uiConfig = {
-//   // Popup signin flow rather than redirect flow.
-//   signInFlow: 'popup',
-//   // Redirect to / after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
-//   signInSuccessUrl: '/home',
-//   signInOptions: [
-//     firebase.auth.EmailAuthProvider.PROVIDER_ID,
-//     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-//   ],
-// };
-
 const UI_CONFIG = {
   signInFlow: 'popup',
   signInSuccessUrl: '/home',
   signInOptions: [
-    // {
-    //   provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    //   requireDisplayName: true,
-    // },
     {
       provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     }
   ]
-  // callbacks: {
-  //   signInSuccessWithAuthResult: () => false
-  // },
 };
 
 const INPUTS = [
@@ -52,7 +32,6 @@ export default function Login(props) {
     <div className="flex flex-col bg-light-green w-[50%] py-4 mx-auto">
       <h1 className="text-center font-heading text-3xl pb-3">Sign In</h1>
       <p className="text-center text-2xl pb-3">Please choose a sign-in method:</p>
-      {/* <StyledFirebaseAuth uiConfig={UI_CONFIG} firebaseAuth={firebase.auth()} /> */}
       <div>
         {formInputArray}
       </div>
@@ -89,8 +68,6 @@ async function userLogin(props) {
       console.log("Login Successful");
       // Redirect to dashboard page
       props.loginStatus();
-
-      // Check current token here
     }
   } catch (error) {
     console.log(error)

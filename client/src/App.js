@@ -148,14 +148,14 @@ const FAMILY_INFO = [
 ];
 
 // NOTE: Use Environement Variables once app is deployed to production
-const firebaseConfig = {
-  apiKey: "AIzaSyAGSZzesnF02c38v_XRDH0ZjtAQnxltI10",
-  authDomain: "healio-e7722.firebaseapp.com",
-  projectId: "healio-e7722",
-  storageBucket: "healio-e7722.appspot.com",
-  messagingSenderId: "920066944228",
-  appId: "1:920066944228:web:0d00c25c07d1b2c1b890f1"
-};
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAGSZzesnF02c38v_XRDH0ZjtAQnxltI10",
+//   authDomain: "healio-e7722.firebaseapp.com",
+//   projectId: "healio-e7722",
+//   storageBucket: "healio-e7722.appspot.com",
+//   messagingSenderId: "920066944228",
+//   appId: "1:920066944228:web:0d00c25c07d1b2c1b890f1"
+// };
 
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -163,50 +163,6 @@ function App() {
   const [currUser, setCurrUser] = useState(FAMILY_INFO[0]);
   const [familyInfo, setFamilyInfo] = useState(FAMILY_INFO);
 
-  // fetch('/api')
-  //   .then((res) => res.json())
-  //   .then((data) => setData(data.message))
-  //   .catch((error) => { console.log(error) });
-
-  //   if (!firebase.apps.length) {
-  //     firebase.initializeApp(firebaseConfig);
-  //   } else {
-  //     firebase.app();
-  //   }
-  //   const getUser = async () => {
-  //     try {
-  //       const token = await firebase.auth().currentUser.getIdToken(true);
-  //       // console.log(firebase.auth.currentUser);
-  //       const req = await fetch(apiEndpoint + "user", {
-  //         method: 'POST',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           authorization: `Bearer ${token}`,
-  //         },
-  //       });
-  //       console.log(req);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  //   getUser();
-  //   const authUnregisterFunction = firebase.auth().onAuthStateChanged((firebaseUser) => {
-  //     if (firebaseUser) {
-  //       setIsSignedIn(true);
-  //       //setCurrUser(firebaseUser);
-  //     } else {
-  //       // only change isLoggedIn when it's true
-  //       if (isSignedIn) {
-  //         setIsSignedIn(false);
-  //       }
-
-  //       // setCurrUser(null);
-  //     }
-  //   })
-
-  //   return function cleanup() {
-  //     authUnregisterFunction();
-  //   }
   function currentUser(user) {
     FAMILY_INFO[0].firstName = user.first_name;
     FAMILY_INFO[0].lastName = user.last_name;
@@ -228,7 +184,8 @@ function App() {
     } else {
       setIsSignedIn(true);
       let json = JSON.parse(string)
-      currentUser(json); // For auth purposes, I can call if (loginStatus) to determine if the user is authenticated or not
+      console.log(json);
+      currentUser(json);
     }
   }
   loginStatus();
