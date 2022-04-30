@@ -63,14 +63,14 @@ const CATEGORIES = [
 export default function NavBar(props) {
     async function handleSignOut() {
         await fetch(apiEndpoint + "logout",
-        {
-            method: "GET",
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-            mode: 'cors'
-        });
+            {
+                method: "GET",
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                mode: 'cors'
+            });
         console.log('logging out')
-        props.setSignedInFalse();
+        props.loginStatus();
     }
 
     const [isMenuOpen, setMenuOpen] = useState(false);

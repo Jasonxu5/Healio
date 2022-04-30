@@ -24,10 +24,11 @@ import { FirebaseError } from 'firebase/app';
 const apiEndpoint = "http://localhost:5000/api/v1/"
 
 // i'm sorry but i can't parse images in json files
+// cut down this array later, keep it hardcoded for now
 const FAMILY_INFO = [
   {
-    firstName: 'Katie',
-    lastName: 'Wang',
+    firstName: '',
+    lastName: '',
     img: katie,
     notifications: [
       'You have a new message from Dr. Osborn!',
@@ -162,83 +163,76 @@ function App() {
   const [currUser, setCurrUser] = useState(FAMILY_INFO[0]);
   const [familyInfo, setFamilyInfo] = useState(FAMILY_INFO);
 
-  useEffect(() => {
-    // fetch('/api')
-    //   .then((res) => res.json())
-    //   .then((data) => setData(data.message))
-    //   .catch((error) => { console.log(error) });
+  // fetch('/api')
+  //   .then((res) => res.json())
+  //   .then((data) => setData(data.message))
+  //   .catch((error) => { console.log(error) });
 
-    //   if (!firebase.apps.length) {
-    //     firebase.initializeApp(firebaseConfig);
-    //   } else {
-    //     firebase.app();
-    //   }
-    //   const getUser = async () => {
-    //     try {
-    //       const token = await firebase.auth().currentUser.getIdToken(true);
-    //       // console.log(firebase.auth.currentUser);
-    //       const req = await fetch(apiEndpoint + "user", {
-    //         method: 'POST',
-    //         headers: {
-    //           'Content-Type': 'application/json',
-    //           authorization: `Bearer ${token}`,
-    //         },
-    //       });
-    //       console.log(req);
-    //     } catch (err) {
-    //       console.log(err);
-    //     }
-    //   }
-    //   getUser();
-    //   const authUnregisterFunction = firebase.auth().onAuthStateChanged((firebaseUser) => {
-    //     if (firebaseUser) {
-    //       setIsSignedIn(true);
-    //       //setCurrUser(firebaseUser);
-    //     } else {
-    //       // only change isLoggedIn when it's true
-    //       if (isSignedIn) {
-    //         setIsSignedIn(false);
-    //       }
+  //   if (!firebase.apps.length) {
+  //     firebase.initializeApp(firebaseConfig);
+  //   } else {
+  //     firebase.app();
+  //   }
+  //   const getUser = async () => {
+  //     try {
+  //       const token = await firebase.auth().currentUser.getIdToken(true);
+  //       // console.log(firebase.auth.currentUser);
+  //       const req = await fetch(apiEndpoint + "user", {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           authorization: `Bearer ${token}`,
+  //         },
+  //       });
+  //       console.log(req);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   getUser();
+  //   const authUnregisterFunction = firebase.auth().onAuthStateChanged((firebaseUser) => {
+  //     if (firebaseUser) {
+  //       setIsSignedIn(true);
+  //       //setCurrUser(firebaseUser);
+  //     } else {
+  //       // only change isLoggedIn when it's true
+  //       if (isSignedIn) {
+  //         setIsSignedIn(false);
+  //       }
 
-    //       // setCurrUser(null);
-    //     }
-    //   })
+  //       // setCurrUser(null);
+  //     }
+  //   })
 
-    //   return function cleanup() {
-    //     authUnregisterFunction();
-    //   }
-    async function loginStatus() {
-      let response = await fetch(apiEndpoint + `currentCookie`,
-        {
-          method: "GET",
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          mode: 'cors'
-        })
-      let responseJSON = await response.json();
-      let string = JSON.stringify(responseJSON);
+  //   return function cleanup() {
+  //     authUnregisterFunction();
+  //   }
+  function currentUser(user) {
+    FAMILY_INFO[0].firstName = user.first_name;
+    FAMILY_INFO[0].lastName = user.last_name;
+  }
 
-      if (string.includes('Success')) {
-        setIsSignedIn(true);
-        return string; // For auth purposes, I can call if (loginStatus) to determine if the user is authenticated or not
-      } else {
-        setIsSignedIn(false);
-      }
+  async function loginStatus() {
+    let response = await fetch(apiEndpoint + `currentCookie`,
+      {
+        method: "GET",
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        mode: 'cors'
+      })
+    let responseJSON = await response.json();
+    let string = JSON.stringify(responseJSON);
+
+    if (string.includes('Error')) {
+      setIsSignedIn(false);
+    } else {
+      setIsSignedIn(true);
+      let json = JSON.parse(string)
+      currentUser(json); // For auth purposes, I can call if (loginStatus) to determine if the user is authenticated or not
     }
-    loginStatus();
-
-
-  }, [isSignedIn])
-
-  // console.log(data)
-
-  function setSignedInTrue() {
-    setIsSignedIn(true);
   }
+  loginStatus();
 
-  function setSignedInFalse() {
-    setIsSignedIn(false);
-  }
 
   // Scroll lock on messages
   if (useLocation().pathname === '/messages') {
@@ -248,7 +242,7 @@ function App() {
   }
 
   // Headers for each page, not sure if there's a better way to do this
-  const healthHeader = <Header title={'Overview'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} setSignedInFalse={setSignedInFalse} />;
+  const healthHeader = <Header title={'Overview'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} loginStatus={loginStatus} />;
   const labResultsHeader = <Header title={'Lab Results'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />
   const medicationsHeader = <Header title={'Medications'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />
 
@@ -281,7 +275,7 @@ function App() {
           <Route path="/profile" element={<Profile currUser={currUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} profileHeader={profileHeader} />} />
           <Route path="*" element={<Navigate replace to="/health" />} />
         </Routes>
-        <NavBar setSignedInFalse={setSignedInFalse} />
+        <NavBar loginStatus={loginStatus} />
         <p>{!data ? "" : data}</p>
       </div>
 
@@ -291,7 +285,7 @@ function App() {
       <div>
         <Routes>
           <Route exact path="/" element={<Landing />} />
-          <Route path="/login" element={<Login setSignedInTrue={setSignedInTrue} />} />
+          <Route path="/login" element={<Login loginStatus={loginStatus} />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>

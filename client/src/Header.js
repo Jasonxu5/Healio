@@ -212,7 +212,7 @@ const USER_INFO = [
 ];
 
 export default function Header(props) {
-    const { title, currUser, setUserCallback, familyInfo, familyInfoCallback, setSignedInFalse } = props;
+    const { title, currUser, setUserCallback, familyInfo, familyInfoCallback, loginStatus } = props;
     const [isMenuOpen, setMenu] = useState(false);
     const [isAddUserClicked, setIsAddUserClicked] = useState(false);
     const ref = useRef();
@@ -293,7 +293,7 @@ function MenuPopup(ref, fullName, img, familyInfoArray, props) {
             mode: 'cors'
         });
         console.log('logging out')
-        props.setSignedInFalse();
+        props.loginStatus();
     }
 
     return (

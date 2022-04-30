@@ -88,7 +88,7 @@ async function userLogin(props) {
     if (string.includes('success')) {
       console.log("Login Successful");
       // Redirect to dashboard page
-      props.setSignedInTrue();
+      props.loginStatus();
 
       // Check current token here
     }

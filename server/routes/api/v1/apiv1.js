@@ -40,8 +40,6 @@ router.get('/logout', async function (req, res, next) {
 })
 
 router.get('/currentCookie', async function (req, res, next) {
-  const decode = jwt.decode(req.cookies.jwt, jwtSecret);
-  console.log(decode);
   const token = req.cookies.jwt
   console.log(token);
   if (token) {
@@ -50,7 +48,8 @@ router.get('/currentCookie', async function (req, res, next) {
         res.json({ "Error": err })
         return;
       }
-      res.json({ "Status": "Success" })
+      const decode = jwt.decode(req.cookies.jwt, jwtSecret);
+      res.json(decode)
       return;
     })
   } else {
