@@ -140,6 +140,8 @@ function createToken(res, user) {
     const token = jwt.sign(
       {
         id: user._id,
+        first_name: user.first_name,
+        last_name: user.last_name,
         email: user.email,
         is_admin: user.is_family_manager
       },

@@ -286,7 +286,12 @@ function AddAnotherUser(addUserCallback) {
 function MenuPopup(ref, fullName, img, familyInfoArray, props) {
     const handleSignOut = async () => {
         // firebase.auth().signOut();
-        await fetch(apiEndpoint + "logout");
+        await fetch(apiEndpoint + "logout", {
+            method: "GET",
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            mode: 'cors'
+        });
         console.log('logging out')
         props.setSignedInFalse();
     }

@@ -73,7 +73,9 @@ async function userLogin(props) {
     let response = await fetch(apiEndpoint + "userlogin", {
       method: "POST",
       body: JSON.stringify({ email: email, password: password }),
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      mode: 'cors'
     })
 
     let responseJSON = await response.json();

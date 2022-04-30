@@ -61,8 +61,14 @@ const CATEGORIES = [
 ];
 
 export default function NavBar(props) {
-    const handleSignOut = async () => {
-        await fetch(apiEndpoint + "logout");
+    async function handleSignOut() {
+        await fetch(apiEndpoint + "logout",
+        {
+            method: "GET",
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            mode: 'cors'
+        });
         console.log('logging out')
         props.setSignedInFalse();
     }
