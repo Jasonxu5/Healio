@@ -53,7 +53,7 @@ export default function Landing() {
 function NavBar(css, ref) {
     return (
         <div className={css} ref={ref}>
-            <p className="mt-2">Contact</p>
+            <Link to="/" className="mt-2">Home</Link>
             <p className="mt-2">About</p>
             <Link to="/login">
                 <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 hover:cursor-pointer">Login</p>
