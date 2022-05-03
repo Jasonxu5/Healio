@@ -6,13 +6,16 @@ Our project for the Informatics Capstone is the design and development of a more
 
 - Run `npm i` in the client directory
 - Run `npm run start` in the client directory
-- Run `node www.js` in the server directory to start server
+- Run `node ./bin/www` in the server directory to start server
 
 ## Team
 
 | Jason Xu                                            | Jerome Orille                                            | Niya Park                                        | Alex Ramos                                          |
 | ---------------------------------------------------- | ------------------------------------------------------- | -------------------------------------------------- | ----------------------------------------------------- |
 | [jasonxu5@uw.edu](mailto:jasonxu5@uw.edu) | [jcorille@uw.edu](mailto:jcorille@uw.edu) | [njkpark@uw.edu](mailto:njkpark@uw.edu) | [aramos10@uw.edu](mailto:aramos10@uw.edu) |
+
+## Contributing
+Please read [CONTRIBUTING.md](https://github.com/Jasonxu5/Healio/blob/main/CONTRIBUTING.md) for guidelines on how to contribute to this project. 
 
 ## License
 
