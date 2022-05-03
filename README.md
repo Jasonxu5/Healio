@@ -20,4 +20,4 @@ Please read [CONTRIBUTING.md](https://github.com/Jasonxu5/Healio/blob/main/CONTR
 
 ## License
 
-This project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/)
+This project is licensed under the [MIT License](https://github.com/Jasonxu5/Healio/blob/main/LICENSE)
