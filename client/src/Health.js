@@ -81,7 +81,7 @@ function CardHasImage(props) {
                 <div className="mt-4 text-dark-blue">
                     <Link className="absolute p-2 font-semibold bg-dark-green rounded-lg" to='/resources'>Find Providers {'>'}</Link>
                 </div>
-                <img className="md:hidden absolute top-[-72px] right-[-20px]" src={hospital} alt="Hospital Clip Art" />
+                <img className="md:hidden absolute top-[-20px] right-[-25px] h-[10vw]" src={hospital} alt="Hospital Clip Art" />
             </div>
         );
     }
@@ -144,7 +144,7 @@ function SingleHealthCard(props) {
     if (count === 0) {
         introCardOnGrid = 'col-span-2 ';
     } else {
-        introCardOnGrid = '';
+        introCardOnGrid = 'overflow-y-auto ';
     }
 
     // Stack smaller cards on top of each other
@@ -187,7 +187,7 @@ function SingleHealthCard(props) {
     }
 
     return (
-        <div className={"p-6 " + introCardOnGrid + stackSmallCards + widthPxSize + heightPxSize + "bg-white shadow-[2px_4px_20px_rgba(0,0,0,0.25)] rounded-[20px] overflow-y-auto"}>
+        <div className={"p-6 " + introCardOnGrid + stackSmallCards + widthPxSize + heightPxSize + "bg-white shadow-[2px_4px_20px_rgba(0,0,0,0.25)] rounded-[20px]"}>
             {headerStyle}
             {body}
         </div>

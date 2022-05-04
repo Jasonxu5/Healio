@@ -70,6 +70,9 @@ const FAMILY_INFO = [
         status: 'Inactive'
       }
     ],
+    vaccines: [],
+    allergies: [],
+    surgeries: [],
     doctorNotes: {
       date: '02/09/2021',
       body: 'Mrs. Wang is a 40 year old woman with complaints of fatigue and a sore throat since yesterday morning. She has no difficulty swallowing, but doing so makes the pain worse. Reported recording a temp of 100.7 last night. ' +
@@ -101,6 +104,9 @@ const FAMILY_INFO = [
       }
     ],
     medications: [],
+    vaccines: [],
+    allergies: [],
+    surgeries: [],
     doctorNotes: {
       date: '02/06/2022',
       body: 'Daughter Wang came home from school yesterday with a very sore throat and recorded a fever that night. She reported no other symptoms and has been taking ibuprofen for the fever. ' +
@@ -125,6 +131,9 @@ const FAMILY_INFO = [
       'New prescription added to your medications.'
     ],
     labResults: [],
+    vaccines: [],
+    allergies: [],
+    surgeries: [],
     medications: [
       {
         date: new Date('February 5, 2022'),
@@ -202,6 +211,9 @@ function App() {
   const healthHeader = <Header title={'Overview'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} loginStatus={loginStatus} />;
   const labResultsHeader = <Header title={'Lab Results'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />
   const medicationsHeader = <Header title={'Medications'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />
+  const vaccinesHeader = <Header title={'Vaccines'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />
+  const allergiesHeader = <Header title={'Allergies'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />
+  const surgeriesHeader = <Header title={'Surgeries'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />
 
   const messagingHeader = <Header title={'Messaging'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
 
@@ -217,9 +229,9 @@ function App() {
           <Route path="/health/overview" element={<Health currUser={currUser} healthHeader={healthHeader} />} />
           <Route path="/health/lab_results" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.labResults} infoHeader={labResultsHeader} />} />
           <Route path="/health/medications" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.medications} infoHeader={medicationsHeader} />} />
-          <Route path="/health/vaccines" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
-          <Route path="/health/allergies" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
-          <Route path="/health/surgical_history" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
+          <Route path="/health/vaccines" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.vaccines} infoHeader={vaccinesHeader} />} />
+          <Route path="/health/allergies" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.allergies} infoHeader={allergiesHeader} />} />
+          <Route path="/health/surgical_history" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.surgeries} infoHeader={surgeriesHeader} />} />
           <Route path="/appointments" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/appointments/upcoming_appointments" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/appointments/schedule_appointments" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
