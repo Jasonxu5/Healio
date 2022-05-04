@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import Modal from 'react-bootstrap/Modal';
+import { faBars, faX } from '@fortawesome/free-solid-svg-icons';
 import landingImage from './img/landingImage.svg';
 
 import niya from './team/niya.jpg';
@@ -48,13 +49,19 @@ export default function Landing() {
 function NavBar(props) {
     const { bodyRef, aboutRef } = props;
     const [isMenuOpen, setMenuOpen] = useState(false);
+    const [isDisclaimerClicked, setDisclaimer] = useState(false);
     const navRef = useRef();
+    const disclaimerRef = useRef();
 
-    // Set up clicking event for mobile hamburger menu
+    // Set up clicking event for menus
     useEffect(() => {
         const checkIfClickedOutside = e => {
-            if (isMenuOpen && navRef.current && !navRef.current.contains(e.target)) {
+            if (isMenuOpen && !navRef.current.contains(e.target)) {
                 setMenuOpen(false);
+            }
+            // I included the typeof so it won't throw an error
+            if (isDisclaimerClicked && (typeof(e.target.className) !== 'object') && !e.target.className.includes('modal')) {
+                setDisclaimer(false);
             }
         }
         document.addEventListener('mousedown', checkIfClickedOutside);
@@ -62,32 +69,51 @@ function NavBar(props) {
         return () => {
             document.removeEventListener('mousedown', checkIfClickedOutside);
         }
-    }, [isMenuOpen]);
+    }, [isMenuOpen, isDisclaimerClicked]);
     return (
         <div className="w-screen bg-white fixed z-50">
             <div className="md:w-[88vw] flex justify-between w-[95vw] mx-10 mt-4 pb-4">
                 <h1 className="font-heading text-3xl font-bold mt-2">Healio</h1>
                 <div className="md:inline my-3 hidden">
                     <FontAwesomeIcon className="text-4xl cursor-pointer hover:animate-wiggle" onClick={() => { setMenuOpen(true) }} icon={faBars} aria-label="Hamburger menu for extra icons" />
-                    {isMenuOpen ? <NavOptions css="absolute right-[20px] mt-2 flex gap-5 text-xl p-5 bg-white rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" navRef={navRef} bodyRef={bodyRef} aboutRef={aboutRef} /> : null}
+                    {isMenuOpen ? <NavOptions css="absolute right-[20px] mt-2 flex gap-5 text-xl p-5 bg-white rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" navRef={navRef} bodyRef={bodyRef} aboutRef={aboutRef} setDisclaimerCallback={setDisclaimer} /> : null}
                 </div>
-                <NavOptions css="md:hidden flex gap-10 text-xl my-1" navRef={null} bodyRef={bodyRef} aboutRef={aboutRef} />
+                <NavOptions css="md:hidden flex gap-10 text-xl my-1" navRef={null} bodyRef={bodyRef} aboutRef={aboutRef} setDisclaimerCallback={setDisclaimer} />
             </div>
+            <Modal className="sm:w-[400px] sm:left-[15%] md:w-[550px] md:left-[20%] absolute left-[25%] top-[10%] w-[750px] h-[500px] p-5 bg-white border-2 border-black rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)] z-[150] overflow-y-auto" show={isDisclaimerClicked} ref={disclaimerRef}>
+                <FontAwesomeIcon className="text-2xl mb-2 hover:text-[#FF0000] hover:cursor-pointer" onClick={() => setDisclaimer(false)} icon={faX} size="lg" aria-label="Close icon" />
+                <Modal.Header className="text-center" closeButton>
+                    <Modal.Title className="font-header text-3xl">Data Use Disclaimer</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Starting on May 23th, 2022, the Mobio team will be transitioning the Healio platform to an open-source project. What this means is that the project repository and source code will be publicly accessible under the MIT License. Our team has done extensive research and development in building the platform you’re using today, but we cannot continue our efforts on this project after graduation. Therefore, by open-sourcing our project, we will give future teams a foundation for them to build and iterate new features and improvements upon.
+
+                    During the transition to open source, all currently stored user data will be DELETED on May 23, 2022. We will provide an option to export lab results, doctor’s notes, and medical history if you want to save that data. However, all other types of data such as appointments and messages will not have the option to be exported.
+
+                    Thank you for using Healio and helping us contribute to the development of a more accessible patient portal!
+
+                    - The Mobio Team
+                </Modal.Body>
+            </Modal>
         </div>
     );
 }
 
 function NavOptions(props) {
-    const { css, navRef, bodyRef, aboutRef } = props
+    const { css, navRef, bodyRef, aboutRef, setDisclaimerCallback } = props;
+
     const handleClick = (event) => {
         if (event.target.textContent === 'Home') {
             bodyRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+        } else if (event.target.textContent === 'About') {
+            aboutRef.current.scrollIntoView({ behavior: 'smooth', inline: 'end' });
         } else {
-            aboutRef.current.scrollIntoView({ behavior: 'smooth', inline: 'end'});
+            setDisclaimerCallback(true);
         }
     };
     return (
         <div className={css} ref={navRef}>
+            <p className="mt-2 hover:cursor-pointer" onClick={handleClick}>Data Use Disclaimer</p>
             <p className="mt-2 hover:cursor-pointer" onClick={handleClick}>Home</p>
             <p className="mt-2 hover:cursor-pointer" onClick={handleClick}>About</p>
             <Link to="/login">
