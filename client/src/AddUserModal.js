@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
 export default function AddUserModal(props) {
-    const { userInfo, familyInfo, familyInfoCallback, isAddUserClicked, addUserCallback } = props;
+    const { userInfo, familyInfo, familyInfoCallback, isAddUserClicked, addUserCallback, addUserRef } = props;
     const [typedName, setTypedName] = useState('');
     const [currUsersAdded, setCurrUsersAdded] = useState([]);
     
@@ -40,7 +40,7 @@ export default function AddUserModal(props) {
     }
     
     return (
-        <Modal className="sm:w-[250px] md:w-[500px] absolute left-[25%] top-[10%] w-[750px] h-[500px] p-5 bg-white border-2 border-black rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" show={isAddUserClicked}>
+        <Modal className="sm:w-[250px] md:w-[500px] absolute left-[25%] top-[10%] w-[750px] h-[500px] p-5 bg-white border-2 border-black rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" show={isAddUserClicked} ref={addUserRef}>
             <FontAwesomeIcon className="text-2xl mb-2 hover:text-[#FF0000] hover:cursor-pointer" onClick={() => addUserCallback(false)} icon={faX} size="lg" aria-label="Close icon" />
             <Modal.Header className="text-center" closeButton>
                 <Modal.Title className="font-header text-3xl">Add a family member</Modal.Title>
@@ -64,7 +64,14 @@ function IndividualUser(props) {
 
     const handleClick = () => {
         setIsAdded(!isAdded);
-        currUsersAddedCallback([...currUsersAdded, user]);
+        if (!isAdded) {
+            currUsersAddedCallback([...currUsersAdded, user]);
+        } else {
+            const removeUser = currUsersAdded.filter(userInArray => { 
+                return user !== userInArray;
+            });
+            currUsersAddedCallback([...removeUser]);
+        }
     };
     return (
         <div className={'hover:cursor-pointer' + (isAdded ? ' bg-light-blue' : '')} onClick={handleClick}>
