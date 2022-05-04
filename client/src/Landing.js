@@ -127,7 +127,7 @@ function Body(props) {
     const { bodyRef } = props;
     return (
         <div className="md:mx-auto md:w-full" ref={bodyRef}>
-            <img className="md:hidden absolute right-0 top-[70px] ml-auto h-[90vh]" src={landingImage} alt="Patients and Doctor Clipart" />
+            <img className="md:hidden absolute right-0 top-[70px] ml-auto h-[100vh]" src={landingImage} alt="Patients and Doctor Clipart" />
             <div className="md:mt-[125px] md:text-center flex flex-col gap-4 mx-10 mt-[200px]">
                 <h2 className="font-heading text-5xl font-bold">Healio</h2>
                 <div className="text-2xl">
@@ -149,7 +149,7 @@ function About(props) {
         return <MoBioProfile name={member.name} role={member.role} img={member.img} key={index} />
     });
     return (
-        <div className="md:flex-col flex mt-[400px]" ref={aboutRef}>
+        <div className="md:flex-col flex mt-[100vh]" ref={aboutRef}>
             <div className="md:mt-[125px] md:text-center flex flex-col gap-4 mx-10 mt-[200px]">
                 <h2 className="font-heading text-5xl font-bold">Who we are</h2>
                 <div className="text-2xl">
