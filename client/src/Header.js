@@ -224,11 +224,15 @@ export default function Header(props) {
         }
     });
 
-    // Set up clicking event for dropdown user accounts
+    // Set up clicking event for dropdown user accounts and modals
     useEffect(() => {
         const checkIfClickedOutside = e => {
             if (isMenuOpen && ref.current && !ref.current.contains(e.target)) {
                 setMenu(false);
+            }
+            // I included the typeof so it won't throw an error
+            if (isAddUserClicked && (typeof(e.target.className) !== 'object') && !e.target.className.includes('modal')) {
+                setIsAddUserClicked(false);
             }
         }
         document.addEventListener('mousedown', checkIfClickedOutside);
@@ -236,7 +240,7 @@ export default function Header(props) {
         return () => {
             document.removeEventListener('mousedown', checkIfClickedOutside);
         }
-    }, [isMenuOpen]);
+    }, [isMenuOpen, isAddUserClicked]);
 
     if (currUser.isAdmin) {
         familyInfoArray.push(AddAnotherUser(setIsAddUserClicked));
