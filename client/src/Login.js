@@ -24,10 +24,13 @@ const INPUTS = [
 ];
 
 export default function Login(props) {
-  const formInputArray = INPUTS.map((input, index) => {
-    return <SingleFormInput input={input} key={index} />
-  });
 
+  const handleClick = () => {
+    userLogin(props);
+  }
+  const formInputArray = INPUTS.map((input, index) => {
+    return <SingleFormInput input={input} callback={handleClick} key={index} />
+  });
   return (
     <div className="flex flex-col bg-light-green w-[50%] py-4 mx-auto">
       <h1 className="text-center font-heading text-3xl pb-3">Sign In</h1>
@@ -36,7 +39,7 @@ export default function Login(props) {
         {formInputArray}
       </div>
       <p className="mx-auto error_message bg-red"></p>
-      <p className="mx-auto py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={() => userLogin(props)}>
+      <p className="mx-auto py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={handleClick}>
         Sign In
       </p>
       <p className="text-center pb-3">Don't have an account? <Link className="text-light-blue underline" to="/signup">Sign up here!</Link></p>

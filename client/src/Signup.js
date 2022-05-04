@@ -44,10 +44,15 @@ const INPUTS = [
     "Admin"
 ];
 export default function Signup() {
+    
+    const handleClick = () => {
+        createUser();
+    };
 
     const formInputArray = INPUTS.map((input, index) => {
-        return <SingleFormInput input={input} key={index} />
+        return <SingleFormInput input={input} callback={handleClick} key={index} />
     });
+
     return (
         <div className="flex flex-col bg-light-green w-[25%] py-4 mx-auto">
             <h1 className="text-center font-heading text-3xl pb-3">Sign Up</h1>
@@ -55,7 +60,7 @@ export default function Signup() {
                 {formInputArray}
             </div>
             <p className="mx-auto error_message bg-red"></p>
-            <p className="mx-auto py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={createUser}>
+            <p className="mx-auto py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={handleClick}>
                 Create Account
             </p>
             <p className="text-center pb-3 mt-2">Already have an account? <Link className="text-light-blue underline" to="/login">Log in here!</Link></p>
@@ -107,7 +112,7 @@ export async function createUser() {
 }
 
 export function SingleFormInput(props) {
-    const { input } = props;
+    const { input, callback } = props;
     let inputType;
     if (input === 'Password') {
         inputType = 'password';
@@ -117,12 +122,22 @@ export function SingleFormInput(props) {
         inputType = '';
     }
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+    };
+
+    const handleKeypress = (event) => {
+        console.log(event.key);
+        if (event.key === 'Enter') {
+            callback()
+        }
+    };
     if (input !== 'Admin') {
         return (
-            <form className="ml-10 pb-3">
+            <form className="ml-10 pb-3" onSubmit={handleSubmit}>
                 <label className="text-2xl pb-3">{input + ':'}</label>
                 <input className="block p-[12px] w-[75%] mt-3 rounded-[15px] bg-grey" type={inputType}
-                    placeholder={'Type ' + input + ' here...'} aria-label={'Type in your ' + input} autoComplete="off" />
+                    placeholder={'Type ' + input + ' here...'} aria-label={'Type in your ' + input} autoComplete="off" onKeyDown={handleKeypress} />
             </form>
         )
     } else {
