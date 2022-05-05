@@ -216,6 +216,7 @@ export default function Header(props) {
     const [isMenuOpen, setMenu] = useState(false);
     const [isAddUserClicked, setIsAddUserClicked] = useState(false);
     const ref = useRef();
+    const addUserRef = useRef();
     const fullName = currUser.firstName + ' ' + currUser.lastName;
 
     const familyInfoArray = familyInfo.map((person, index) => {
@@ -231,7 +232,7 @@ export default function Header(props) {
                 setMenu(false);
             }
             // I included the typeof so it won't throw an error
-            if (isAddUserClicked && (typeof(e.target.className) !== 'object') && !e.target.className.includes('modal')) {
+            if (isAddUserClicked && (typeof(e.target.className) !== 'object') && !addUserRef.current.dialog.contains(e.target)) {
                 setIsAddUserClicked(false);
             }
         }
@@ -250,7 +251,7 @@ export default function Header(props) {
     // Need to flex container for Font Awesome Icon
     return (
         <header className="relative py-8">
-            <AddUserModal userInfo={USER_INFO} familyInfo={familyInfo} familyInfoCallback={familyInfoCallback} isAddUserClicked={isAddUserClicked} addUserCallback={setIsAddUserClicked} />
+            <AddUserModal userInfo={USER_INFO} familyInfo={familyInfo} familyInfoCallback={familyInfoCallback} isAddUserClicked={isAddUserClicked} addUserCallback={setIsAddUserClicked} addUserRef={addUserRef} />
             <p className="md:text-center font-heading text-3xl">{title}</p>
             <div className="absolute flex bottom-[20px] right-[30px] hover:cursor-pointer bg-light-green rounded-full mb-2 pr-3" onClick={() => setMenu(true)}>
                 <img className="rounded-full inline w-12 h-12" src={currUser.img} alt={fullName} />
