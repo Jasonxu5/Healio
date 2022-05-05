@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faXmark, faCheck } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
 
+const apiEndpoint = "http://localhost:5000/api/v1/"
+
 export default function Profile(props) {
     const { currUser, familyInfo, familyInfoCallback, profileHeader } = props;
     const [isUserEditing, setIsUserEditing] = useState(false);
@@ -62,13 +64,39 @@ function EditProfile(props) {
         }
     });
 
+    async function updateUser(newFirst, newLast) {
+        let current = await fetch(apiEndpoint + `currentCookie`,
+            {
+                method: "GET",
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                mode: 'cors'
+            })
+
+        let account = await current.json();
+
+        try {
+            let response = await fetch(apiEndpoint + "profile", {
+                method: "POST",
+                body: JSON.stringify({ email: account.email, newFirst: newFirst, newLast: newLast }),
+                headers: { 'Content-Type': 'application/json' },
+                mode: 'cors'
+            })
+
+            let responseJSON = await response.json();
+            console.log(JSON.stringify(responseJSON));
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const handleFirstNameChange = (event) => {
         setNewFirstName(event.target.value);
     }
     const handleLastNameChange = (event) => {
         setNewLastName(event.target.value);
     }
-    const handleFormSubmit = (event) => {
+    const handleFormSubmit = async (event) => {
         event.preventDefault();
         let isThereNoError = true;
 
@@ -87,6 +115,8 @@ function EditProfile(props) {
         }
 
         if (isThereNoError) {
+            updateUser(newFirstName, newLastName);
+
             currUser.firstName = newFirstName;
             currUser.lastName = newLastName;
             userEditCallback(false);
@@ -105,11 +135,13 @@ function EditProfile(props) {
                     <input className="absolute file:visible file:py-3 file:px-6 file:border-light-blue bg-[#FFFFFF] file:rounded-[15px] file:hover:cursor-pointer file:hover:bg-light-blue hover:font-bold invisible left-[5px] top-[5px]" type="file" name="img" accept="image/*" />
                 </form>
             </div>
-            <div className="sm:mt-20 flex flex-col gap-6 font-heading text-2xl">
+            <div id='info-box' className="sm:mt-20 flex flex-col gap-6 font-heading text-2xl">
                 <div className="md:flex-col flex gap-6">
                     <input className="sm:w-[460px] p-[12px] rounded-[15px] bg-grey" placeholder="New first name..." aria-label="Change first name" autoComplete="off" onChange={handleFirstNameChange} />
                     <input className="sm:w-[460px] p-[12px] rounded-[15px] bg-grey" placeholder="New last name..." aria-label="Change last name" autoComplete="off" onChange={handleLastNameChange} />
                 </div>
+                <p className="bg-light-blue">Log out and sign in again to apply changes to rest of site after changing name</p>
+
                 <div>
                     <h1 className="mb-4">Family Information</h1>
                     <div className="font-sans text-lg">

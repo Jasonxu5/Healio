@@ -33,7 +33,6 @@ async function verifyAuthToken(req, res, next) {
 }
 
 router.get('/logout', async function (req, res, next) {
-  console.log(req.cookies);
   res.cookie("jwt", "", { maxAge: "1" }) // overwrite the existing jwt token
   console.log("Login Session Cookie deleted")
   res.json({ "Status": "Logged out" })
@@ -41,7 +40,6 @@ router.get('/logout', async function (req, res, next) {
 
 router.get('/currentCookie', async function (req, res, next) {
   const token = req.cookies.jwt
-  console.log(token);
   if (token) {
     jwt.verify(token, jwtSecret, (err) => {
       if (err) {
@@ -58,8 +56,16 @@ router.get('/currentCookie', async function (req, res, next) {
   }
 })
 
-router.get('/isLoggedIn', async function (req, res, next) {
-  return;
+router.post('/profile', async function (req, res, next) {
+  let accountEmail = req.body.email;
+  let user = await req.db.User.findOne({ email: accountEmail });
+
+  user.first_name = req.body.newFirst;
+  user.last_name = req.body.newLast;
+
+  await user.save();
+  // createToken(res, user);
+  res.json({ "Status": "Success" });
 })
 
 router.post('/userlogin', async function (req, res, next) {

@@ -23,12 +23,12 @@ const MOBIO = [
     },
     {
         name: 'Jason Xu',
-        role: 'Backend Dev',
+        role: 'Back-End Developer',
         img: jason
     },
     {
         name: 'Jerome Orille',
-        role: 'Frontend Dev',
+        role: 'Front-End Developer',
         img: jerome
     }
 ];
@@ -60,7 +60,7 @@ function NavBar(props) {
                 setMenuOpen(false);
             }
             // I included the typeof so it won't throw an error
-            if (isDisclaimerClicked && (typeof(e.target.className) !== 'object') && !e.target.className.includes('modal')) {
+            if (isDisclaimerClicked && (typeof (e.target.className) !== 'object') && !e.target.className.includes('modal')) {
                 setDisclaimer(false);
             }
         }

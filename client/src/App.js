@@ -172,7 +172,7 @@ function App() {
   const [currUser, setCurrUser] = useState(FAMILY_INFO[0]);
   const [familyInfo, setFamilyInfo] = useState(FAMILY_INFO);
 
-  function currentUser(user) {
+  async function currentUser(user) {
     FAMILY_INFO[0].firstName = user.first_name;
     FAMILY_INFO[0].lastName = user.last_name;
   }
@@ -185,6 +185,7 @@ function App() {
         credentials: 'include',
         mode: 'cors'
       })
+      
     let responseJSON = await response.json();
     let string = JSON.stringify(responseJSON);
 
