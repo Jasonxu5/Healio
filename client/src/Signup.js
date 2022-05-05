@@ -1,6 +1,8 @@
 // Import FirebaseAuth and firebase.
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
@@ -43,49 +45,50 @@ const INPUTS = [
     "Password",
     "Admin"
 ];
-export default function Signup() {
-    
+export default function Signup(props) {
+    const { loginStatus, isLoginClicked, loginClickedCallback, loginRef, loginCallback } = props;
+    const [getFirstName, setFirstName] = useState('');
+    const [getLastName, setLastName] = useState('');
+    const [getEmail, setEmail] = useState('');
+    const [getPass, setPass] = useState('');
+    const [getAdmin, setAdmin] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const callbackArray = [setFirstName, setLastName, setEmail, setPass, setAdmin];
+
     const handleClick = () => {
-        createUser();
+        createUser(loginStatus, getFirstName, getLastName, getEmail, getPass, getAdmin, setErrorMessage);
     };
 
     const formInputArray = INPUTS.map((input, index) => {
-        return <SingleFormInput input={input} callback={handleClick} key={index} />
+        return <SingleFormInput input={input} submitCallback={handleClick} inputCallback={callbackArray[index]} key={index} />
     });
 
     return (
-        <div className="flex flex-col bg-light-green w-[25%] py-4 mx-auto">
-            <h1 className="text-center font-heading text-3xl pb-3">Sign Up</h1>
-            <div>
+        <Modal className="sm:w-[400px] sm:left-[15%] md:w-[550px] md:left-[20%] absolute left-[25%] top-[10%] w-[750px] h-[500px] p-5 bg-white border-2 border-black rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)] z-[150] overflow-y-auto" show={isLoginClicked} ref={loginRef}>
+            <FontAwesomeIcon className="text-2xl mb-2 hover:text-[#FF0000] hover:cursor-pointer" onClick={() => loginClickedCallback(false)} icon={faX} size="lg" aria-label="Close icon" />
+            <Modal.Header className="text-center" closeButton>
+                <Modal.Title className="font-header text-3xl">Sign Up</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="">
                 {formInputArray}
-            </div>
-            <p className="mx-auto error_message bg-red"></p>
+            </Modal.Body>
+            <p className="mx-auto bg-red">{errorMessage}</p>
             <p className="mx-auto py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={handleClick}>
                 Create Account
             </p>
-            <p className="text-center pb-3 mt-2">Already have an account? <Link className="text-light-blue underline" to="/login">Log in here!</Link></p>
-        </div>
+            <Modal.Footer className="text-center pb-3">
+                Already have an account? <p className="text-light-blue underline hover:cursor-pointer" onClick={() => loginCallback(true)}>Log in here!</p>
+            </Modal.Footer>
+        </Modal>
     );
 }
 
-export async function createUser() {
-    // refactor this later if there's time otherwise it works fine
-    let first = document.querySelector("#root > div > div > div > form:nth-child(1) > input").value;
-    let last = document.querySelector("#root > div > div > div > form:nth-child(2) > input").value;
-    let email = document.querySelector("#root > div > div > div > form:nth-child(3) > input").value;
-    let pass = document.querySelector("#root > div > div > div > form:nth-child(4) > input").value;
-    let isManager = undefined
-    if (document.querySelector("#root > div > div > div > div > form > div:nth-child(1) > input[type=radio]").checked) {
-        isManager = true;
-    } else {
-        isManager = false;
-    }
-
+export async function createUser(loginStatus, first, last, email, pass, isManager, errorCallback) {
     let array = [first, last, email, pass, isManager]
 
     for (let i = 0; i < array.length; i++) {
         if (array[i] === '') {
-            document.querySelector("#root > div > div > p.mx-auto.error_message").textContent = "One or more fields are empty"
+            errorCallback('One or more fields are empty');
             return;
         }
     }
@@ -99,11 +102,10 @@ export async function createUser() {
         let responseJSON = await response.json();
         let string = JSON.stringify(responseJSON);
         if (string.includes('Error')) {
-            document.querySelector("#root > div > div > p.mx-auto.error_message").textContent = "Another account already exists with this email"
+            errorCallback('Another account already exists with this email');
         } else { // {status : success}
-            document.querySelector("#root > div > div > p.mx-auto.error_message").textContent = "Success!";
-            // Redirect page to Login Page
-            window.location.replace('/login');
+            errorCallback('Success!');
+            loginStatus();
         }
 
     } catch (error) {
@@ -112,7 +114,7 @@ export async function createUser() {
 }
 
 export function SingleFormInput(props) {
-    const { input, callback } = props;
+    const { input, submitCallback, inputCallback } = props;
     let inputType;
     if (input === 'Password') {
         inputType = 'password';
@@ -126,10 +128,21 @@ export function SingleFormInput(props) {
         event.preventDefault();
     };
 
+    const handleTextChange = (event) => {
+        inputCallback(event.target.value);
+    }
+
+    const handleButtonClick = (event) => {
+        if (event.target.value === 'yes') {
+            inputCallback(true);
+        } else {
+            inputCallback(false);
+        }
+    }
+
     const handleKeypress = (event) => {
-        console.log(event.key);
         if (event.key === 'Enter') {
-            callback()
+            submitCallback()
         }
     };
     if (input !== 'Admin') {
@@ -137,7 +150,8 @@ export function SingleFormInput(props) {
             <form className="ml-10 pb-3" onSubmit={handleSubmit}>
                 <label className="text-2xl pb-3">{input + ':'}</label>
                 <input className="block p-[12px] w-[75%] mt-3 rounded-[15px] bg-grey" type={inputType}
-                    placeholder={'Type ' + input + ' here...'} aria-label={'Type in your ' + input} autoComplete="off" onKeyDown={handleKeypress} />
+                    placeholder={'Type ' + input + ' here...'} aria-label={'Type in your ' + input} autoComplete="off"
+                    onKeyDown={handleKeypress} onChange={handleTextChange} />
             </form>
         )
     } else {
@@ -146,11 +160,11 @@ export function SingleFormInput(props) {
                 <p className="text-2xl pb-3">Do you manage your family?</p>
                 <form className="flex gap-5">
                     <div>
-                        <input type="radio" name="admin-access" value="yes" />
+                        <input type="radio" name="admin-access" value="yes" onClick={handleButtonClick} />
                         <label className="ml-2" htmlFor="yes">Yes</label>
                     </div>
                     <div>
-                        <input type="radio" name="admin-access" value="no" />
+                        <input type="radio" name="admin-access" value="no" onClick={handleButtonClick} />
                         <label className="ml-2" htmlFor="no">No</label>
                     </div>
                 </form>

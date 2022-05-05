@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from 'react-bootstrap/Modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faX } from '@fortawesome/free-solid-svg-icons';
 import landingImage from './img/landingImage.svg';
+
+import Login from './Login.js';
+import Signup from './Signup.js';
 
 import niya from './team/niya.jpg';
 import alex from './team/alex.jpg';
@@ -23,31 +26,58 @@ const MOBIO = [
     },
     {
         name: 'Jason Xu',
-        role: 'Back-End Developer',
+        role: 'Backend Developer',
         img: jason
     },
     {
         name: 'Jerome Orille',
-        role: 'Front-End Developer',
+        role: 'Frontend Developer',
         img: jerome
     }
 ];
 
-export default function Landing() {
+export default function Landing(props) {
+    const { loginStatus } = props;
+    const [isLoginClicked, setIsLoginClicked] = useState(false);
+    const [isLogin, setLogin] = useState(true);
+
     const bodyRef = useRef();
     const aboutRef = useRef();
+    const loginRef = useRef();
+
+    // Set up clicking event for menus
+    useEffect(() => {
+        const checkIfClickedOutside = e => {
+            // I included the typeof so it won't throw an error
+            if (isLoginClicked && (typeof (e.target.className) !== 'object') && !loginRef.current.dialog.contains(e.target)) {
+                setIsLoginClicked(false);
+            }
+        }
+        document.addEventListener('mousedown', checkIfClickedOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', checkIfClickedOutside);
+        }
+    }, [isLoginClicked]);
     return (
-        <div className="flex flex-col bg-pale-blue">
-            <NavBar bodyRef={bodyRef} aboutRef={aboutRef} />
-            <Body bodyRef={bodyRef} />
-            <About aboutRef={aboutRef} />
-            <footer className="mx-10 mt-[200px]">&copy; 2021 - 2022 MoBio @ University of Washington iSchool</footer>
+        <div>
+            {isLoginClicked ?
+                (isLogin ?
+                    <Login loginStatus={loginStatus} isLoginClicked={isLoginClicked} loginClickedCallback={setIsLoginClicked} loginRef={loginRef} loginCallback={setLogin} /> :
+                    <Signup loginStatus={loginStatus} isLoginClicked={isLoginClicked} loginClickedCallback={setIsLoginClicked} loginRef={loginRef} loginCallback={setLogin}/>) :
+                null}
+            <div className="flex flex-col bg-pale-blue">
+                <NavBar loginCallback={setIsLoginClicked} bodyRef={bodyRef} aboutRef={aboutRef} />
+                <Body loginCallback={setIsLoginClicked} bodyRef={bodyRef} />
+                <About aboutRef={aboutRef} />
+                <footer className="mx-10 mt-[200px]">&copy; 2021 - 2022 MoBio @ University of Washington iSchool</footer>
+            </div>
         </div>
     );
 }
 
 function NavBar(props) {
-    const { bodyRef, aboutRef } = props;
+    const { loginCallback, bodyRef, aboutRef } = props;
     const [isMenuOpen, setMenuOpen] = useState(false);
     const [isDisclaimerClicked, setDisclaimer] = useState(false);
     const navRef = useRef();
@@ -76,9 +106,9 @@ function NavBar(props) {
                 <h1 className="font-heading text-3xl font-bold mt-2">Healio</h1>
                 <div className="md:inline my-3 hidden">
                     <FontAwesomeIcon className="text-4xl cursor-pointer hover:animate-wiggle" onClick={() => { setMenuOpen(true) }} icon={faBars} aria-label="Hamburger menu for extra icons" />
-                    {isMenuOpen ? <NavOptions css="absolute right-[20px] mt-2 flex gap-5 text-xl p-5 bg-white rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" navRef={navRef} bodyRef={bodyRef} aboutRef={aboutRef} setDisclaimerCallback={setDisclaimer} /> : null}
+                    {isMenuOpen ? <NavOptions css="absolute right-[20px] mt-2 flex gap-5 text-xl p-5 bg-white rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" navRef={navRef} bodyRef={bodyRef} aboutRef={aboutRef} setDisclaimerCallback={setDisclaimer} loginCallback={loginCallback} /> : null}
                 </div>
-                <NavOptions css="md:hidden flex gap-10 text-xl my-1" navRef={null} bodyRef={bodyRef} aboutRef={aboutRef} setDisclaimerCallback={setDisclaimer} />
+                <NavOptions css="md:hidden flex gap-10 text-xl my-1" navRef={null} bodyRef={bodyRef} aboutRef={aboutRef} setDisclaimerCallback={setDisclaimer} loginCallback={loginCallback} />
             </div>
             <Modal className="sm:w-[400px] sm:left-[15%] md:w-[550px] md:left-[20%] absolute left-[25%] top-[10%] w-[750px] h-[500px] p-5 bg-white border-2 border-black rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)] z-[150] overflow-y-auto" show={isDisclaimerClicked} ref={disclaimerRef}>
                 <FontAwesomeIcon className="text-2xl mb-2 hover:text-[#FF0000] hover:cursor-pointer" onClick={() => setDisclaimer(false)} icon={faX} size="lg" aria-label="Close icon" />
@@ -100,7 +130,7 @@ function NavBar(props) {
 }
 
 function NavOptions(props) {
-    const { css, navRef, bodyRef, aboutRef, setDisclaimerCallback } = props;
+    const { css, navRef, bodyRef, aboutRef, setDisclaimerCallback, loginCallback } = props;
 
     const handleClick = (event) => {
         if (event.target.textContent === 'Home') {
@@ -116,15 +146,13 @@ function NavOptions(props) {
             <p className="mt-2 hover:cursor-pointer" onClick={handleClick}>Data Use Disclaimer</p>
             <p className="mt-2 hover:cursor-pointer" onClick={handleClick}>Home</p>
             <p className="mt-2 hover:cursor-pointer" onClick={handleClick}>About</p>
-            <Link to="/login">
-                <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 hover:cursor-pointer">Login</p>
-            </Link>
+            <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 hover:cursor-pointer" onClick={() => loginCallback(true)}>Login</p>
         </div>
     )
 }
 
 function Body(props) {
-    const { bodyRef } = props;
+    const { loginCallback, bodyRef } = props;
     return (
         <div className="md:mx-auto md:w-full" ref={bodyRef}>
             <img className="md:hidden absolute right-0 top-[70px] ml-auto h-[100vh]" src={landingImage} alt="Patients and Doctor Clipart" />
@@ -135,9 +163,7 @@ function Body(props) {
                     <p>Take control of your family's</p>
                     <p>medical information today.</p>
                 </div>
-                <Link to="/login">
-                    <p className="md:mx-auto font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 w-[115px] hover:cursor-pointer">Join Healio</p>
-                </Link>
+                <p className="md:mx-auto font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 w-[115px] hover:cursor-pointer" onClick={() => loginCallback(true)}>Join Healio</p>
             </div>
         </div>
     );

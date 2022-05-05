@@ -13,8 +13,6 @@ import Profile from './Profile.js';
 import PlaceHolder from './Template.js';
 
 import Landing from './Landing.js';
-import Login from './Login.js';
-import Signup from './Signup.js';
 
 import katie from './img/katie.png'; // profile picture
 import daughter from './img/daughter.png';
@@ -254,9 +252,7 @@ function App() {
     return (
       <div>
         <Routes>
-          <Route exact path="/" element={<Landing />} />
-          <Route path="/login" element={<Login loginStatus={loginStatus} />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route exact path="/" element={<Landing loginStatus={loginStatus} />} />
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
       </div>
