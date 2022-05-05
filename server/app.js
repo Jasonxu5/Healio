@@ -20,12 +20,23 @@ const __dirname = dirname(__filename);
 let app = express();
 app.use(cookieParser());
 
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header("Access-Control-Allow-Credentials", true);
-  next();
-});
+const whitelist = ['http://localhost:3000', 'https://healio-e7722.web.app'];
+const corsOptions = {
+  credentials: true,
+  origin: (origin, callback) => {
+    if (whitelist.includes(origin))
+      return callback(null, true)
+
+    callback(new Error('Not allowed by CORS'));
+  }
+}
+
+app.use(cors(corsOptions));
+// app.use(cookieSession({
+//   secure: true,
+//   sameSite: "none"
+// }))
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

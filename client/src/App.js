@@ -185,7 +185,7 @@ function App() {
         credentials: 'include',
         mode: 'cors'
       })
-      
+
     let responseJSON = await response.json();
     let string = JSON.stringify(responseJSON);
 
