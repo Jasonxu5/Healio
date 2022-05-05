@@ -18,7 +18,7 @@ export default function Profile(props) {
                 {profileHeader}
                 {profileLayout}
             </div>
-            <div className="absolute top-[100px] right-[30px] py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold"
+            <div className="animate-popup absolute top-[100px] right-[30px] py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold"
                 onClick={() => { setIsUserEditing(!isUserEditing) }}>
                 <p className="inline">{isUserEditing ? "Cancel Edit" : "Edit Profile"}</p>
                 <FontAwesomeIcon className="inline ml-2" icon={faPenToSquare} aria-label="Edit a profile" />
@@ -37,7 +37,7 @@ function ProfileInformation(props) {
     });
 
     return (
-        <div className="sm:flex-col flex gap-6">
+        <div className="animate-popup sm:flex-col flex gap-6">
             <img src={currUser.img} className="rounded-full w-36 h-36 border-2" />
             <div className="flex flex-col gap-6 font-heading text-2xl">
                 <h1>{currUser.firstName + ' ' + currUser.lastName}</h1>
@@ -127,7 +127,7 @@ function EditProfile(props) {
     }
 
     return (
-        <div className="sm:flex-col flex gap-6">
+        <div className="sm:flex-col animate-popup flex gap-6">
             <div>
                 <img src={currUser.img} className="rounded-full w-36 h-36 border-2" />
                 <form className="relative">
@@ -140,7 +140,7 @@ function EditProfile(props) {
                     <input className="sm:w-[460px] p-[12px] rounded-[15px] bg-grey" placeholder="New first name..." aria-label="Change first name" autoComplete="off" onChange={handleFirstNameChange} />
                     <input className="sm:w-[460px] p-[12px] rounded-[15px] bg-grey" placeholder="New last name..." aria-label="Change last name" autoComplete="off" onChange={handleLastNameChange} />
                 </div>
-                <p className="bg-light-blue">Log out and sign in again to apply changes to rest of site after changing name</p>
+                <p className="italic">Please relog to apply name changes!</p>
 
                 <div>
                     <h1 className="mb-4">Family Information</h1>

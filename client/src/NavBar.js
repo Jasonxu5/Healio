@@ -115,12 +115,12 @@ export default function NavBar(props) {
                 <div className="flex flex-col my-20">
                     {categoriesArray}
                 </div>
-                <footer className="py-20 px-3">
-                    <Link to="/" className="hover:cursor-pointer" onClick={handleSignOut}>
+                <Link to="/" className="hover:cursor-pointer" onClick={handleSignOut}>
+                    <footer className="my-20 transition hover:bg-dark-green font-bold text-dark-blue py-2 pl-3">
                         <FontAwesomeIcon className="mr-2" icon={faRightFromBracket} size="lg" aria-label="Log out" />
                         <p className="inline ml-1">Log out</p>
-                    </Link>
-                </footer>
+                    </footer>
+                </Link>
             </nav>
         </div>
     )
@@ -142,11 +142,11 @@ function Category(props) {
 
     // div -> NavLink might be a bug later on sry
     return (
-        <div className={'md:ml-3 relative bg-light-green w-48' + roundedCorners}
+        <div className={'md:animate-popup md:ml-3 relative bg-light-green w-48' + roundedCorners}
             onMouseEnter={() => setIsMouseHovered(true)}
             onMouseLeave={() => setIsMouseHovered(false)}>
             <NavLink to={queryLink} className={({ isActive }) => isActive ? setIsCategorySelected(true) : setIsCategorySelected(false)}>
-                <div className={(isMouseHovered || isCategorySelected ? 'bg-dark-green font-bold text-dark-blue ' : '') + 'py-2 pl-3' + roundedCorners}>
+                <div className={(isMouseHovered || isCategorySelected ? 'transition bg-dark-green font-bold text-dark-blue ' : '') + 'py-2 pl-3' + roundedCorners}>
                     <FontAwesomeIcon className="mr-2" icon={icon} size={iconSize} aria-label={categoryName} />
                     <p className="inline ml-2">{categoryName} </p>
                 </div>
@@ -162,7 +162,7 @@ function SubCategory(props) {
 
     const queryLink = categoryQueryLink + '/' + subCategoryName.toLowerCase().split(' ').join('_');
     return (
-        <NavLink to={queryLink} className={isMouseHovered ? 'font-bold bg-light-blue pl-4 py-2' : 'pl-4 py-2'}
+        <NavLink to={queryLink} className={isMouseHovered ? 'transition font-bold bg-light-blue pl-4 py-2' : 'pl-4 py-2'}
             onMouseEnter={() => setIsMouseHovered(true)}
             onMouseLeave={() => setIsMouseHovered(false)}>
             {subCategoryName}
@@ -173,7 +173,7 @@ function SubCategory(props) {
 function SubCategoryPopup(props) {
     const { subCategories } = props;
     return (
-        <div className="absolute left-[192px] top-0 w-[200px] border-2 border-black bg-white flex flex-col">
+        <div className="animate-popup absolute left-[192px] top-0 w-[200px] border-2 border-black bg-white flex flex-col">
             {subCategories}
         </div>
     );

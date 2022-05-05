@@ -34,7 +34,7 @@ function FilterOptions(props) {
     };
     return (
         <div>
-            <form className="flex gap-3 mt-5 mb-10">
+            <form className="animate-popup flex gap-3 mt-5 mb-10">
                 <label className="absolute left-[-100vw]">Type something here...</label>
                 <input className="p-[12px] w-[250px] rounded-[15px] bg-grey placeholder:text-black"
                     onChange={handleTextChange} placeholder={'Search for ' + infoType + '...'} aria-label="Filter your health information" autoComplete="off" />
@@ -66,13 +66,13 @@ function InfoBody(props) {
     } else {
         return (
             <div>
-                <div className="sm:grid-cols-[200px,250px] md:grid-cols-[150px,300px,250px] grid grid-cols-[220px,350px,225px,250px] mb-4 ml-5 font-heading text-2xl text-dark-blue">
+                <div className="sm:grid-cols-[200px,250px] md:grid-cols-[150px,300px,250px] animate-popup grid grid-cols-[220px,350px,225px,250px] mb-4 ml-5 font-heading text-2xl text-dark-blue">
                     <p className="">Date</p>
                     <p className="">{infoType.substring(0, infoType.length - 1)}</p>
                     <p className="sm:hidden">Doctor</p>
                     <p className="md:hidden">Status</p>
                 </div>
-                <div className="grid gap-8">
+                <div className="animate-popup grid gap-8">
                     {healthInfoArray}
                 </div>
             </div>

@@ -110,7 +110,7 @@ function NavBar(props) {
                 </div>
                 <NavOptions css="md:hidden flex gap-10 text-xl my-1" navRef={null} bodyRef={bodyRef} aboutRef={aboutRef} setDisclaimerCallback={setDisclaimer} loginCallback={loginCallback} />
             </div>
-            <Modal className="sm:w-[400px] sm:left-[15%] md:w-[550px] md:left-[20%] absolute left-[25%] top-[10%] w-[750px] h-[500px] p-5 bg-white border-2 border-black rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)] z-[150] overflow-y-auto" show={isDisclaimerClicked} ref={disclaimerRef}>
+            <Modal className="sm:w-[400px] sm:left-[15%] md:w-[550px] md:left-[20%] animate-popup duration-150 ease-in-out absolute left-[25%] top-[10%] w-[750px] h-[500px] p-5 bg-white border-2 border-black rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)] z-[150] overflow-y-auto" show={isDisclaimerClicked} ref={disclaimerRef}>
                 <FontAwesomeIcon className="text-2xl mb-2 hover:text-[#FF0000] hover:cursor-pointer" onClick={() => setDisclaimer(false)} icon={faX} size="lg" aria-label="Close icon" />
                 <Modal.Header className="text-center" closeButton>
                     <Modal.Title className="font-header text-3xl">Data Use Disclaimer</Modal.Title>
@@ -155,8 +155,8 @@ function Body(props) {
     const { loginCallback, bodyRef } = props;
     return (
         <div className="md:mx-auto md:w-full" ref={bodyRef}>
-            <img className="md:hidden absolute right-0 top-[70px] ml-auto h-[100vh]" src={landingImage} alt="Patients and Doctor Clipart" />
-            <div className="md:mt-[125px] md:text-center flex flex-col gap-4 mx-10 mt-[200px]">
+            <img className="md:hidden absolute right-0 top-[70px] ml-auto h-[100vh]" src={landingImage} alt="Patients and Doctor Clipart" data-aos="fade-left" data-aos-duration="1500" />
+            <div className="md:mt-[125px] md:text-center flex flex-col gap-4 mx-10 mt-[200px]" data-aos="fade-right" data-aos-duration="1500">
                 <h2 className="font-heading text-5xl font-bold">Healio</h2>
                 <div className="text-2xl">
                     <p>Son, Daughter, Parent, <p className="text-light-blue inline">You.</p></p>
@@ -176,7 +176,7 @@ function About(props) {
     });
     return (
         <div className="md:flex-col flex mt-[100vh]" ref={aboutRef}>
-            <div className="md:mt-[125px] md:text-center flex flex-col gap-4 mx-10 mt-[200px]">
+            <div className="md:mt-[125px] md:text-center flex flex-col gap-4 mx-10 mt-[200px]" data-aos="fade-right" data-aos-duration="1500">
                 <h2 className="font-heading text-5xl font-bold">Who we are</h2>
                 <div className="text-2xl">
                     <p>We are a team of <p className="text-light-blue inline">self-motivated</p></p>
@@ -184,7 +184,7 @@ function About(props) {
                     <p>the University of Washington iSchool.</p>
                 </div>
             </div>
-            <div className="md:mt-[30px] md:relative md:gap-2 md:right-0 absolute grid grid-cols-2 gap-y-20 gap-x-40 right-[35px]">
+            <div className="md:mt-[30px] md:relative md:gap-2 md:right-0 absolute grid grid-cols-2 gap-y-20 gap-x-40 right-[35px]" data-aos="fade-left" data-aos-duration="1500">
                 {mobioArray}
             </div>
         </div>

@@ -187,7 +187,7 @@ function SingleHealthCard(props) {
     }
 
     return (
-        <div className={"p-6 " + introCardOnGrid + stackSmallCards + widthPxSize + heightPxSize + "bg-white shadow-[2px_4px_20px_rgba(0,0,0,0.25)] rounded-[20px]"}>
+        <div className={"animate-popup p-6 " + introCardOnGrid + stackSmallCards + widthPxSize + heightPxSize + "bg-white shadow-[2px_4px_20px_rgba(0,0,0,0.25)] rounded-[20px]"}>
             {headerStyle}
             {body}
         </div>
