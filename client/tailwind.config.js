@@ -20,7 +20,7 @@ module.exports = {
       },
       animation: {
         wiggle: 'wiggle 1s ease-in-out',
-        popup: 'popup 1s ease-in-out'
+        popup: 'popup 0.5s ease-in-out'
       }
     },
     fontFamily: {
