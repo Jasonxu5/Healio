@@ -83,6 +83,24 @@ export default function Signup(props) {
     );
 }
 
+async function createCookie(email, pass) {
+    try {
+        let response = await fetch(apiEndpoint + "userlogin", {
+            method: "POST",
+            body: JSON.stringify({ email: email, password: pass }),
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            mode: 'cors'
+        })
+
+        let responseJSON = await response.json();
+        let string = JSON.stringify(responseJSON);
+        return string;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export async function createUser(loginStatus, first, last, email, pass, isManager, errorCallback) {
     let array = [first, last, email, pass, isManager]
 
@@ -105,9 +123,12 @@ export async function createUser(loginStatus, first, last, email, pass, isManage
             errorCallback('Another account already exists with this email');
         } else { // {status : success}
             errorCallback('Success!');
-            loginStatus();
-        }
+            let output = await createCookie(email, pass);
 
+            if (output.includes('success')) {
+                loginStatus();
+            }
+        }
     } catch (error) {
         console.log("Error" + error);
     }
