@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faX } from '@fortawesome/free-solid-svg-icons';
@@ -64,7 +63,7 @@ export default function Landing(props) {
             {isLoginClicked ?
                 (isLogin ?
                     <Login loginStatus={loginStatus} isLoginClicked={isLoginClicked} loginClickedCallback={setIsLoginClicked} loginRef={loginRef} loginCallback={setLogin} /> :
-                    <Signup loginStatus={loginStatus} isLoginClicked={isLoginClicked} loginClickedCallback={setIsLoginClicked} loginRef={loginRef} loginCallback={setLogin}/>) :
+                    <Signup loginStatus={loginStatus} isLoginClicked={isLoginClicked} loginClickedCallback={setIsLoginClicked} loginRef={loginRef} loginCallback={setLogin} />) :
                 null}
             <div className="flex flex-col bg-pale-blue">
                 <NavBar loginCallback={setIsLoginClicked} bodyRef={bodyRef} aboutRef={aboutRef} />
@@ -106,7 +105,7 @@ function NavBar(props) {
                 <h1 className="font-heading text-3xl font-bold mt-2">Healio</h1>
                 <div className="md:inline my-3 hidden">
                     <FontAwesomeIcon className="text-4xl cursor-pointer hover:animate-wiggle" onClick={() => { setMenuOpen(true) }} icon={faBars} aria-label="Hamburger menu for extra icons" />
-                    {isMenuOpen ? <NavOptions css="absolute right-[20px] mt-2 flex gap-5 text-xl p-5 bg-white rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" navRef={navRef} bodyRef={bodyRef} aboutRef={aboutRef} setDisclaimerCallback={setDisclaimer} loginCallback={loginCallback} /> : null}
+                    {isMenuOpen ? <NavOptions css="absolute right-[20px] mt-2 flex flex-col gap-5 text-xl p-5 bg-white rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" navRef={navRef} bodyRef={bodyRef} aboutRef={aboutRef} setDisclaimerCallback={setDisclaimer} loginCallback={loginCallback} /> : null}
                 </div>
                 <NavOptions css="md:hidden flex gap-10 text-xl my-1" navRef={null} bodyRef={bodyRef} aboutRef={aboutRef} setDisclaimerCallback={setDisclaimer} loginCallback={loginCallback} />
             </div>
@@ -146,7 +145,7 @@ function NavOptions(props) {
             <p className="mt-2 hover:cursor-pointer" onClick={handleClick}>Data Use Disclaimer</p>
             <p className="mt-2 hover:cursor-pointer" onClick={handleClick}>Home</p>
             <p className="mt-2 hover:cursor-pointer" onClick={handleClick}>About</p>
-            <p className="font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 hover:cursor-pointer" onClick={() => loginCallback(true)}>Login</p>
+            <p className="md:w-[80px] font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 hover:cursor-pointer" onClick={() => loginCallback(true)}>Login</p>
         </div>
     )
 }
@@ -155,15 +154,17 @@ function Body(props) {
     const { loginCallback, bodyRef } = props;
     return (
         <div className="md:mx-auto md:w-full" ref={bodyRef}>
-            <img className="md:hidden absolute right-0 top-[70px] ml-auto h-[100vh]" src={landingImage} alt="Patients and Doctor Clipart" data-aos="fade-left" data-aos-duration="1500" />
-            <div className="md:mt-[125px] md:text-center flex flex-col gap-4 mx-10 mt-[200px]" data-aos="fade-right" data-aos-duration="1500">
-                <h2 className="font-heading text-5xl font-bold">Healio</h2>
-                <div className="text-2xl">
-                    <p>Son, Daughter, Parent, <p className="text-light-blue inline">You.</p></p>
-                    <p>Take control of your family's</p>
-                    <p>medical information today.</p>
+            <div className="md:flex-col flex">
+                <div className="md:mt-[125px] md:text-center flex flex-col gap-4 mx-10 mt-[200px]" data-aos="fade-right" data-aos-duration="1500">
+                    <h2 className="font-heading text-5xl font-bold">Healio</h2>
+                    <div className="text-2xl">
+                        <p>Son, Daughter, Parent, <p className="text-light-blue inline">You.</p></p>
+                        <p>Take control of your family's</p>
+                        <p>medical information today.</p>
+                    </div>
+                    <p className="md:mx-auto font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 w-[115px] hover:cursor-pointer" onClick={() => loginCallback(true)}>Join Healio</p>
                 </div>
-                <p className="md:mx-auto font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 w-[115px] hover:cursor-pointer" onClick={() => loginCallback(true)}>Join Healio</p>
+                <img className="md:hidden ml-auto h-[100vh]" src={landingImage} alt="Patients and Doctor Clipart" data-aos="fade-left" data-aos-duration="1500" />
             </div>
         </div>
     );
@@ -175,8 +176,8 @@ function About(props) {
         return <MoBioProfile name={member.name} role={member.role} img={member.img} key={index} />
     });
     return (
-        <div className="md:flex-col flex mt-[100vh]" ref={aboutRef}>
-            <div className="md:mt-[125px] md:text-center flex flex-col gap-4 mx-10 mt-[200px]" data-aos="fade-right" data-aos-duration="1500">
+        <div className="md:flex-col flex mt-10" ref={aboutRef}>
+            <div className="md:mt-[50vh] md:text-center flex flex-col gap-4 mx-10 mt-[200px]" data-aos="fade-right" data-aos-duration="1500">
                 <h2 className="font-heading text-5xl font-bold">Who we are</h2>
                 <div className="text-2xl">
                     <p>We are a team of <p className="text-light-blue inline">self-motivated</p></p>
