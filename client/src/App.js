@@ -8,7 +8,11 @@ import Header from './Header.js';
 
 import Health from './Health.js';
 import PatientInfo from './PatientInfo.js';
+
 import Messaging from './Messaging.js';
+
+import FindHospitals from './FindHospitals.js';
+
 import Profile from './Profile.js';
 import PlaceHolder from './Template.js';
 
@@ -216,6 +220,8 @@ function App() {
 
   const messagingHeader = <Header title={'Messaging'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
 
+  const findHospitalsHeader = <Header title={'Find Hospitals'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
+
   const profileHeader = <Header title={'Your Profile'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
 
   const templateHeader = <Header title={'To be worked on ...'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
@@ -237,7 +243,7 @@ function App() {
           <Route path="/appointments/past_appointments" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/messages" element={<Messaging currUser={currUser} messagingHeader={messagingHeader} />} />
           <Route path="/resources" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
-          <Route path="/resources/find_hospitals" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
+          <Route path="/resources/find_hospitals" element={<FindHospitals findHospitalsHeader={findHospitalsHeader} />} />
           <Route path="/resources/find_providers" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/resources/educational_providers" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/profile" element={<Profile currUser={currUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} profileHeader={profileHeader} />} />

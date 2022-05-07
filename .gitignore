@@ -30,6 +30,7 @@ yarn-error.log*
 MongoDBConnection.js
 serviceAccount.js
 jwtSecret.js
+mapboxToken.js
 
 healio_cluster_pw.txt
 
