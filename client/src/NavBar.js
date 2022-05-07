@@ -142,7 +142,7 @@ function Category(props) {
 
     // div -> NavLink might be a bug later on sry
     return (
-        <div className={'md:animate-popup md:ml-3 relative bg-light-green w-48' + roundedCorners}
+        <div className={'md:animate-popup md:ml-3 md:shadow-[4px_4px_4px_rgba(0,0,0,0.25)] relative bg-light-green w-48' + roundedCorners}
             onMouseEnter={() => setIsMouseHovered(true)}
             onMouseLeave={() => setIsMouseHovered(false)}>
             <NavLink to={queryLink} className={({ isActive }) => isActive ? setIsCategorySelected(true) : setIsCategorySelected(false)}>
@@ -173,7 +173,7 @@ function SubCategory(props) {
 function SubCategoryPopup(props) {
     const { subCategories } = props;
     return (
-        <div className="animate-popup absolute left-[192px] top-0 w-[200px] border-2 border-black bg-white flex flex-col">
+        <div className="animate-popup absolute flex flex-col left-[192px] top-0 w-[200px] border-2 border-black bg-white shadow-[4px_4px_4px_rgba(0,0,0,0.25)]">
             {subCategories}
         </div>
     );
