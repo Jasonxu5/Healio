@@ -49,7 +49,7 @@ function FilterOptions(props) {
 
 function InfoBody(props) {
     const { currUser, currStatus, currInfo, userHealthInfo, infoType } = props;
-    
+
     const healthInfoArray = userHealthInfo.map((item, index) => {
         const itemLowercase = item.name.toLowerCase();
         if ((currStatus === '' || currStatus === item.status) && itemLowercase.includes(currInfo)) {
@@ -60,24 +60,20 @@ function InfoBody(props) {
                 status={item.status}
                 key={index} />
         }
-    })
-    if (healthInfoArray.length === 0) {
-        return <p>No {infoType.toLowerCase()} are available for {currUser.firstName}.</p>
-    } else {
-        return (
-            <div>
-                <div className="sm:grid-cols-[200px,250px] md:grid-cols-[150px,300px,250px] animate-popup grid grid-cols-[220px,350px,225px,250px] mb-4 ml-5 font-heading text-2xl text-dark-blue">
-                    <p className="">Date</p>
-                    <p className="">{infoType.substring(0, infoType.length - 1)}</p>
-                    <p className="sm:hidden">Doctor</p>
-                    <p className="md:hidden">Status</p>
-                </div>
-                <div className="animate-popup grid gap-8">
-                    {healthInfoArray}
-                </div>
+    });
+    return (
+        <div>
+            <div className="sm:grid-cols-[200px,250px] md:grid-cols-[150px,300px,250px] animate-popup grid grid-cols-[220px,350px,225px,250px] mb-4 ml-5 font-heading text-2xl text-dark-blue">
+                <p className="">Date</p>
+                <p className="">{infoType.substring(0, infoType.length - 1)}</p>
+                <p className="sm:hidden">Doctor</p>
+                <p className="md:hidden">Status</p>
             </div>
-        )
-    }
+            <div className="animate-popup grid gap-8">
+                {!(healthInfoArray.every((item) => item === undefined)) ? healthInfoArray : <p>No {infoType.toLowerCase()} are available for {currUser.firstName}.</p>}
+            </div>
+        </div>
+    )
 }
 
 function SingleHealthInfoItem(props) {

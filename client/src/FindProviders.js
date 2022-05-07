@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function FindProviders(props) {
@@ -13,12 +13,20 @@ export default function FindProviders(props) {
 
 function ProviderCards(props) {
     const { doctorInfo } = props;
+    const [searchTerm, setSearchTerm] = useState('');
     const doctorInfoArray = doctorInfo.map((doctor, index) => {
-        return <SingleProvider docName={doctor.name} docImg={doctor.img} docSpeciality={doctor.speciality} key={index} />;
-    })
+        const docName = doctor.name;
+        const docSpeciality = doctor.speciality;
+        if (docName.toLowerCase().includes(searchTerm) || docSpeciality.toLowerCase().includes(searchTerm)) {
+            return <SingleProvider docName={docName} docImg={doctor.img} docSpeciality={docSpeciality} key={index} />;
+        }
+    });
     return (
-        <div className="sm:grid-cols-1 grid grid-cols-2 gap-4 w-[95%]">
-            {doctorInfoArray}
+        <div>
+            <FilterProvider searchTermCallback={setSearchTerm} />
+            <div className="sm:grid-cols-1 grid grid-cols-2 gap-4 w-[95%]">
+                {!doctorInfoArray.every(doc => doc === undefined) ? doctorInfoArray : <p>No doctors found within the query.</p>}
+            </div>
         </div>
     );
 }
@@ -41,6 +49,23 @@ function SingleProvider(props) {
                 </div>
             </div>
             <hr className="sm:block mt-4 border-grey hidden" />
+        </div>
+    )
+}
+
+function FilterProvider(props) {
+    const { searchTermCallback } = props;
+
+    const handleTextChange = (event) => {
+        searchTermCallback(event.target.value.toLowerCase());
+    };
+    return (
+        <div>
+            <form className="animate-popup flex gap-3 mt-5 mb-10">
+                <label className="absolute left-[-100vw]">Type something here...</label>
+                <input className="p-[12px] w-[250px] rounded-[15px] bg-grey placeholder:text-black"
+                    onChange={handleTextChange} placeholder={'Search for a provider...'} aria-label="Search for a provider" autoComplete="off" />
+            </form>
         </div>
     )
 }
