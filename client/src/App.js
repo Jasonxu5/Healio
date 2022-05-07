@@ -11,6 +11,7 @@ import PatientInfo from './PatientInfo.js';
 
 import Messaging from './Messaging.js';
 
+import FindProviders from './FindProviders.js';
 import FindHospitals from './FindHospitals.js';
 
 import Profile from './Profile.js';
@@ -18,9 +19,15 @@ import PlaceHolder from './Template.js';
 
 import Landing from './Landing.js';
 
-import katie from './img/katie.png'; // profile picture
+import katie from './img/katie.png';
 import daughter from './img/daughter.png';
 import grandma from './img/grandma.png';
+import ortega from './img/ortega.png'; // profile picture
+import montgomery from './img/montgomery.jpeg';
+import valera from './img/valera.png';
+import cain from './img/cain.jpeg'; // profile picture
+import martinez from './img/martinez.jpeg';
+import candice from './img/candice.png';
 import { FirebaseError } from 'firebase/app';
 
 const apiEndpoint = "http://localhost:5000/api/v1/"
@@ -158,6 +165,39 @@ const FAMILY_INFO = [
   }
 ];
 
+const DOCTOR_INFO = [
+  {
+    name: 'Dr. Ortega',
+    img: ortega,
+    speciality: 'General Practioner'
+  },
+  {
+    name: 'Dr. Montgomery',
+    img: montgomery,
+    speciality: 'Diagonstic Ultrasound'
+  },
+  {
+    name: 'Dr. Valera',
+    img: valera,
+    speciality: 'Radiology'
+  },
+  {
+    name: 'Dr. Cain',
+    img: cain,
+    speciality: 'Pharmacy'
+  },
+  {
+    name: 'Dr. Martinez',
+    img: martinez,
+    speciality: 'Bacteriology'
+  },
+  {
+    name: 'Dr. Candice Knots',
+    img: candice,
+    speciality: 'Maxillofacial Surgery'
+  }
+];
+
 // NOTE: Use Environement Variables once app is deployed to production
 // const firebaseConfig = {
 //   apiKey: "AIzaSyAGSZzesnF02c38v_XRDH0ZjtAQnxltI10",
@@ -220,6 +260,7 @@ function App() {
 
   const messagingHeader = <Header title={'Messaging'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
 
+  const findProvidersHeader = <Header title={'Find Providers'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
   const findHospitalsHeader = <Header title={'Find Hospitals'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
 
   const profileHeader = <Header title={'Your Profile'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
@@ -242,9 +283,9 @@ function App() {
           <Route path="/appointments/schedule_appointments" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/appointments/past_appointments" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/messages" element={<Messaging currUser={currUser} messagingHeader={messagingHeader} />} />
-          <Route path="/resources" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
+          <Route path="/resources" element={<FindProviders doctorInfo={DOCTOR_INFO} findProvidersHeader={findProvidersHeader} />} />
+          <Route path="/resources/find_providers" element={<FindProviders doctorInfo={DOCTOR_INFO} findProvidersHeader={findProvidersHeader} />} />
           <Route path="/resources/find_hospitals" element={<FindHospitals findHospitalsHeader={findHospitalsHeader} />} />
-          <Route path="/resources/find_providers" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/resources/educational_providers" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
           <Route path="/profile" element={<Profile currUser={currUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} profileHeader={profileHeader} />} />
           <Route path="*" element={<Navigate replace to="/health" />} />

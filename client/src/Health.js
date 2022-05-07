@@ -124,7 +124,7 @@ function CardHasList(props) {
         )
     } else {
         return (
-            <Link to={link} className="grid divide-y divide-[#E5E5E5] gap-2">
+            <Link to={link} className="grid divide-y divide-grey gap-2">
                 {listItemsArray}
             </Link>
         );
