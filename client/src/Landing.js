@@ -109,12 +109,12 @@ function NavBar(props) {
                 </div>
                 <NavOptions css="md:hidden flex gap-10 text-xl my-1" navRef={null} bodyRef={bodyRef} aboutRef={aboutRef} setDisclaimerCallback={setDisclaimer} loginCallback={loginCallback} />
             </div>
-            <Modal className="sm:w-[400px] sm:left-[15%] md:w-[550px] md:left-[20%] animate-popup duration-150 ease-in-out absolute left-[25%] top-[10%] w-[750px] h-[500px] p-5 bg-white border-2 border-black rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)] z-[150] overflow-y-auto" show={isDisclaimerClicked} ref={disclaimerRef}>
+            <Modal className="modal" show={isDisclaimerClicked} ref={disclaimerRef}>
                 <FontAwesomeIcon className="text-2xl mb-2 hover:text-[#FF0000] hover:cursor-pointer" onClick={() => setDisclaimer(false)} icon={faX} size="lg" aria-label="Close icon" />
                 <Modal.Header className="text-center" closeButton>
                     <Modal.Title className="font-header text-3xl">Data Use Disclaimer</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className="text-center">
                     Starting on May 23th, 2022, the Mobio team will be transitioning the Healio platform to an open-source project. What this means is that the project repository and source code will be publicly accessible under the MIT License. Our team has done extensive research and development in building the platform you’re using today, but we cannot continue our efforts on this project after graduation. Therefore, by open-sourcing our project, we will give future teams a foundation for them to build and iterate new features and improvements upon.
 
                     During the transition to open source, all currently stored user data will be DELETED on May 23, 2022. We will provide an option to export lab results, doctor’s notes, and medical history if you want to save that data. However, all other types of data such as appointments and messages will not have the option to be exported.

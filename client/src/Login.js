@@ -40,12 +40,12 @@ export default function Login(props) {
     return <SingleFormInput input={input} submitCallback={handleClick} inputCallback={callbackArray[index]} key={index} />
   });
   return (
-    <Modal className="sm:w-[400px] sm:left-[15%] md:w-[550px] md:left-[20%] animate-popup absolute left-[25%] top-[10%] w-[750px] h-[500px] p-5 bg-white border-2 border-black rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)] z-[150] overflow-y-auto" show={isLoginClicked} ref={loginRef}>
+    <Modal className="modal" show={isLoginClicked} ref={loginRef}>
       <FontAwesomeIcon className="text-2xl mb-2 hover:text-[#FF0000] hover:cursor-pointer" onClick={() => loginClickedCallback(false)} icon={faX} size="lg" aria-label="Close icon" />
       <Modal.Header className="text-center" closeButton>
         <Modal.Title className="font-header text-3xl">Log In</Modal.Title>
       </Modal.Header>
-      <Modal.Body className="self-center">
+      <Modal.Body className="">
         {formInputArray}
       </Modal.Body>
       <p className="mx-auto bg-red">{errorMessage}</p>
