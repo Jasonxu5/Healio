@@ -12,11 +12,11 @@ import valera from './img/valera.png';
 // if there's a better way to implement this feel free to do so!
 const CONVERSATIONS = [
     {
-        participants: ['Katie', 'Daughter', 'Dr. Ortega'],
+        participants: ['Jason', 'Daughter', 'Dr. Ortega'],
         images: [katie, daughter, ortega]
     },
     {
-        participants: ['Katie', 'Grandma', 'Dr. Valera'],
+        participants: ['Jason', 'Grandma', 'Dr. Valera'],
         images: [katie, grandma, valera]
     }
 ];
@@ -116,6 +116,8 @@ export default function Messaging(props) {
 function ChatBox(props) {
     const { currUser, currMessages, currMessagesCallback, currConversation, setConvoCallback } = props;
     const [typedMessage, setTypedMessage] = useState('');
+
+    CONVERSATIONS.map(index => index.participants[0] = currUser.firstName);
 
     if (!currConversation.participants.includes(currUser.firstName)) {
         const allConvos = [...new Set(currMessages.map(message => message.conversation))];
