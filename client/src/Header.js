@@ -215,7 +215,7 @@ export default function Header(props) {
     const { title, currUser, setUserCallback, familyInfo, familyInfoCallback, loginStatus } = props;
     const [isMenuOpen, setMenu] = useState(false);
     const [isAddUserClicked, setIsAddUserClicked] = useState(false);
-    const ref = useRef();
+    const menuRef = useRef();
     const addUserRef = useRef();
     const fullName = currUser.firstName + ' ' + currUser.lastName;
 
@@ -228,7 +228,7 @@ export default function Header(props) {
     // Set up clicking event for dropdown user accounts and modals
     useEffect(() => {
         const checkIfClickedOutside = e => {
-            if (isMenuOpen && ref.current && !ref.current.contains(e.target)) {
+            if (isMenuOpen && menuRef.current && !menuRef.current.contains(e.target)) {
                 setMenu(false);
             }
             // I included the typeof so it won't throw an error
@@ -244,8 +244,10 @@ export default function Header(props) {
     }, [isMenuOpen, isAddUserClicked]);
 
     if (currUser.isAdmin) {
-        familyInfoArray.push(AddAnotherUser(setIsAddUserClicked));
+        const verySpecialKey = familyInfoArray[familyInfoArray.length - 1].key + 1;
+        familyInfoArray.push(<AddAnotherUser addUserCallback={setIsAddUserClicked} key={verySpecialKey} />);
     }
+    console.log(familyInfoArray);
 
 
     // Need to flex container for Font Awesome Icon
@@ -256,7 +258,7 @@ export default function Header(props) {
             <div className="absolute flex bottom-[20px] right-[30px] hover:cursor-pointer bg-light-green rounded-full mb-2 pr-3" onClick={() => setMenu(true)}>
                 <img className="rounded-full inline w-12 h-12" src={currUser.img} alt={fullName} />
                 <FontAwesomeIcon className="self-center text-2xl ml-3" icon={faAngleDown} size="lg" aria-label="Down arrow for choosing a user in the family" />
-                {isMenuOpen ? MenuPopup(ref, fullName, currUser.img, familyInfoArray, loginStatus) : null}
+                {isMenuOpen ? <MenuPopup menuRef={menuRef} fullName={fullName} img={currUser.img} familyInfoArray={familyInfoArray} loginStatus={loginStatus} /> : null}
             </div>
         </header>
     );
@@ -277,7 +279,8 @@ function IndividualFamilyMember(props) {
     );
 }
 
-function AddAnotherUser(addUserCallback) {
+function AddAnotherUser(props) {
+    const { addUserCallback } = props;
     const handleShow = () => addUserCallback(true);
 
     return (
@@ -288,7 +291,8 @@ function AddAnotherUser(addUserCallback) {
     );
 }
 
-function MenuPopup(ref, fullName, img, familyInfoArray, loginStatus) {
+function MenuPopup(props) {
+    const { menuRef, fullName, img, familyInfoArray, loginStatus } = props;
     const handleSignOut = async () => {
         // firebase.auth().signOut();
         await fetch(apiEndpoint + "logout", {
@@ -302,7 +306,7 @@ function MenuPopup(ref, fullName, img, familyInfoArray, loginStatus) {
     }
 
     return (
-        <div className="animate-popup absolute grid gap-2 right-0 top-[50px] w-[424px] p-6 border-2 border-black bg-[#FFFFFF] shadow-[4px_4px_4px_rgba(0,0,0,0.25)] z-[100] rounded-[15px] cursor-auto" ref={ref}>
+        <div className="animate-popup absolute grid gap-2 right-0 top-[50px] w-[424px] p-6 border-2 border-black bg-[#FFFFFF] shadow-[4px_4px_4px_rgba(0,0,0,0.25)] z-[100] rounded-[15px] cursor-auto" ref={menuRef}>
             <div>
                 <img className="rounded-full w-20 h-20 m-auto" src={img} alt={fullName} />
                 <p className="text-2xl text-center">{fullName}</p>
