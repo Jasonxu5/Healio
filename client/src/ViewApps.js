@@ -1,28 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function ViewApps(props) {
     const { currUser, viewAppsHeader } = props;
+    const [currSearch, setCurrSearch] = useState('');
     return (
         <div className="md:pl-[25px] flex flex-col pl-[235px]">
             {viewAppsHeader}
-            <AppList currUser={currUser} />
+            <FilterApp searchCallback={setCurrSearch} />
+            <AppList currUser={currUser} currSearch={currSearch} />
         </div>
     );
 }
 
+function FilterApp(props) {
+    const { searchCallback } = props;
+
+    const handleTextChange = (event) => {
+        searchCallback(event.target.value.toLowerCase());
+    };
+    return (
+        <div>
+            <form className="animate-popup flex gap-3 mt-5 mb-10">
+                <label className="absolute left-[-100vw]">Type something here...</label>
+                <input className="p-[12px] w-[250px] rounded-[15px] bg-grey placeholder:text-black"
+                    onChange={handleTextChange} placeholder={'Search for appointments...'} aria-label="Filter your appointments" autoComplete="off" />
+            </form>
+        </div>
+    )
+}
+
 function AppList(props) {
-    const { currUser } = props;
+    const { currUser, currSearch } = props;
     const today = new Date();
 
     const upcomingApps = currUser.appointments.filter((app) => {
-        return today <= app.date;
+        return today <= app.date && app.name.toLowerCase().includes(currSearch);
     });
     const upcomingAppsArray = upcomingApps.map((app, index) => {
         return <Appointment app={app.name} dateObject={app.date} key={index} />;
     });
 
     const pastApps = currUser.appointments.filter((app) => {
-        return today > app.date;
+        return today > app.date && app.name.toLowerCase().includes(currSearch);
     });
     const pastAppsArray = pastApps.map((app, index) => {
         return <Appointment app={app.name} dateObject={app.date} key={index} />;
@@ -74,27 +93,3 @@ function Appointment(props) {
         </div>
     );
 }
-
-// function FilterOApp(props) {
-//     const {  } = props;
-//     const handleOptionChange = (event) => {
-//         currStatusCallback(event.target.value);
-//     };
-
-//     const handleTextChange = (event) => {
-//         currInfoCallback(event.target.value.toLowerCase());
-//     };
-//     return (
-//         <div>
-//             <form className="animate-popup flex gap-3 mt-5 mb-10">
-//                 <label className="absolute left-[-100vw]">Type something here...</label>
-//                 <input className="p-[12px] w-[250px] rounded-[15px] bg-grey placeholder:text-black"
-//                     onChange={handleTextChange} placeholder={'Search for ' + infoType + '...'} aria-label="Filter your health information" autoComplete="off" />
-//                 <select className="p-[12px] w-[200px] rounded-[15px] bg-grey" onChange={handleOptionChange} value={currStatus}>
-//                     <option value="">Filter by status...</option>
-//                     {statuses}
-//                 </select>
-//             </form>
-//         </div>
-//     )
-// }
