@@ -43,7 +43,7 @@ export default function Login(props) {
     <Modal className="modal" show={isLoginClicked} ref={loginRef}>
       <FontAwesomeIcon className="text-2xl mb-2 hover:text-[#FF0000] hover:cursor-pointer" onClick={() => loginClickedCallback(false)} icon={faX} size="lg" aria-label="Close icon" />
       <Modal.Header className="text-center" closeButton>
-        <Modal.Title className="font-header text-3xl">Log In</Modal.Title>
+        <Modal.Title className="font-heading text-3xl">Log In</Modal.Title>
       </Modal.Header>
       <Modal.Body className="">
         {formInputArray}

@@ -40,7 +40,7 @@ function AppList(props) {
             <div className="flex flex-col">
                 {!upcomingAppsArray.every(app => app === undefined) ? upcomingAppsArray : <p className="my-4">No upcoming appointments.</p>}
             </div>
-            <h2 className="font-heading text-2xl">Past Appointments</h2>
+            <h2 className="font-heading text-2xl mt-12">Past Appointments</h2>
             {!pastAppsArray.every(app => app === undefined) ? (
                 <div className="sm:grid-cols-[150px,250px] md:grid-cols-[150px,300px] grid grid-cols-[220px,350px] font-heading text-xl mt-2 ml-5">
                     <h3>Date</h3>

@@ -43,7 +43,7 @@ export default function AddUserModal(props) {
         <Modal className="sm:w-[250px] md:w-[500px] animate-popup absolute left-[25%] top-[10%] w-[750px] h-[500px] p-5 bg-white border-2 border-black rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" show={isAddUserClicked} ref={addUserRef}>
             <FontAwesomeIcon className="text-2xl mb-2 hover:text-[#FF0000] hover:cursor-pointer" onClick={() => addUserCallback(false)} icon={faX} size="lg" aria-label="Close icon" />
             <Modal.Header className="text-center" closeButton>
-                <Modal.Title className="font-header text-3xl">Add a family member</Modal.Title>
+                <Modal.Title className="font-heading text-3xl">Add a family member</Modal.Title>
             </Modal.Header>
             <form className="flex gap-3 justify-center mb-6">
                 <label className="absolute left-[-100vw]">Search for family member...</label>
