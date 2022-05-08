@@ -65,7 +65,7 @@ function InfoBody(props) {
         <div>
             <div className="sm:grid-cols-[200px,250px] md:grid-cols-[150px,300px,250px] animate-popup grid grid-cols-[220px,350px,225px,250px] mb-4 ml-5 font-heading text-2xl text-dark-blue">
                 <p className="">Date</p>
-                <p className="">{infoType.substring(0, infoType.length - 1)}</p>
+                <p className="">{infoType !== 'Surgeries' && infoType !== 'Allergies' ? infoType.substring(0, infoType.length - 1) : infoType.substring(0, infoType.length - 3) + 'y'}</p>
                 <p className="sm:hidden">Doctor</p>
                 <p className="md:hidden">Status</p>
             </div>
