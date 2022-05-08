@@ -9,6 +9,9 @@ import Header from './Header.js';
 import Health from './Health.js';
 import PatientInfo from './PatientInfo.js';
 
+import ViewApps from './ViewApps.js';
+import ScheduleApps from './ScheduleApps.js';
+
 import Messaging from './Messaging.js';
 
 import FindProviders from './FindProviders.js';
@@ -259,6 +262,9 @@ function App() {
   const allergiesHeader = <Header title={'Allergies'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />
   const surgeriesHeader = <Header title={'Surgeries'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />
 
+  const viewAppsHeader = <Header title={'Appointments'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
+  const scheduleAppsHeader = <Header title={'Schedule Appointment'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
+
   const messagingHeader = <Header title={'Messaging'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
 
   const findProvidersHeader = <Header title={'Find Providers'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
@@ -280,10 +286,9 @@ function App() {
           <Route path="/health/vaccines" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.vaccines} infoHeader={vaccinesHeader} />} />
           <Route path="/health/allergies" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.allergies} infoHeader={allergiesHeader} />} />
           <Route path="/health/surgical_history" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.surgeries} infoHeader={surgeriesHeader} />} />
-          <Route path="/appointments" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
-          <Route path="/appointments/upcoming_appointments" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
-          <Route path="/appointments/schedule_appointments" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
-          <Route path="/appointments/past_appointments" element={<PlaceHolder currUser={currUser} templateHeader={templateHeader} />} />
+          <Route path="/appointments" element={<ViewApps currUser={currUser} viewAppsHeader={viewAppsHeader} />} />
+          <Route path="/appointments/view_appointments" element={<ViewApps currUser={currUser} viewAppsHeader={viewAppsHeader} />} />
+          <Route path="/appointments/schedule_appointment" element={<ScheduleApps currUser={currUser} scheduleAppsHeader={scheduleAppsHeader} />} />
           <Route path="/messages" element={<Messaging currUser={currUser} messagingHeader={messagingHeader} />} />
           <Route path="/resources" element={<FindProviders doctorInfo={DOCTOR_INFO} findProvidersHeader={findProvidersHeader} />} />
           <Route path="/resources/find_providers" element={<FindProviders doctorInfo={DOCTOR_INFO} findProvidersHeader={findProvidersHeader} />} />

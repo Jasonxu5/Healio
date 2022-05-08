@@ -163,7 +163,7 @@ function ChatBox(props) {
     // Label element has css rules that hide it from non-screen readers
     return (
         <div className="grow-[2]">
-            <div className="h-[75%] overflow-y-auto">
+            <div className="animate-popup h-[75%] overflow-y-auto">
                 {convoArray}
                 <div ref={ref} />
             </div>

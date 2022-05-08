@@ -2,10 +2,9 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { DivIcon } from 'leaflet';
-import { mapboxToken } from './mapboxToken.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouseMedical } from '@fortawesome/free-solid-svg-icons';
-import hospitalData from './data/hospitals.json'
+import hospitalData from './data/hospitals.json';
 
 export default function FindHospitals(props) {
     const { findHospitalsHeader } = props;
@@ -46,7 +45,7 @@ function SeattleMap() {
             center={[47.6, -122.2]}
             zoom={10}>
             <TileLayer
-                url={'https://api.mapbox.com/styles/v1/jcorille/cl2vdj5hd000a15pi839lo74j/tiles/256/{z}/{x}/{y}@2x?access_token=' + mapboxToken}
+                url={'https://api.mapbox.com/styles/v1/jcorille/cl2vdj5hd000a15pi839lo74j/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiamNvcmlsbGUiLCJhIjoiY2wydmY5OHlyMGI3eTNsbXZkZHE1a254MyJ9.bprBsigMZMrTf_RkkDzE9g'}
                 attribution='Jerome Orille | University of Washington'
             />
             {hospitalMarkersArray}

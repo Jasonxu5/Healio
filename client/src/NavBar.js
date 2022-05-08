@@ -28,9 +28,8 @@ const CATEGORIES = [
         iconSize: 'lg',
         name: 'Appointments',
         hoverOptions: [
-            'Schedule Appointments',
-            'Upcoming Appointments',
-            'Past Appointments'
+            'View Appointments',
+            'Schedule Appointment'
         ]
     },
     {
