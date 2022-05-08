@@ -19,11 +19,11 @@ export default function ScheduleApps(props) {
 function AppCalendar(props) {
     const { currUser } = props;
     return <Calendar
-        className="animate-popup h-screen"
+        className="relative flex flex-col animate-popup h-screen"
+        tileClassName="transition"
         prev2Label={null}
         next2Label={null}
         view='month'
         minDetail="month"
-        tileClassName="transition h-[14.2vh]"
     />;
 }
