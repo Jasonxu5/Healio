@@ -42,7 +42,7 @@ function SingleProvider(props) {
                     <h2 className="font-heading text-3xl">{docName}</h2>
                     <hr className="border-grey" />
                     <p className="font-bold">Speciality: {docSpeciality}</p>
-                    <Link to="/appointments"
+                    <Link to="/appointments/schedule_appointment"
                         className="transition w-[215px] py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold">
                         Schedule Appointment
                     </Link>

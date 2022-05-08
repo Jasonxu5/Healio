@@ -23,6 +23,7 @@ function AppCalendar(props) {
         prev2Label={null}
         next2Label={null}
         view='month'
+        minDetail="month"
         tileClassName="transition h-[14.2vh]"
     />;
 }
