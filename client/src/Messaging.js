@@ -12,11 +12,11 @@ import valera from './img/valera.png';
 // if there's a better way to implement this feel free to do so!
 const CONVERSATIONS = [
     {
-        participants: ['Jason', 'Daughter', 'Dr. Ortega'],
+        participants: ['Placeholder', 'Daughter', 'Dr. Ortega'],
         images: [katie, daughter, ortega]
     },
     {
-        participants: ['Jason', 'Grandma', 'Dr. Valera'],
+        participants: ['Placeholder', 'Grandma', 'Dr. Valera'],
         images: [katie, grandma, valera]
     }
 ];
