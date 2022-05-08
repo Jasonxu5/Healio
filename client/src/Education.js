@@ -78,7 +78,7 @@ function SingleEducationCard(props) {
                     <h2 className="sm:block hidden font-heading text-3xl">{shortTitle}</h2>
                     <hr className="border-grey" />
                     <p className="">{desc}</p>
-                    <a href={url}
+                    <a href={url} target="_blank" rel="noopener noreferrer"
                         className="transition w-[160px] py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold">
                         Visit Resource
                     </a>
