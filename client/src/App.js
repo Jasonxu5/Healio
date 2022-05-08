@@ -253,48 +253,49 @@ function App() {
   } else {
     document.body.style.overflow = '';
   }
+  
+  const headerTitles = [
+    'Overview',
+    'Lab Results',
+    'Medications',
+    'Vaccines',
+    'Allergies',
+    'Surgeries',
+    'Appointments',
+    'Schedule Appointment',
+    'Messaging',
+    'Find Providers',
+    'Find Hospitals',
+    'Learn More',
+    'Your Profile',
+    'To be worked on ...' // template header
+  ]
 
-  // Headers for each page, not sure if there's a better way to do this
-  const healthHeader = <Header title={'Overview'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} loginStatus={loginStatus} />;
-  const labResultsHeader = <Header title={'Lab Results'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />
-  const medicationsHeader = <Header title={'Medications'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />
-  const vaccinesHeader = <Header title={'Vaccines'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />
-  const allergiesHeader = <Header title={'Allergies'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />
-  const surgeriesHeader = <Header title={'Surgeries'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />
-
-  const viewAppsHeader = <Header title={'Appointments'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
-  const scheduleAppsHeader = <Header title={'Schedule Appointment'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
-
-  const messagingHeader = <Header title={'Messaging'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
-
-  const findProvidersHeader = <Header title={'Find Providers'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
-  const findHospitalsHeader = <Header title={'Find Hospitals'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
-  const educationHeader = <Header title={'Learn More'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
-
-  const profileHeader = <Header title={'Your Profile'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
-
-  const templateHeader = <Header title={'To be worked on ...'} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} />;
+  // There IS a better way to do it!
+  const headerArray = headerTitles.map((title, index) => {
+    return <Header title={title} currUser={currUser} setUserCallback={setCurrUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} loginStatus={loginStatus} key={index} />;
+  });
 
   if (isSignedIn) {
     return (
       <div className="bg-gradient-to-br from-pale-blue to-white">
         <Routes>
-          <Route path="/health" element={<Health currUser={currUser} healthHeader={healthHeader} />} />
-          <Route path="/health/overview" element={<Health currUser={currUser} healthHeader={healthHeader} />} />
-          <Route path="/health/lab_results" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.labResults} infoHeader={labResultsHeader} />} />
-          <Route path="/health/medications" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.medications} infoHeader={medicationsHeader} />} />
-          <Route path="/health/vaccines" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.vaccines} infoHeader={vaccinesHeader} />} />
-          <Route path="/health/allergies" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.allergies} infoHeader={allergiesHeader} />} />
-          <Route path="/health/surgical_history" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.surgeries} infoHeader={surgeriesHeader} />} />
-          <Route path="/appointments" element={<ViewApps currUser={currUser} viewAppsHeader={viewAppsHeader} />} />
-          <Route path="/appointments/view_appointments" element={<ViewApps currUser={currUser} viewAppsHeader={viewAppsHeader} />} />
-          <Route path="/appointments/schedule_appointment" element={<ScheduleApps currUser={currUser} scheduleAppsHeader={scheduleAppsHeader} />} />
-          <Route path="/messages" element={<Messaging currUser={currUser} messagingHeader={messagingHeader} />} />
-          <Route path="/resources" element={<FindProviders doctorInfo={DOCTOR_INFO} findProvidersHeader={findProvidersHeader} />} />
-          <Route path="/resources/find_providers" element={<FindProviders doctorInfo={DOCTOR_INFO} findProvidersHeader={findProvidersHeader} />} />
-          <Route path="/resources/find_hospitals" element={<FindHospitals findHospitalsHeader={findHospitalsHeader} />} />
-          <Route path="/resources/educational_providers" element={<Education educationHeader={educationHeader} />} />
-          <Route path="/profile" element={<Profile currUser={currUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} profileHeader={profileHeader} />} />
+          <Route path="/health" element={<Health currUser={currUser} healthHeader={headerArray[0]} />} />
+          <Route path="/health/overview" element={<Health currUser={currUser} healthHeader={headerArray[0]} />} />
+          <Route path="/health/lab_results" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.labResults} infoHeader={headerArray[1]} />} />
+          <Route path="/health/medications" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.medications} infoHeader={headerArray[2]} />} />
+          <Route path="/health/vaccines" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.vaccines} infoHeader={headerArray[3]} />} />
+          <Route path="/health/allergies" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.allergies} infoHeader={headerArray[4]} />} />
+          <Route path="/health/surgical_history" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.surgeries} infoHeader={headerArray[5]} />} />
+          <Route path="/appointments" element={<ViewApps currUser={currUser} viewAppsHeader={headerArray[6]} />} />
+          <Route path="/appointments/view_appointments" element={<ViewApps currUser={currUser} viewAppsHeader={headerArray[6]} />} />
+          <Route path="/appointments/schedule_appointment" element={<ScheduleApps currUser={currUser} scheduleAppsHeader={headerArray[7]} />} />
+          <Route path="/messages" element={<Messaging currUser={currUser} messagingHeader={headerArray[8]} />} />
+          <Route path="/resources" element={<FindProviders doctorInfo={DOCTOR_INFO} findProvidersHeader={headerArray[9]} />} />
+          <Route path="/resources/find_providers" element={<FindProviders doctorInfo={DOCTOR_INFO} findProvidersHeader={headerArray[9]} />} />
+          <Route path="/resources/find_hospitals" element={<FindHospitals findHospitalsHeader={headerArray[10]} />} />
+          <Route path="/resources/educational_providers" element={<Education educationHeader={headerArray[11]} />} />
+          <Route path="/profile" element={<Profile currUser={currUser} familyInfo={familyInfo} familyInfoCallback={setFamilyInfo} profileHeader={headerArray[12]} />} />
           <Route path="*" element={<Navigate replace to="/health" />} />
         </Routes>
         <NavBar loginStatus={loginStatus} />

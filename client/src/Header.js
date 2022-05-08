@@ -256,7 +256,7 @@ export default function Header(props) {
             <div className="absolute flex bottom-[20px] right-[30px] hover:cursor-pointer bg-light-green rounded-full mb-2 pr-3" onClick={() => setMenu(true)}>
                 <img className="rounded-full inline w-12 h-12" src={currUser.img} alt={fullName} />
                 <FontAwesomeIcon className="self-center text-2xl ml-3" icon={faAngleDown} size="lg" aria-label="Down arrow for choosing a user in the family" />
-                {isMenuOpen ? MenuPopup(ref, fullName, currUser.img, familyInfoArray, props) : null}
+                {isMenuOpen ? MenuPopup(ref, fullName, currUser.img, familyInfoArray, loginStatus) : null}
             </div>
         </header>
     );
@@ -288,7 +288,7 @@ function AddAnotherUser(addUserCallback) {
     );
 }
 
-function MenuPopup(ref, fullName, img, familyInfoArray, props) {
+function MenuPopup(ref, fullName, img, familyInfoArray, loginStatus) {
     const handleSignOut = async () => {
         // firebase.auth().signOut();
         await fetch(apiEndpoint + "logout", {
@@ -298,7 +298,7 @@ function MenuPopup(ref, fullName, img, familyInfoArray, props) {
             mode: 'cors'
         });
         console.log('logging out')
-        props.loginStatus();
+        loginStatus();
     }
 
     return (
