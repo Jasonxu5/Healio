@@ -112,7 +112,7 @@ function NavBar(props) {
             <Modal className="modal" show={isDisclaimerClicked} ref={disclaimerRef}>
                 <FontAwesomeIcon className="text-2xl mb-2 hover:text-[#FF0000] hover:cursor-pointer" onClick={() => setDisclaimer(false)} icon={faX} size="lg" aria-label="Close icon" />
                 <Modal.Header className="text-center" closeButton>
-                    <Modal.Title className="font-header text-3xl">Data Use Disclaimer</Modal.Title>
+                    <Modal.Title className="font-heading text-3xl">Data Use Disclaimer</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="text-center">
                     Starting on May 23th, 2022, the Mobio team will be transitioning the Healio platform to an open-source project. What this means is that the project repository and source code will be publicly accessible under the MIT License. Our team has done extensive research and development in building the platform you’re using today, but we cannot continue our efforts on this project after graduation. Therefore, by open-sourcing our project, we will give future teams a foundation for them to build and iterate new features and improvements upon.
