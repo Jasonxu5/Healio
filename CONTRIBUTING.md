@@ -8,7 +8,7 @@ Our main research insights found that major existing patient portals such as MyC
 
 After conducting user research, other factors that influenced our design were the need to make privacy and data consent guidelines clear, the addition of messaging features to easily communicate with a healthcare provider, and accessibility features such as language translation.
 
-The code follows a Client Server architecture. All client-side rendering and interactivity are done via React. The server itself was built using Node.js and the Express framework. The server handles login and signup requests, which then calls the API to a MongoDB database where it stores user emails, HASHED passwords (encrypted using the `bcyrpt` library), and data associated with the specific user (such as medications, appointments, etc.)
+The code follows a Client Server architecture. All client-side rendering and interactivity are done via React. The server itself was built using Node.js and the Express framework. The server handles login and signup requests, which then calls the API to a MongoDB database where it stores user emails, **hashed** passwords (encrypted using the `bcyrpt` library), and data associated with the specific user (such as medications, appointments, etc.)
 
 Keep this information in mind once you begin to make contributions to this project.
 
