@@ -82,6 +82,7 @@ export default function NavBar(props) {
             iconSize={category.iconSize}
             categoryName={category.name}
             hoverOptions={category.hoverOptions}
+            menuCallback={setMenuOpen}
             key={index}
         />;
     });
@@ -126,11 +127,11 @@ export default function NavBar(props) {
 }
 
 function Category(props) {
-    const { queryLink, icon, iconSize, categoryName, hoverOptions } = props;
+    const { queryLink, icon, iconSize, categoryName, hoverOptions, menuCallback } = props;
     const [isCategorySelected, setIsCategorySelected] = useState(false);
     const [isMouseHovered, setIsMouseHovered] = useState(false);
     const subCategories = hoverOptions.map((option, index) => {
-        return <SubCategory subCategoryName={option} categoryQueryLink={queryLink} key={index} />
+        return <SubCategory subCategoryName={option} categoryQueryLink={queryLink} menuCallback={menuCallback} key={index} />
     });
     const mobileRef = useRef();
 
@@ -152,14 +153,25 @@ function Category(props) {
 
     let navType;
     if (window.innerWidth > 1040 || categoryName === 'Messaging' || categoryName === 'Profile') {
-        navType = (
-            <NavLink to={queryLink} className={({ isActive }) => isActive ? setIsCategorySelected(true) : setIsCategorySelected(false)}>
-                <div className={(isMouseHovered || isCategorySelected ? 'transition bg-dark-green font-bold text-dark-blue ' : '') + 'py-2 pl-3'}>
-                    <FontAwesomeIcon className="md:hidden mr-2" icon={icon} size={iconSize} aria-label={categoryName} />
-                    <p className="inline ml-2">{categoryName} </p>
-                </div>
-            </NavLink>
-        );
+        if (window.innerWidth > 1040) {
+            navType = (
+                <NavLink to={queryLink} className={({ isActive }) => isActive ? setIsCategorySelected(true) : setIsCategorySelected(false)}>
+                    <div className={(isMouseHovered || isCategorySelected ? 'transition bg-dark-green font-bold text-dark-blue ' : '') + 'py-2 pl-3'}>
+                        <FontAwesomeIcon className="md:hidden mr-2" icon={icon} size={iconSize} aria-label={categoryName} />
+                        <p className="inline ml-2">{categoryName} </p>
+                    </div>
+                </NavLink>
+            );
+        } else {
+            navType = (
+                <NavLink to={queryLink} onClick={() => menuCallback(false)} className={({ isActive }) => isActive ? setIsCategorySelected(true) : setIsCategorySelected(false)}>
+                    <div className={(isMouseHovered || isCategorySelected ? 'transition bg-dark-green font-bold text-dark-blue ' : '') + 'py-2 pl-3'}>
+                        <FontAwesomeIcon className="md:hidden mr-2" icon={icon} size={iconSize} aria-label={categoryName} />
+                        <p className="inline ml-2">{categoryName} </p>
+                    </div>
+                </NavLink>
+            );
+        }
     } else {
         navType = (
             <div className="hover:cursor-pointer" onClick={() => setIsMouseHovered(true)} ref={mobileRef}>
@@ -196,14 +208,15 @@ function Category(props) {
 }
 
 function SubCategory(props) {
-    const { subCategoryName, categoryQueryLink } = props;
+    const { subCategoryName, categoryQueryLink, menuCallback } = props;
     const [isMouseHovered, setIsMouseHovered] = useState(false);
 
     const queryLink = categoryQueryLink + '/' + subCategoryName.toLowerCase().split(' ').join('_');
     return (
         <NavLink to={queryLink} className={isMouseHovered ? 'transition font-bold bg-light-blue pl-4 py-2' : 'pl-4 py-2'}
             onMouseEnter={() => setIsMouseHovered(true)}
-            onMouseLeave={() => setIsMouseHovered(false)}>
+            onMouseLeave={() => setIsMouseHovered(false)}
+            onClick={() => menuCallback(false)}>
             {subCategoryName}
         </NavLink>
     )
