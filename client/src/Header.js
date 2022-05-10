@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import AddUserModal from './AddUserModal';
-import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faAngleDown } from '@fortawesome/free-solid-svg-icons';
@@ -315,9 +314,9 @@ function MenuPopup(props) {
                 {familyInfoArray}
             </div>
             <hr className="border-grey" />
-            <Link to="/" className="transition mx-auto py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={handleSignOut}>
+            <div className="transition mx-auto py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={handleSignOut}>
                 <p>Log Out</p>
-            </Link>
+            </div>
         </div>
     );
 }

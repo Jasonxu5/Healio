@@ -86,7 +86,6 @@ function CalendarModal(props) {
             setError(true);
         }
     }
-    console.log(hasError);  
 
     const handleKeypress = (event) => {
         if (event.key === 'Enter') {
@@ -113,7 +112,7 @@ function CalendarModal(props) {
                     <option value="">Choose a doctor...</option>
                     {doctorNamesArray}
                 </select>
-                {hasError ? <div><br /><p className="mt-5 bg-[#FFB6C1] text-center inline">One or more fields are empty.</p></div> : null}
+                {hasError ? <div><br /><p className="mt-5 bg-pink text-center inline">One or more fields are empty.</p></div> : null}
             </Modal.Body>
             <p className="transition py-3 px-6 mx-auto w-[212px] mt-2 border-2 border-light-blue rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={handleClick}>Schedule Appointment</p>
         </Modal>
