@@ -73,7 +73,7 @@ export default function Signup(props) {
                 {formInputArray}
             </Modal.Body>
             <p className="mx-auto bg-red">{errorMessage}</p>
-            <p className="mx-auto w-[165px] py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={handleClick}>
+            <p className="transition mx-auto w-[162px] py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={handleClick}>
                 Create Account
             </p>
             <Modal.Footer className="text-center pb-3">

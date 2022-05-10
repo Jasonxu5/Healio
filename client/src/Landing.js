@@ -16,22 +16,26 @@ const MOBIO = [
     {
         name: 'Niya Park',
         role: 'Project Manager',
-        img: niya
+        img: niya,
+        linkedin: 'https://www.linkedin.com/in/niyapark/'
     },
     {
         name: 'Alex Ramos',
         role: 'Designer',
-        img: alex
+        img: alex,
+        linkedin: 'https://www.linkedin.com/in/alex-g-ramos/'
     },
     {
         name: 'Jason Xu',
         role: 'Backend Developer',
-        img: jason
+        img: jason,
+        linkedin: 'https://www.linkedin.com/in/jason-xu-5a29b4180/'
     },
     {
         name: 'Jerome Orille',
         role: 'Frontend Developer',
-        img: jerome
+        img: jerome,
+        linkedin: 'https://www.linkedin.com/in/jahwoamyy/'
     }
 ];
 
@@ -66,8 +70,8 @@ export default function Landing(props) {
                     <Signup loginStatus={loginStatus} isLoginClicked={isLoginClicked} loginClickedCallback={setIsLoginClicked} loginRef={loginRef} loginCallback={setLogin} />) :
                 null}
             <div className="flex flex-col bg-pale-blue">
-                <NavBar loginCallback={setIsLoginClicked} bodyRef={bodyRef} aboutRef={aboutRef} />
-                <Body loginCallback={setIsLoginClicked} bodyRef={bodyRef} />
+                <NavBar loginCallback={setIsLoginClicked} setLogin={setLogin} bodyRef={bodyRef} aboutRef={aboutRef} />
+                <Body loginCallback={setIsLoginClicked} setLogin={setLogin} bodyRef={bodyRef} />
                 <About aboutRef={aboutRef} />
                 <footer className="mx-10 mt-[200px]">&copy; 2021 - 2022 MoBio @ University of Washington iSchool</footer>
             </div>
@@ -76,7 +80,7 @@ export default function Landing(props) {
 }
 
 function NavBar(props) {
-    const { loginCallback, bodyRef, aboutRef } = props;
+    const { loginCallback, setLogin, bodyRef, aboutRef } = props;
     const [isMenuOpen, setMenuOpen] = useState(false);
     const [isDisclaimerClicked, setDisclaimer] = useState(false);
     const navRef = useRef();
@@ -99,15 +103,21 @@ function NavBar(props) {
             document.removeEventListener('mousedown', checkIfClickedOutside);
         }
     }, [isMenuOpen, isDisclaimerClicked]);
+
+    const handleClick = () => {
+        setLogin(true);
+        loginCallback(true);
+    };
+
     return (
         <div className="w-screen bg-white fixed z-50">
             <div className="md:w-[88vw] flex justify-between w-[95vw] mx-10 mt-4 pb-4">
                 <h1 className="font-heading text-3xl font-bold mt-2">Healio</h1>
                 <div className="md:inline my-3 hidden">
                     <FontAwesomeIcon className="text-4xl cursor-pointer hover:animate-wiggle" onClick={() => { setMenuOpen(true) }} icon={faBars} aria-label="Hamburger menu for extra icons" />
-                    {isMenuOpen ? <NavOptions css="absolute right-[20px] mt-2 flex flex-col gap-5 text-xl p-5 bg-white rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" navRef={navRef} bodyRef={bodyRef} aboutRef={aboutRef} setDisclaimerCallback={setDisclaimer} loginCallback={loginCallback} /> : null}
+                    {isMenuOpen ? <NavOptions css="absolute right-[20px] mt-2 flex flex-col gap-5 text-xl p-5 bg-white rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" navRef={navRef} bodyRef={bodyRef} aboutRef={aboutRef} setDisclaimerCallback={setDisclaimer} loginCallback={handleClick} /> : null}
                 </div>
-                <NavOptions css="md:hidden flex gap-10 text-xl my-1" navRef={null} bodyRef={bodyRef} aboutRef={aboutRef} setDisclaimerCallback={setDisclaimer} loginCallback={loginCallback} />
+                <NavOptions css="md:hidden flex gap-10 text-xl my-1" navRef={null} bodyRef={bodyRef} aboutRef={aboutRef} setDisclaimerCallback={setDisclaimer} loginCallback={handleClick} />
             </div>
             <Modal className="modal" show={isDisclaimerClicked} ref={disclaimerRef}>
                 <FontAwesomeIcon className="text-2xl mb-2 hover:text-[#FF0000] hover:cursor-pointer" onClick={() => setDisclaimer(false)} icon={faX} size="lg" aria-label="Close icon" />
@@ -129,7 +139,7 @@ function NavBar(props) {
 }
 
 function NavOptions(props) {
-    const { css, navRef, bodyRef, aboutRef, setDisclaimerCallback, loginCallback } = props;
+    const { css, navRef, bodyRef, aboutRef, setDisclaimerCallback, loginCallback} = props;
 
     const handleClick = (event) => {
         if (event.target.textContent === 'Home') {
@@ -145,13 +155,18 @@ function NavOptions(props) {
             <p className="mt-2 hover:cursor-pointer" onClick={handleClick}>Data Use Disclaimer</p>
             <p className="mt-2 hover:cursor-pointer" onClick={handleClick}>Home</p>
             <p className="mt-2 hover:cursor-pointer" onClick={handleClick}>About</p>
-            <p className="md:w-[80px] font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 hover:cursor-pointer" onClick={() => loginCallback(true)}>Login</p>
+            <p className="md:w-[80px] font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 hover:cursor-pointer" onClick={loginCallback}>Login</p>
         </div>
     )
 }
 
 function Body(props) {
-    const { loginCallback, bodyRef } = props;
+    const { loginCallback, setLogin, bodyRef } = props;
+
+    const handleClick = () => {
+        setLogin(false);
+        loginCallback(true);
+    }
     return (
         <div className="md:mx-auto md:w-full" ref={bodyRef}>
             <div className="md:flex-col flex">
@@ -162,7 +177,7 @@ function Body(props) {
                         <p>Take control of your family's</p>
                         <p>medical information today.</p>
                     </div>
-                    <p className="md:mx-auto font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 w-[115px] hover:cursor-pointer" onClick={() => loginCallback(true)}>Join Healio</p>
+                    <p className="md:mx-auto font-semibold text-dark-blue bg-dark-green rounded-lg py-2 px-4 w-[86px] hover:cursor-pointer" onClick={handleClick}>Sign Up</p>
                 </div>
                 <img className="md:hidden ml-auto h-[100vh]" src={landingImage} alt="Patients and Doctor Clipart" data-aos="fade-left" data-aos-duration="1500" />
             </div>
@@ -173,7 +188,7 @@ function Body(props) {
 function About(props) {
     const { aboutRef } = props;
     const mobioArray = MOBIO.map((member, index) => {
-        return <MoBioProfile name={member.name} role={member.role} img={member.img} key={index} />
+        return <MoBioProfile name={member.name} role={member.role} img={member.img} linkedin={member.linkedin} key={index} />
     });
     return (
         <div className="md:flex-col flex mt-10" ref={aboutRef}>
@@ -193,12 +208,12 @@ function About(props) {
 }
 
 function MoBioProfile(props) {
-    const { name, role, img } = props;
+    const { name, role, img, linkedin } = props;
 
     return (
         <div className="md:mx-auto font-heading text-xl">
             <img className="rounded-full h-40" src={img} />
-            <p>{name}</p>
+            <a href={linkedin} target="_blank" rel="noopener noreferrer">{name}</a>
             <p>{role}</p>
         </div>
     );

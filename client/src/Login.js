@@ -49,8 +49,8 @@ export default function Login(props) {
         {formInputArray}
       </Modal.Body>
       <p className="mx-auto bg-red">{errorMessage}</p>
-      <p className="mx-auto w-[100px] py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={handleClick}>
-        Sign In
+      <p className="transition mx-auto w-[94px] py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={handleClick}>
+        Log In
       </p>
       <Modal.Footer className="text-center pb-3">
         Don't have an account? <p className="text-light-blue underline hover:cursor-pointer" onClick={() => loginCallback(false)}>Sign up here!</p>
