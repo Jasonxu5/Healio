@@ -22,13 +22,7 @@ app.use(cookieParser());
 
 const whitelist = ['http://localhost:3000', 'https://healio-e7722.web.app'];
 const corsOptions = {
-  credentials: true,
-  origin: (origin, callback) => {
-    if (whitelist.includes(origin))
-      return callback(null, true)
-
-    callback(new Error('Not allowed by CORS'));
-  }
+  credentials: true
 }
 
 app.use(cors(corsOptions));
