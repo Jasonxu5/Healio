@@ -191,9 +191,9 @@ function About(props) {
         return <MoBioProfile name={member.name} role={member.role} img={member.img} linkedin={member.linkedin} key={index} />
     });
     return (
-        <div className="md:flex-col flex mt-10" ref={aboutRef}>
+        <div className="md:flex-col flex mt-10">
             <div className="md:mt-[50vh] md:text-center flex flex-col gap-4 mx-10 mt-[100px]" data-aos="fade-right" data-aos-duration="1500">
-                <h2 className="font-heading text-5xl font-bold">Who we are</h2>
+                <h2 className="font-heading text-5xl font-bold" ref={aboutRef}>Who we are</h2>
                 <div className="text-2xl">
                     <p>We are a team of <p className="text-light-blue inline">self-motivated</p></p>
                     <p>college undergraduates from</p>
