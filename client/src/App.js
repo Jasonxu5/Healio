@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
+import { serverEndpoint } from './serverEndpoint.js';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 
@@ -34,7 +35,8 @@ import martinez from './img/martinez.jpeg';
 import candice from './img/candice.png';
 import { FirebaseError } from 'firebase/app';
 
-const apiEndpoint = "http://localhost:5000/api/v1/"
+// const apiEndpoint = "http://localhost:5000/api/v1/"
+const apiEndpoint = serverEndpoint;
 
 // i'm sorry but i can't parse images in json files
 // cut down this array later, keep it hardcoded for now
@@ -253,7 +255,7 @@ function App() {
   } else {
     document.body.style.overflow = '';
   }
-  
+
   const headerTitles = [
     'Overview',
     'Lab Results',

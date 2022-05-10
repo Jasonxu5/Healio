@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import AddUserModal from './AddUserModal';
+import { serverEndpoint } from './serverEndpoint.js';
 import _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faAngleDown } from '@fortawesome/free-solid-svg-icons';
@@ -10,7 +11,7 @@ import katie from './img/katie.png'; // profile picture
 import daughter from './img/daughter.png';
 import grandma from './img/grandma.png';
 
-const apiEndpoint = "http://localhost:5000/api/v1/"
+const apiEndpoint = serverEndpoint;
 
 const USER_INFO = [
     {
@@ -231,7 +232,7 @@ export default function Header(props) {
                 setMenu(false);
             }
             // I included the typeof so it won't throw an error
-            if (isAddUserClicked && (typeof(e.target.className) !== 'object') && !addUserRef.current.dialog.contains(e.target)) {
+            if (isAddUserClicked && (typeof (e.target.className) !== 'object') && !addUserRef.current.dialog.contains(e.target)) {
                 setIsAddUserClicked(false);
             }
         }

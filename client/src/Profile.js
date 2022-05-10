@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { serverEndpoint } from './serverEndpoint.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faXmark, faCheck } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
 
-const apiEndpoint = "http://localhost:5000/api/v1/"
+const apiEndpoint = serverEndpoint;
 
 export default function Profile(props) {
     const { currUser, familyInfo, familyInfoCallback, profileHeader } = props;

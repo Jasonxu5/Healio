@@ -1,5 +1,6 @@
 // Import FirebaseAuth and firebase.
 import React, { useState } from 'react';
+import { serverEndpoint } from './serverEndpoint.js';
 import { Link } from 'react-router-dom';
 import { SingleFormInput } from './Signup.js';
 import Modal from 'react-bootstrap/Modal';
@@ -9,7 +10,7 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 
-const apiEndpoint = "http://localhost:5000/api/v1/"
+const apiEndpoint = serverEndpoint;
 
 const UI_CONFIG = {
   signInFlow: 'popup',
