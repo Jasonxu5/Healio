@@ -73,7 +73,7 @@ export default function Landing(props) {
                 <NavBar loginCallback={setIsLoginClicked} setLogin={setLogin} bodyRef={bodyRef} aboutRef={aboutRef} />
                 <Body loginCallback={setIsLoginClicked} setLogin={setLogin} bodyRef={bodyRef} />
                 <About aboutRef={aboutRef} />
-                <footer className="mx-10 mt-[200px]">&copy; 2021 - 2022 MoBio @ University of Washington iSchool</footer>
+                <footer className="mx-10 mt-[300px]">&copy; 2021 - 2022 MoBio @ University of Washington iSchool</footer>
             </div>
         </div>
     );
@@ -192,7 +192,7 @@ function About(props) {
     });
     return (
         <div className="md:flex-col flex mt-10" ref={aboutRef}>
-            <div className="md:mt-[50vh] md:text-center flex flex-col gap-4 mx-10 mt-[200px]" data-aos="fade-right" data-aos-duration="1500">
+            <div className="md:mt-[50vh] md:text-center flex flex-col gap-4 mx-10 mt-[100px]" data-aos="fade-right" data-aos-duration="1500">
                 <h2 className="font-heading text-5xl font-bold">Who we are</h2>
                 <div className="text-2xl">
                     <p>We are a team of <p className="text-light-blue inline">self-motivated</p></p>
