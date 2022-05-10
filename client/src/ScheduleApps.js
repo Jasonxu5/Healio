@@ -5,12 +5,13 @@ import { faX } from '@fortawesome/free-solid-svg-icons';
 import { Calendar } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendar.css';
+import { set } from 'lodash';
 
 // Because Calendar is impossible with Tailwind...
 // ...I have to painfully relearn normal CSS
 
 export default function ScheduleApps(props) {
-    const { currUser, scheduleAppsHeader } = props;
+    const { currUser, doctorInfo, scheduleAppsHeader } = props;
     const [isModalClicked, setModalClicked] = useState(false);
     const [clickedDay, setClickedDay] = useState(null);
     const appRef = useRef();
@@ -31,7 +32,7 @@ export default function ScheduleApps(props) {
 
     return (
         <div className="md:pl-[25px] flex flex-col pl-[235px]">
-            <CalendarModal currUser={currUser} appRef={appRef} isModalClicked={isModalClicked} modalCallback={setModalClicked} clickedDay={clickedDay} />
+            <CalendarModal currUser={currUser} doctorInfo={doctorInfo} appRef={appRef} isModalClicked={isModalClicked} modalCallback={setModalClicked} clickedDay={clickedDay} />
             {scheduleAppsHeader}
             <AppCalendar modalCallback={setModalClicked} dayCallback={setClickedDay} />
         </div>
@@ -39,8 +40,14 @@ export default function ScheduleApps(props) {
 }
 
 function CalendarModal(props) {
-    const { currUser, appRef, isModalClicked, modalCallback, clickedDay } = props;
+    const { currUser, doctorInfo, appRef, isModalClicked, modalCallback, clickedDay } = props;
     const [currText, setCurrText] = useState('');
+    const [currDoctor, setCurrDoctor] = useState('');
+    const [hasError, setError] = useState(false);
+
+    const doctorNamesArray = doctorInfo.map((doc, index) => {
+        return <option value={doc.name} key={index}>{doc.name}</option>;
+    });
 
     let date;
     if (clickedDay !== null) {
@@ -63,12 +70,24 @@ function CalendarModal(props) {
         setCurrText(event.target.value);
     }
 
-    const handleClick = () => {
-        const newAppointment = { name: currText, date: clickedDay };
-        currUser.appointments = [...currUser.appointments, newAppointment];
-        setCurrText('');
-        modalCallback(false);
+    const handleOptionChange = (event) => {
+        const currOption = event.target.value;
+        setCurrDoctor(currOption);
     }
+
+    const handleClick = () => {
+        if (currText.length !== 0 && currDoctor.length !== 0) {
+            const newAppointment = { name: currText, date: clickedDay, doctor: currDoctor };
+            currUser.appointments = [...currUser.appointments, newAppointment];
+            setCurrText('');
+            setError(false);
+            modalCallback(false);
+        } else {
+            setError(true);
+        }
+    }
+    console.log(hasError);  
+
     const handleKeypress = (event) => {
         if (event.key === 'Enter') {
             handleClick();
@@ -89,6 +108,12 @@ function CalendarModal(props) {
                         placeholder={'Reason for appointment...'} aria-label={'Reason for appointment'} autoComplete="off"
                         onKeyDown={handleKeypress} onChange={handleTextChange} />
                 </form>
+                <h2 className="mt-5 text-2xl">Select a doctor:</h2>
+                <select className="mt-3 p-[12px] w-[200px] rounded-[15px] bg-grey" onChange={handleOptionChange}>
+                    <option value="">Choose a doctor...</option>
+                    {doctorNamesArray}
+                </select>
+                {hasError ? <div><br /><p className="mt-5 bg-[#FFB6C1] text-center inline">One or more fields are empty.</p></div> : null}
             </Modal.Body>
             <p className="transition py-3 px-6 mx-auto w-[212px] mt-2 border-2 border-light-blue rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={handleClick}>Schedule Appointment</p>
         </Modal>

@@ -247,7 +247,6 @@ export default function Header(props) {
         const verySpecialKey = familyInfoArray[familyInfoArray.length - 1].key + 1;
         familyInfoArray.push(<AddAnotherUser addUserCallback={setIsAddUserClicked} key={verySpecialKey} />);
     }
-    console.log(familyInfoArray);
 
 
     // Need to flex container for Font Awesome Icon

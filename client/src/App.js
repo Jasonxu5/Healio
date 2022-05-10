@@ -93,8 +93,8 @@ const FAMILY_INFO = [
       doctor: 'Dr. Ortega'
     },
     appointments: [
-      { name: 'Follow up with Dr. Ortega', date: new Date('February 12, 2022') },
-      { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022') }
+      { name: 'Follow up with Dr. Ortega', date: new Date('February 12, 2022'), doctor: 'Dr. Ortega' },
+      { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022'), doctor: 'Dr. Osborn' }
     ],
     isAdmin: true
   },
@@ -127,7 +127,7 @@ const FAMILY_INFO = [
       doctor: 'Dr. Ortega'
     },
     appointments: [
-      { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022') }
+      { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022'), doctor: 'Dr. Osborn' }
     ],
     isAdmin: false
   },
@@ -162,8 +162,8 @@ const FAMILY_INFO = [
       doctor: 'Dr. Valera'
     },
     appointments: [
-      { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022') },
-      { name: 'Follow up with Dr. Valera', date: new Date('February 21, 2022') }
+      { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022'), doctor: 'Dr. Osborn' },
+      { name: 'Follow up with Dr. Valera', date: new Date('February 21, 2022'), doctor: 'Dr. Valera' }
     ],
     isAdmin: false
   }
@@ -289,7 +289,7 @@ function App() {
           <Route path="/health/surgical_history" element={<PatientInfo currUser={currUser} userHealthInfo={currUser.surgeries} infoHeader={headerArray[5]} />} />
           <Route path="/appointments" element={<ViewApps currUser={currUser} viewAppsHeader={headerArray[6]} />} />
           <Route path="/appointments/view_appointments" element={<ViewApps currUser={currUser} viewAppsHeader={headerArray[6]} />} />
-          <Route path="/appointments/schedule_appointment" element={<ScheduleApps currUser={currUser} scheduleAppsHeader={headerArray[7]} />} />
+          <Route path="/appointments/schedule_appointment" element={<ScheduleApps currUser={currUser} doctorInfo={DOCTOR_INFO} scheduleAppsHeader={headerArray[7]} />} />
           <Route path="/messages" element={<Messaging currUser={currUser} messagingHeader={headerArray[8]} />} />
           <Route path="/resources" element={<FindProviders doctorInfo={DOCTOR_INFO} findProvidersHeader={headerArray[9]} />} />
           <Route path="/resources/find_providers" element={<FindProviders doctorInfo={DOCTOR_INFO} findProvidersHeader={headerArray[9]} />} />
