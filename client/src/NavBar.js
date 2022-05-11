@@ -2,10 +2,11 @@ import { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquarePlus, faCalendarCheck, faMessage, faLightbulb, faUser, faRightFromBracket, faBars, faX } from '@fortawesome/free-solid-svg-icons'
+import { serverEndpoint } from './serverEndpoint.js';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 
-const apiEndpoint = "http://localhost:5000/api/v1/"
+const apiEndpoint = serverEndpoint;
 
 const CATEGORIES = [
     {

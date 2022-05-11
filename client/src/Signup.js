@@ -1,13 +1,14 @@
 // Import FirebaseAuth and firebase.
 import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import { serverEndpoint } from './serverEndpoint.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 
-const apiEndpoint = "http://localhost:5000/api/v1/"
+const apiEndpoint = serverEndpoint;
 
 // Configure FirebaseUI.
 // const uiConfig = {
