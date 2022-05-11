@@ -122,8 +122,12 @@ function CalendarModal(props) {
 function AppCalendar(props) {
     const { modalCallback, dayCallback } = props;
     const handleClick = (event) => {
-        dayCallback(event);
-        modalCallback(true);
+        if (new Date() > event) {
+            alert('Please choose a different day (later than today\'s date)');
+        } else {
+            dayCallback(event);
+            modalCallback(true);
+        }
     };
     return <Calendar
         className="relative flex flex-col animate-popup h-screen"
