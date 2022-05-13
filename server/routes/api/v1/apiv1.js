@@ -3,35 +3,19 @@ import firebaseAdmin from "../../../firebaseAdmin.js";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { jwtSecret } from "../../../jwtSecret.js";
-import cookie from "cookie"
+import { fileURLToPath } from "url";
+import path from "path";
+import { dirname } from 'path';
+import fs from "fs";
+import Papa from "papaparse";
+import cookie from "cookie";
 
 // import { userAuth } from "../../../app.js"
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 var router = express.Router();
-
-const getUserFromToken = async (token) => {
-  try {
-    const firebaseUser = await firebaseAdmin.auth.verifyIdToken(token);
-    return firebaseUser
-  } catch (err) {
-    return { "Error": err }
-  }
-}
-
-async function verifyAuthToken(req, res, next) {
-  try {
-    const token = req.headers.authorization?.split(" ")[1];
-    //const user = await getUserFromToken(token)
-
-    // if (!user) {
-    //   res.json({ "Error": "Unauthorized" });
-    // }
-
-    return token
-  } catch (err) {
-    return { "Error": err }
-  }
-}
 
 router.get('/logout', async function (req, res, next) {
   res.cookie("jwt", "", { // overwrite the existing jwt token
@@ -69,22 +53,10 @@ router.post('/profile', async function (req, res, next) {
   user.last_name = req.body.newLast;
 
   await user.save();
-  // createToken(res, user);
   res.json({ "Status": "Success" });
 })
 
 router.post('/userlogin', async function (req, res, next) {
-  // console.log(req.headers.authorization);
-  // const token = req.cookies.jwt;
-  // if (token) {
-  //   jwt.verify(token, jwtSecret, (err) => {
-  //     if (err) {
-  //       res.json({ Error: "Unauthorized User! Please create an account or sign in." })
-  //     }
-  //   })
-  // }
-  // console.log("hello world: ", req.cookies.jwt); // Do this after login credentials are determined to be correct. Check if the token matches the account when going to dashboard page
-
   let email = req.body.email;
   let password = req.body.password;
 
@@ -112,9 +84,6 @@ router.post('/userlogin', async function (req, res, next) {
 })
 
 router.post('/user', async function (req, res, next) {
-  // let token = await verifyAuthToken(req);
-  // let user = await firebaseAdmin.auth.verifyIdToken(token);
-
   let email = req.body.email;
   let existingEmail = await req.db.User.exists({ email: email })
 
@@ -125,6 +94,22 @@ router.post('/user', async function (req, res, next) {
 
   let password = req.body.password;
 
+  let types = new Map();
+  types.set('allergies', '');
+  types.set('medications', '')
+  types.set('procedures', '')
+  types.set('vaccines', '')
+
+  for (let key of types.keys()) {
+    let healthData = await createHealthData(key);
+    types.set(key, healthData)
+  }
+
+  console.log(types.get('allergies'))
+  console.log(types.get('medications'))
+  types.get('procedures')
+  types.get('vaccines')
+
   bcrypt.hash(password, 10).then(async (hash) => { // 10 denotes the number of salt rounds, greater number makes it harder to brute-force hash
     try {
       const newUser = new req.db.User({
@@ -132,7 +117,11 @@ router.post('/user', async function (req, res, next) {
         last_name: req.body.last_name,
         email: req.body.email,
         password: hash,
-        is_family_manager: req.body.isFamilyManager
+        is_family_manager: req.body.isFamilyManager,
+        allergies: types.get('allergies'),
+        medications: types.get('medications'),
+        procedures: types.get('procedures'),
+        vaccines: types.get('vaccines')
       })
 
       await newUser.save()
@@ -144,6 +133,36 @@ router.post('/user', async function (req, res, next) {
   })
 })
 
+async function createHealthData(key) {
+  let start = 1;
+  let limit = 5;
+
+  let randNum = Math.floor(Math.random() * (limit - start + 1) + start); // Generates random numbers between start and limit
+  let file = fs.createReadStream(path.resolve(__dirname, `../../../data/${key}.csv`))
+
+  return new Promise((resolve) => {
+    Papa.parse(file, {
+      header: false,
+      complete: (results) => {
+        let arrayElm = [];
+        let final = [];
+        let data = results.data;
+
+        for (let i = 1; i <= randNum; i++) {
+          arrayElm.push(data[Math.floor(Math.random() * data.length)]) // Grab a random array element from data
+        }
+
+        arrayElm.forEach((array) => {
+          array.forEach((element) => {
+            final.push(element)
+          })
+        })
+        resolve(final);
+      }
+    })
+  });
+}
+
 function createToken(res, user) {
   try {
     const maxAge = 60 * 60 // 1 hour in seconds
@@ -153,7 +172,11 @@ function createToken(res, user) {
         first_name: user.first_name,
         last_name: user.last_name,
         email: user.email,
-        is_admin: user.is_family_manager
+        is_admin: user.is_family_manager,
+        allergies: user.allergies,
+        medications: user.medications,
+        procedures: user.procedures,
+        vaccines: user.vaccines
       },
       jwtSecret,
       {

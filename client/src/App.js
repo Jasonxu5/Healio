@@ -223,6 +223,11 @@ function App() {
   async function currentUser(user) {
     FAMILY_INFO[0].firstName = user.first_name;
     FAMILY_INFO[0].lastName = user.last_name;
+
+    console.log(user.allergies);
+    console.log(user.medications);
+    console.log(user.procedures);
+    console.log(user.vaccines);
   }
 
   async function loginStatus() {

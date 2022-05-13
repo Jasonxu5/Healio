@@ -14,7 +14,11 @@ async function dbConnect() {
     last_name: String,
     email: String,
     password: String,
-    is_family_manager: Boolean
+    is_family_manager: Boolean,
+    allergies: [String],
+    medications: [String],
+    procedures: [String],
+    vaccines: [String]
   })
 
   db.User = mongoose.model('User', UserSchema)
