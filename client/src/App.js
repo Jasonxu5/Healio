@@ -221,9 +221,55 @@ function App() {
   const [familyInfo, setFamilyInfo] = useState(FAMILY_INFO);
 
   async function currentUser(user) {
+    const DATES = [
+      new Date('March 21, 2022'),
+      new Date('April 20, 2022'),
+      new Date('May 5, 2022'),
+      new Date('May 11, 2022'),
+      new Date('May 22, 2022')
+    ];
+    const STATUSES = [
+      'Active',
+      'Inactive',
+      'Inactive',
+      'Active',
+      'Active'
+    ];
     FAMILY_INFO[0].firstName = user.first_name;
     FAMILY_INFO[0].lastName = user.last_name;
 
+    FAMILY_INFO[0].allergies = user.allergies.map((item, index)=> {
+      return {
+        date: DATES[index],
+        name: item,
+        doctor: DOCTOR_INFO[index].name,
+        status: STATUSES[index]
+      }
+    });
+    FAMILY_INFO[0].medications = user.medications.map((item, index)=> {
+      return {
+        date: DATES[index],
+        name: item,
+        doctor: DOCTOR_INFO[index].name,
+        status: STATUSES[index]
+      }
+    });
+    FAMILY_INFO[0].surgeries = user.procedures.map((item, index)=> {
+      return {
+        date: DATES[index],
+        name: item,
+        doctor: DOCTOR_INFO[index].name,
+        status: 'Complete'
+      }
+    });
+    FAMILY_INFO[0].vaccines = user.vaccines.map((item, index)=> {
+      return {
+        date: DATES[index],
+        name: item,
+        doctor: DOCTOR_INFO[index].name,
+        status: STATUSES[index]
+      }
+    });
     console.log(user.allergies);
     console.log(user.medications);
     console.log(user.procedures);
