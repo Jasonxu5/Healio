@@ -343,7 +343,7 @@ function App() {
           <Route path="/appointments" element={<ViewApps currUser={currUser} viewAppsHeader={headerArray[6]} />} />
           <Route path="/appointments/view_appointments" element={<ViewApps currUser={currUser} viewAppsHeader={headerArray[6]} />} />
           <Route path="/appointments/schedule_appointment" element={<ScheduleApps currUser={currUser} doctorInfo={DOCTOR_INFO} scheduleAppsHeader={headerArray[7]} />} />
-          <Route path="/messages" element={<Messaging currUser={currUser} messagingHeader={headerArray[8]} />} />
+          <Route path="/messages" element={<Messaging currUser={currUser} firstUser={FAMILY_INFO[0].firstName} messagingHeader={headerArray[8]} />} />
           <Route path="/resources" element={<FindProviders doctorInfo={DOCTOR_INFO} findProvidersHeader={headerArray[9]} />} />
           <Route path="/resources/find_providers" element={<FindProviders doctorInfo={DOCTOR_INFO} findProvidersHeader={headerArray[9]} />} />
           <Route path="/resources/find_hospitals" element={<FindHospitals findHospitalsHeader={headerArray[10]} />} />

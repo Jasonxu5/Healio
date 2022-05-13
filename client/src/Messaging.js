@@ -1,104 +1,103 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faPaperclip, faFaceSmile } from '@fortawesome/free-solid-svg-icons';
-import _ from 'lodash';
+import _, { first } from 'lodash';
 import katie from './img/katie.png';
 import daughter from './img/daughter.png';
 import grandma from './img/grandma.png';
 import ortega from './img/ortega.png';
 import valera from './img/valera.png';
 
-// necessary so that the MESSAGES point to the same CONVERSATION array object
-// if there's a better way to implement this feel free to do so!
-const CONVERSATIONS = [
-    {
-        participants: ['Placeholder', 'Daughter', 'Dr. Ortega'],
-        images: [katie, daughter, ortega]
-    },
-    {
-        participants: ['Placeholder', 'Grandma', 'Dr. Valera'],
-        images: [katie, grandma, valera]
-    }
-];
-
-const MESSAGES = [
-    {
-        username: 'Katie',
-        img: katie,
-        content: 'Just wanted to say that these notes and your care are superb! Thank you for treating my daughter on such a short notice.',
-        conversation: CONVERSATIONS[0],
-        timestamp: new Date('February 6, 2022 11:13:00')
-    },
-    {
-        username: 'Katie',
-        img: katie,
-        content: 'Hey Dr. Ortega! I had a question about my recent appointment, where can I find my doctors notes and details on the prescribed medications?',
-        conversation: CONVERSATIONS[0],
-        timestamp: new Date('February 17, 2022 13:34:00')
-    },
-    {
-        username: 'Katie',
-        img: katie,
-        content: 'Thanks Dr. Ortega! The medications prescribed seem to be just what I needed!',
-        conversation: CONVERSATIONS[0],
-        timestamp: new Date('February 17, 2022 14:20:00')
-    },
-    {
-        username: 'Katie',
-        img: katie,
-        content: 'Dr. Valera, I\'m writing to ask if there is anything that I should bring or keep in mind before my mother\'s upcoming appointment this week? Is it okay if she continues to take pain relievers?',
-        conversation: CONVERSATIONS[1],
-        timestamp: new Date('February 6, 2022 11:13:00')
-    },
-    {
-        username: 'Katie',
-        img: katie,
-        content: 'Hello Dr. Valera! Any idea when the lab results for my mother\'s x-rays will come in? Should I call you to discuss them if I have questions?',
-        conversation: CONVERSATIONS[1],
-        timestamp: new Date('February 8, 2022 06:02:00')
-    },
-    {
-        username: 'Katie',
-        img: katie,
-        content: 'Thanks Dr. Valera! I appreciate your efforts and the care provided to my mother!',
-        conversation: CONVERSATIONS[1],
-        timestamp: new Date('February 8, 2022 08:28:00')
-    },
-    {
-        username: 'Dr. Ortega',
-        img: ortega,
-        content: 'You\'re welcome, Mrs. Wang! Stay healthy!',
-        conversation: CONVERSATIONS[0],
-        timestamp: new Date('February 6, 2022 11:15:00')
-    },
-    {
-        username: 'Dr. Ortega',
-        img: ortega,
-        content: 'Hello Mrs. Wang! I\'ve updated your profile with doctors notes and information about your prescribed medications. Take care of yourself!',
-        conversation: CONVERSATIONS[0],
-        timestamp: new Date('February 17, 2022 13:41:00')
-    },
-    {
-        username: 'Dr. Valera',
-        img: valera,
-        content: 'Good morning, Mrs. Wang! Thanks for reaching out, I’m happy to assist you. Healio’s web portal should have all the needed information and it\'s perfectly fine to continue taking the pain killers. Let me know if you have anymore questions!',
-        conversation: CONVERSATIONS[1],
-        timestamp: new Date('February 6, 2022 11:14:00')
-    },
-    {
-        username: 'Dr. Valera',
-        img: valera,
-        content: 'Hello Mrs. Wang! Your mother\'s x-rays should be sent and uploaded on the patient portal shortly. Do call me if there are any questions. Stay safe!',
-        conversation: CONVERSATIONS[1],
-        timestamp: new Date('February 8, 2022 08:20:00')
-    }
-];
 
 export default function Messaging(props) {
-    const { currUser, messagingHeader } = props;
+    const { currUser, firstUser, messagingHeader } = props;
+
+    // im sorry this is really bad :(
+    const CONVERSATIONS = [
+        {
+            participants: [firstUser, 'Daughter', 'Dr. Ortega'],
+            images: [katie, daughter, ortega]
+        },
+        {
+            participants: [firstUser, 'Grandma', 'Dr. Valera'],
+            images: [katie, grandma, valera]
+        }
+    ];
+    const MESSAGES = [
+        {
+            username: firstUser,
+            img: katie,
+            content: 'Just wanted to say that these notes and your care are superb! Thank you for treating my daughter on such a short notice.',
+            conversation: CONVERSATIONS[0],
+            timestamp: new Date('February 6, 2022 11:13:00')
+        },
+        {
+            username: firstUser,
+            img: katie,
+            content: 'Hey Dr. Ortega! I had a question about my recent appointment, where can I find my doctors notes and details on the prescribed medications?',
+            conversation: CONVERSATIONS[0],
+            timestamp: new Date('February 17, 2022 13:34:00')
+        },
+        {
+            username: firstUser,
+            img: katie,
+            content: 'Thanks Dr. Ortega! The medications prescribed seem to be just what I needed!',
+            conversation: CONVERSATIONS[0],
+            timestamp: new Date('February 17, 2022 14:20:00')
+        },
+        {
+            username: firstUser,
+            img: katie,
+            content: 'Dr. Valera, I\'m writing to ask if there is anything that I should bring or keep in mind before my mother\'s upcoming appointment this week? Is it okay if she continues to take pain relievers?',
+            conversation: CONVERSATIONS[1],
+            timestamp: new Date('February 6, 2022 11:13:00')
+        },
+        {
+            username: firstUser,
+            img: katie,
+            content: 'Hello Dr. Valera! Any idea when the lab results for my mother\'s x-rays will come in? Should I call you to discuss them if I have questions?',
+            conversation: CONVERSATIONS[1],
+            timestamp: new Date('February 8, 2022 06:02:00')
+        },
+        {
+            username: firstUser,
+            img: katie,
+            content: 'Thanks Dr. Valera! I appreciate your efforts and the care provided to my mother!',
+            conversation: CONVERSATIONS[1],
+            timestamp: new Date('February 8, 2022 08:28:00')
+        },
+        {
+            username: 'Dr. Ortega',
+            img: ortega,
+            content: 'You\'re welcome, Mrs. Wang! Stay healthy!',
+            conversation: CONVERSATIONS[0],
+            timestamp: new Date('February 6, 2022 11:15:00')
+        },
+        {
+            username: 'Dr. Ortega',
+            img: ortega,
+            content: 'Hello Mrs. Wang! I\'ve updated your profile with doctors notes and information about your prescribed medications. Take care of yourself!',
+            conversation: CONVERSATIONS[0],
+            timestamp: new Date('February 17, 2022 13:41:00')
+        },
+        {
+            username: 'Dr. Valera',
+            img: valera,
+            content: 'Good morning, Mrs. Wang! Thanks for reaching out, I’m happy to assist you. Healio’s web portal should have all the needed information and it\'s perfectly fine to continue taking the pain killers. Let me know if you have anymore questions!',
+            conversation: CONVERSATIONS[1],
+            timestamp: new Date('February 6, 2022 11:14:00')
+        },
+        {
+            username: 'Dr. Valera',
+            img: valera,
+            content: 'Hello Mrs. Wang! Your mother\'s x-rays should be sent and uploaded on the patient portal shortly. Do call me if there are any questions. Stay safe!',
+            conversation: CONVERSATIONS[1],
+            timestamp: new Date('February 8, 2022 08:20:00')
+        }
+    ];
     const [currConversation, setCurrConversation] = useState(CONVERSATIONS[0]);
     const [currMessages, setCurrMessages] = useState(MESSAGES);
-
+    
     return (
         <div>
             <div className="md:pl-[25px] pl-[235px]">
@@ -117,8 +116,7 @@ function ChatBox(props) {
     const { currUser, currMessages, currMessagesCallback, currConversation, setConvoCallback } = props;
     const [typedMessage, setTypedMessage] = useState('');
 
-    CONVERSATIONS.map(index => index.participants[0] = currUser.firstName);
-
+    
     if (!currConversation.participants.includes(currUser.firstName)) {
         const allConvos = [...new Set(currMessages.map(message => message.conversation))];
         const relevantConvosToUser = allConvos.filter(convo => { return convo.participants.includes(currUser.firstName) });
@@ -232,7 +230,7 @@ function OneMessage(props) {
             <div>
                 <p className="text-dark-grey text-center my-2">{fullTimestamp}</p>
                 <div className="flex gap-2">
-                    <p className={messageStyling + " max-w-[627px] p-[12px] my-[10px]"}>{message.content}</p>
+                    <p className={messageStyling + " md:max-w-[400px] max-w-[627px] p-[12px] my-[10px]"}>{message.content}</p>
                     <img className={imgStyling + " rounded-full inline w-10 h-10 self-end"} src={message.img} />
                 </div>
             </div>
@@ -245,7 +243,7 @@ function OneMessage(props) {
                 <p className="text-dark-grey text-center mt-2">{fullTimestamp}</p>
                 <div className="flex gap-2">
                     <img className={imgStyling + " rounded-full inline w-10 h-10 self-end"} src={message.img} />
-                    <p className={messageStyling + " max-w-[627px] p-[12px] my-[10px]"}>{message.content}</p>
+                    <p className={messageStyling + " md:max-w-[400px] max-w-[627px] p-[12px] my-[10px]"}>{message.content}</p>
                 </div>
             </div>
         );
