@@ -196,4 +196,30 @@ function createToken(res, user) {
   }
 }
 
+router.get('/appointments', async function (req, res, next) {
+  let email = req.query.email;
+
+  let userAppoints = await req.db.Appointment.find({ email: email })
+  let result = await Promise.all(userAppoints.map(async (item) => {
+    return { name: item.name, date: item.date, doctor: item.doctor }
+  }))
+
+  res.json(result);
+})
+
+router.post('/appointment', async function (req, res, next) {
+  try {
+    const newAppointment = new req.db.Appointment({
+      email: req.body.email,
+      name: req.body.name,
+      date: req.body.date,
+      doctor: req.body.doctor
+    })
+    await newAppointment.save()
+    res.json({ "status": "success" })
+  } catch (error) {
+    res.json({ "Error": error })
+  }
+})
+
 export default router;

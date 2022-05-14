@@ -18,10 +18,19 @@ async function dbConnect() {
     allergies: [String],
     medications: [String],
     procedures: [String],
-    vaccines: [String]
+    vaccines: [String],
   })
 
   db.User = mongoose.model('User', UserSchema)
+
+  const AppointmentSchema = new mongoose.Schema({
+    email: String,
+    name: String,
+    date: Date,
+    doctor: String
+  })
+
+  db.Appointment = mongoose.model('Appointment', AppointmentSchema)
 
   console.log("created DB schemas and models")
 }
