@@ -41,7 +41,7 @@ export default function Messaging(props) {
         {
             username: firstUser,
             img: katie,
-            content: 'Thanks Dr. Ortega! The medications prescribed seem to be just what I needed!',
+            content: 'Please note that this feature is unfinished. :) Thanks Dr. Ortega! The medications prescribed seem to be just what I needed!',
             conversation: CONVERSATIONS[0],
             timestamp: new Date('February 17, 2022 14:20:00')
         },
@@ -230,7 +230,7 @@ function OneMessage(props) {
             <div>
                 <p className="text-dark-grey text-center my-2">{fullTimestamp}</p>
                 <div className="flex gap-2">
-                    <p className={messageStyling + " md:max-w-[400px] max-w-[627px] p-[12px] my-[10px]"}>{message.content}</p>
+                    <p className={messageStyling + " sm:max-w-[300px] md:max-w-[400px] max-w-[627px] p-[12px] my-[10px]"}>{message.content}</p>
                     <img className={imgStyling + " rounded-full inline w-10 h-10 self-end"} src={message.img} />
                 </div>
             </div>
@@ -243,7 +243,7 @@ function OneMessage(props) {
                 <p className="text-dark-grey text-center mt-2">{fullTimestamp}</p>
                 <div className="flex gap-2">
                     <img className={imgStyling + " rounded-full inline w-10 h-10 self-end"} src={message.img} />
-                    <p className={messageStyling + " md:max-w-[400px] max-w-[627px] p-[12px] my-[10px]"}>{message.content}</p>
+                    <p className={messageStyling + " sm:max-w-[300px] md:max-w-[400px] max-w-[627px] p-[12px] my-[10px]"}>{message.content}</p>
                 </div>
             </div>
         );
