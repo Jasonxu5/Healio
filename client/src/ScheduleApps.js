@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import { serverEndpoint } from './serverEndpoint';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import { Calendar } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendar.css';
 import { set } from 'lodash';
+
+const apiEndpoint = serverEndpoint;
 
 // Because Calendar is impossible with Tailwind...
 // ...I have to painfully relearn normal CSS
@@ -75,9 +78,10 @@ function CalendarModal(props) {
         setCurrDoctor(currOption);
     }
 
-    const handleClick = () => {
+    const handleClick = async () => {
         if (currText.length !== 0 && currDoctor.length !== 0) {
             const newAppointment = { name: currText, date: clickedDay, doctor: currDoctor };
+            await saveAppointment(currUser, newAppointment);
             currUser.appointments = [...currUser.appointments, newAppointment];
             setCurrText('');
             setError(false);
@@ -92,6 +96,22 @@ function CalendarModal(props) {
             handleClick();
         }
     };
+
+    async function saveAppointment(currUser, appoint) {
+        try {
+            console.log(currUser);
+            let response = await fetch(apiEndpoint + "appointment", {
+                method: "POST",
+                body: JSON.stringify({ email: currUser.email, name: appoint['name'], date: appoint['date'], doctor: appoint['doctor'] }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            let responseJSON = await response.json();
+            let string = JSON.stringify(responseJSON);
+
+        } catch (error) {
+            console.log("Error:", error);
+        }
+    }
 
     return (
         <Modal className="w-[50%] animate-popup absolute left-[25%] top-[10%] p-5 bg-white border-2 border-black rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" show={isModalClicked} ref={appRef}>

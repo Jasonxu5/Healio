@@ -204,16 +204,6 @@ const DOCTOR_INFO = [
   }
 ];
 
-// NOTE: Use Environement Variables once app is deployed to production
-// const firebaseConfig = {
-//   apiKey: "AIzaSyAGSZzesnF02c38v_XRDH0ZjtAQnxltI10",
-//   authDomain: "healio-e7722.firebaseapp.com",
-//   projectId: "healio-e7722",
-//   storageBucket: "healio-e7722.appspot.com",
-//   messagingSenderId: "920066944228",
-//   appId: "1:920066944228:web:0d00c25c07d1b2c1b890f1"
-// };
-
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [data, setData] = useState("");
@@ -237,8 +227,9 @@ function App() {
     ];
     FAMILY_INFO[0].firstName = user.first_name;
     FAMILY_INFO[0].lastName = user.last_name;
+    FAMILY_INFO[0].email = user.email;
 
-    FAMILY_INFO[0].allergies = user.allergies.map((item, index)=> {
+    FAMILY_INFO[0].allergies = user.allergies.map((item, index) => {
       return {
         date: DATES[index],
         name: item,
@@ -246,7 +237,7 @@ function App() {
         status: STATUSES[index]
       }
     });
-    FAMILY_INFO[0].medications = user.medications.map((item, index)=> {
+    FAMILY_INFO[0].medications = user.medications.map((item, index) => {
       return {
         date: DATES[index],
         name: item,
@@ -254,7 +245,7 @@ function App() {
         status: STATUSES[index]
       }
     });
-    FAMILY_INFO[0].surgeries = user.procedures.map((item, index)=> {
+    FAMILY_INFO[0].surgeries = user.procedures.map((item, index) => {
       return {
         date: DATES[index],
         name: item,
@@ -262,7 +253,7 @@ function App() {
         status: 'Complete'
       }
     });
-    FAMILY_INFO[0].vaccines = user.vaccines.map((item, index)=> {
+    FAMILY_INFO[0].vaccines = user.vaccines.map((item, index) => {
       return {
         date: DATES[index],
         name: item,
@@ -270,10 +261,32 @@ function App() {
         status: STATUSES[index]
       }
     });
-    console.log(user.allergies);
-    console.log(user.medications);
-    console.log(user.procedures);
-    console.log(user.vaccines);
+
+    let appoints = await getAppointments(user.email);
+    console.log(appoints);
+
+    appoints.forEach((x) => {
+      FAMILY_INFO[0].appointments = [...FAMILY_INFO[0].appointments, x]
+    })
+    console.log(FAMILY_INFO[0].appointments)
+  }
+
+  async function getAppointments(email) {
+    let response = await fetch(apiEndpoint + `appointments?email=${email}`);
+
+    // Should be returned in this format
+    // appointments: [
+    //   { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022'), doctor: 'Dr. Osborn' },
+    //   { name: 'Follow up with Dr. Valera', date: new Date('February 21, 2022'), doctor: 'Dr. Valera' }
+    // ]
+    let responseJSON = await response.json();
+
+    responseJSON.map((item) => {
+      let date = item.date = new Date(item.date)
+      return date
+    })
+
+    return responseJSON;
   }
 
   async function loginStatus() {
