@@ -235,12 +235,12 @@ function OneMessage(props) {
     // Style message text and image based on current user
     if (currUser.firstName === message.username) {
         messageStyling = 'ml-auto bg-light-green rounded-[15px_15px_0_15px]';
-        imgStyling = 'mr-[45px]';
+        imgStyling = 'md:mr-[25px] mr-[45px]';
         return (
             <div>
                 <p className="text-dark-grey text-center m-2">{fullTimestamp}</p>
                 <div className="flex gap-2">
-                    <p className={messageStyling + " sm:max-w-[300px] md:max-w-[400px] max-w-[500px] p-[12px] my-[10px]"}>{message.content}</p>
+                    <p className={messageStyling + " sm:max-w-[250px] md:max-w-[400px] max-w-[500px] p-[12px] my-[10px]"}>{message.content}</p>
                     <img className={imgStyling + " rounded-full inline w-10 h-10 self-end"} src={message.img} />
                 </div>
             </div>
