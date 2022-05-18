@@ -69,7 +69,7 @@ function InfoBody(props) {
                 <p className="sm:hidden">Doctor</p>
                 <p className="md:hidden">Status</p>
             </div>
-            <div className="animate-popup grid gap-8">
+            <div className="animate-popup grid gap-8 mt-4">
                 {!(healthInfoArray.every((item) => item === undefined)) ? healthInfoArray : <p>No {infoType.toLowerCase()} are available for {currUser.firstName}.</p>}
             </div>
         </div>
