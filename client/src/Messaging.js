@@ -97,14 +97,25 @@ export default function Messaging(props) {
     ];
     const [currConversation, setCurrConversation] = useState(CONVERSATIONS[0]);
     const [currMessages, setCurrMessages] = useState(MESSAGES);
-    
+
+    if (!currConversation) {
+        return (
+            <div>
+                <div className="md:pl-[25px] pl-[235px]">
+                    {messagingHeader}
+                </div>
+                <hr className="pl-0 border-grey" />
+                <p className="md:pl-[25px] pl-[235px]">This feature unfortunately does not work with the chosen user. Please refresh the page</p>
+            </div>
+        )
+    }
     return (
         <div>
             <div className="md:pl-[25px] pl-[235px]">
                 {messagingHeader}
             </div>
-            <hr className="pl-0" />
-            <div className="md:pl-[25px] flex divide-x w-[97.5%] h-screen pl-[235px]">
+            <hr className="pl-0 border-grey" />
+            <div className="md:pl-[25px] flex divide-x divide-grey h-screen pl-[235px]">
                 <ChatBox currUser={currUser} currMessages={currMessages} currMessagesCallback={setCurrMessages} currConversation={currConversation} setConvoCallback={setCurrConversation} />
                 <ChatNav currUser={currUser} currMessages={currMessages} currConversation={currConversation} setConvoCallback={setCurrConversation} />
             </div>
@@ -116,7 +127,6 @@ function ChatBox(props) {
     const { currUser, currMessages, currMessagesCallback, currConversation, setConvoCallback } = props;
     const [typedMessage, setTypedMessage] = useState('');
 
-    
     if (!currConversation.participants.includes(currUser.firstName)) {
         const allConvos = [...new Set(currMessages.map(message => message.conversation))];
         const relevantConvosToUser = allConvos.filter(convo => { return convo.participants.includes(currUser.firstName) });
@@ -165,7 +175,7 @@ function ChatBox(props) {
                 {convoArray}
                 <div ref={ref} />
             </div>
-            <form className="flex gap-3 justify-center" onSubmit={handleTextSubmit}>
+            <form className="flex gap-3 mt-2 justify-center" onSubmit={handleTextSubmit}>
                 <label className="absolute left-[-100vw]">Type something here...</label>
                 <FontAwesomeIcon className="my-auto text-dark-grey" icon={faImage} size="lg" aria-label="Attach an image here" />
                 <FontAwesomeIcon className="my-auto text-dark-grey" icon={faPaperclip} size="lg" aria-label="Attach a document here" />
@@ -228,22 +238,22 @@ function OneMessage(props) {
         imgStyling = 'mr-[45px]';
         return (
             <div>
-                <p className="text-dark-grey text-center my-2">{fullTimestamp}</p>
+                <p className="text-dark-grey text-center m-2">{fullTimestamp}</p>
                 <div className="flex gap-2">
-                    <p className={messageStyling + " sm:max-w-[300px] md:max-w-[400px] max-w-[627px] p-[12px] my-[10px]"}>{message.content}</p>
+                    <p className={messageStyling + " sm:max-w-[300px] md:max-w-[400px] max-w-[500px] p-[12px] my-[10px]"}>{message.content}</p>
                     <img className={imgStyling + " rounded-full inline w-10 h-10 self-end"} src={message.img} />
                 </div>
             </div>
         );
     } else {
-        messageStyling = 'bg-grey rounded-[15px_15px_15px_0]';
+        messageStyling = 'mr-auto bg-grey rounded-[15px_15px_15px_0]';
         imgStyling = '';
         return (
             <div>
                 <p className="text-dark-grey text-center mt-2">{fullTimestamp}</p>
                 <div className="flex gap-2">
                     <img className={imgStyling + " rounded-full inline w-10 h-10 self-end"} src={message.img} />
-                    <p className={messageStyling + " sm:max-w-[300px] md:max-w-[400px] max-w-[627px] p-[12px] my-[10px]"}>{message.content}</p>
+                    <p className={messageStyling + " sm:max-w-[250px] md:max-w-[400px] max-w-[500px] p-[12px] my-[10px]"}>{message.content}</p>
                 </div>
             </div>
         );
@@ -251,22 +261,27 @@ function OneMessage(props) {
 }
 
 function ChatNav(props) {
-    const { currUser, currMessages, setConvoCallback } = props;
+    const { currUser, currMessages, currConversation, setConvoCallback } = props;
 
     const allConvos = [...new Set(currMessages.map(message => message.conversation))];
     const relevantConvosToUser = allConvos.filter(convo => { return convo.participants.includes(currUser.firstName) })
-    const convoArray = relevantConvosToUser.map((convo, index) => <OneConversation currUser={currUser} convo={convo} setConvoCallback={setConvoCallback} key={index} />);
+    const convoArray = relevantConvosToUser.map((convo, index) => <OneConversation currUser={currUser} currConversation={currConversation} convo={convo} setConvoCallback={setConvoCallback} key={index} />);
 
     return (
-        <div className="grow flex flex-col overflow-y-auto">
+        <div className="flex flex-col divide-y divide-grey overflow-y-auto">
             {convoArray}
         </div>
     );
 }
 
 function OneConversation(props) {
-    const { currUser, convo, setConvoCallback } = props;
+    const { currUser, currConversation, convo, setConvoCallback } = props;
     let userNamesInConvo = '';
+    let selectedConvo = '';
+    if (currConversation === convo) {
+        selectedConvo = ' transition bg-dark-green font-bold text-dark-blue'
+    };
+
     const userArray = convo.images.map((userImg, index) => {
         let userObj = {};
         userObj[convo.participants[index]] = userImg;
@@ -287,11 +302,11 @@ function OneConversation(props) {
     };
 
     return (
-        <div className="flex gap-2 ml-[20px] mt-[20px] hover:cursor-pointer" onClick={handleConvoClick}>
-            <div className="">
+        <div className={'flex flex-col overflow-x-auto whitespace-nowrap hover:cursor-pointer hover:bg-light-blue hover:text-black hover:text-bold' + selectedConvo} onClick={handleConvoClick}>
+            <div className="ml-2 mt-2">
                 {userImgArray}
             </div>
-            <p className="md:hidden">{userNamesInConvo}</p>
+            <p className="md:hidden ml-2 mr-6 my-2">{userNamesInConvo}</p>
         </div>
     );
 }
@@ -302,7 +317,7 @@ function UserInConversation(props) {
     const userImg = user[userName];
     let overlapStyle = '';
     if (index > 1) {
-        overlapStyle = ' sm:top-[-20px] sm:left-0 relative left-[-10px]';
+        overlapStyle = ' relative left-[-10px]';
     }
-    return <img className={'sm:divide-y rounded-full inline w-10 h-10 mb-2' + overlapStyle} src={userImg} alt={userName} />
+    return <img className={'rounded-full inline w-10 h-10 mb-2' + overlapStyle} src={userImg} alt={userName} />
 }

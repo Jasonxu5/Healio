@@ -244,7 +244,7 @@ export default function Header(props) {
     }, [isMenuOpen, isAddUserClicked]);
 
     if (currUser.isAdmin) {
-        const verySpecialKey = familyInfoArray[familyInfoArray.length - 1].key + 1;
+        const verySpecialKey = familyInfoArray.length  + 1;
         familyInfoArray.push(<AddAnotherUser addUserCallback={setIsAddUserClicked} key={verySpecialKey} />);
     }
 
