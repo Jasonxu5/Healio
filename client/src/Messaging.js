@@ -302,7 +302,7 @@ function OneConversation(props) {
     };
 
     return (
-        <div className={'flex flex-col overflow-x-auto whitespace-nowrap hover:cursor-pointer hover:bg-light-blue hover:text-black hover:text-bold' + selectedConvo} onClick={handleConvoClick}>
+        <div className={'transition flex flex-col overflow-x-auto whitespace-nowrap hover:cursor-pointer hover:bg-light-blue hover:text-black hover:text-bold' + selectedConvo} onClick={handleConvoClick}>
             <div className="ml-2 mt-2">
                 {userImgArray}
             </div>
