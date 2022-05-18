@@ -63,7 +63,7 @@ function InfoBody(props) {
     });
     return (
         <div>
-            <div className="sm:grid-cols-[200px,250px] md:grid-cols-[150px,300px,250px] animate-popup grid grid-cols-[220px,350px,225px,250px] mb-4 ml-5 font-heading text-2xl text-dark-blue">
+            <div className="sm:grid-cols-[150px,250px] md:grid-cols-[150px,300px,350px] grid grid-cols-[150px,300px,175px,50px] font-heading text-xl mt-2 ml-5">
                 <p className="">Date</p>
                 <p className="">{infoType !== 'Surgeries' && infoType !== 'Allergies' ? infoType.substring(0, infoType.length - 1) : infoType.substring(0, infoType.length - 3) + 'y'}</p>
                 <p className="sm:hidden">Doctor</p>
@@ -91,7 +91,7 @@ function SingleHealthInfoItem(props) {
     const date = month + '/' + day + '/' + year;
 
     return (
-        <div className="sm:grid-cols-[200px,250px] md:grid-cols-[150px,300px,250px] grid grid-cols-[220px,350px,225px,250px] relative font-heading text-2xl w-[95%] p-[20px] bg-white shadow-[2px_4px_20px_rgba(0,0,0,0.25)] rounded-[20px]">
+        <div className="sm:grid-cols-[150px,250px] md:grid-cols-[150px,300px,250px] grid grid-cols-[150px,300px,175px,50px] relative font-heading text-xl w-[95%] p-[20px] bg-white shadow-[2px_4px_20px_rgba(0,0,0,0.25)] rounded-[20px]">
             <p className="">{date}</p>
             <p className="">{name}</p>
             <p className="sm:hidden">{doctor}</p>
