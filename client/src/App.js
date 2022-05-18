@@ -263,12 +263,8 @@ function App() {
     });
 
     let appoints = await getAppointments(user.email);
-    console.log(appoints);
 
-    appoints.forEach((x) => {
-      FAMILY_INFO[0].appointments = [...FAMILY_INFO[0].appointments, x]
-    })
-    console.log(FAMILY_INFO[0].appointments)
+    FAMILY_INFO[0].appointments = appoints;
   }
 
   async function getAppointments(email) {
@@ -306,7 +302,7 @@ function App() {
     } else {
       setIsSignedIn(true);
       let json = JSON.parse(string)
-      console.log(json);
+      //console.log(json);
       currentUser(json);
     }
   }

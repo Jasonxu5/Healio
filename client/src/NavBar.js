@@ -140,7 +140,8 @@ function Category(props) {
     useEffect(() => {
         const checkIfClickedOutside = e => {
             const lowercaseCategory = categoryName.toLowerCase();
-            if (isMouseHovered && mobileRef.current && e.target.href === undefined || !e.target.href.includes(lowercaseCategory)) {
+            // god i hate this error
+            if (isMouseHovered && mobileRef.current && e.target.href === undefined) {
                 setIsMouseHovered(false);
             }
         }
