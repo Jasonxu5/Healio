@@ -49,7 +49,9 @@ export default function Login(props) {
       <Modal.Body className="">
         {formInputArray}
       </Modal.Body>
-      <p className="mx-auto bg-red">{errorMessage}</p>
+      <div className="my-5 ml-10">
+        <p className="bg-pink text-center inline">{errorMessage}</p>
+      </div>
       <p className="transition mx-auto w-[94px] py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={handleClick}>
         Log In
       </p>

@@ -70,10 +70,15 @@ export default function Signup(props) {
             <Modal.Header className="text-center" closeButton>
                 <Modal.Title className="font-heading text-3xl">Sign Up</Modal.Title>
             </Modal.Header>
+            <div className="my-5 ml-10">
+                <p className="bg-pink text-center inline">Disclaimer: Health information is randomized for viewing purposes</p>
+            </div>
             <Modal.Body className="">
                 {formInputArray}
             </Modal.Body>
-            <p className="mx-auto bg-red">{errorMessage}</p>
+            <div className="my-5 ml-10">
+                <p className="bg-pink text-center inline">{errorMessage}</p>
+            </div>
             <p className="transition mx-auto w-[162px] py-3 px-6 border-2 border-light-blue bg-[#FFFFFF] rounded-[15px] hover:cursor-pointer hover:bg-light-blue hover:font-bold" onClick={handleClick}>
                 Create Account
             </p>
