@@ -30,7 +30,7 @@ export default function AddUserModal(props) {
         setCurrUsersAdded([]);
     };
 
-    // modal is a piece of garbage that blocks scrolling
+    // modal blocks scrolling so we need to enable it
     if (useLocation().pathname !== '/messages' && isAddUserClicked) {
         document.body.style.overflow = '';
     }
