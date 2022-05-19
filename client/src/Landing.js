@@ -115,7 +115,7 @@ function NavBar(props) {
                 <h1 className="font-heading text-3xl font-bold mt-2">Healio</h1>
                 <div className="md:inline my-3 hidden">
                     <FontAwesomeIcon className="text-4xl cursor-pointer hover:animate-wiggle" onClick={() => { setMenuOpen(true) }} icon={faBars} aria-label="Hamburger menu for extra icons" />
-                    {isMenuOpen ? <NavOptions css="absolute right-[20px] mt-2 flex flex-col gap-5 text-xl p-5 bg-white rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" navRef={navRef} bodyRef={bodyRef} aboutRef={aboutRef} setDisclaimerCallback={setDisclaimer} loginCallback={handleClick} /> : null}
+                    {isMenuOpen ? <NavOptions css="animate-popup absolute right-[20px] mt-2 flex flex-col gap-5 text-xl p-5 bg-white rounded-[15px] shadow-[4px_4px_4px_rgba(0,0,0,0.25)]" navRef={navRef} bodyRef={bodyRef} aboutRef={aboutRef} setDisclaimerCallback={setDisclaimer} loginCallback={handleClick} /> : null}
                 </div>
                 <NavOptions css="md:hidden flex gap-10 text-xl my-1" navRef={null} bodyRef={bodyRef} aboutRef={aboutRef} setDisclaimerCallback={setDisclaimer} loginCallback={handleClick} />
             </div>
