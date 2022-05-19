@@ -171,8 +171,7 @@ function IndividualFamilyMember(props) {
         if (!isRemoved) {
             editedFamilyInfo = newFamilyInfo.filter(person => {
 
-                // Might be buggy. Replace with index?
-                return !_.isEqual(familyMember, person);
+                return familyMember.index !== person.index;
             });
         }
         newFamilyInfoCallback([...editedFamilyInfo]);

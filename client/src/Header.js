@@ -15,62 +15,7 @@ const apiEndpoint = serverEndpoint;
 
 const USER_INFO = [
     {
-        firstName: 'Katie',
-        lastName: 'Wang',
-        img: katie,
-        notifications: [
-            'You have a new message from Dr. Osborn!',
-            'Your recent lab results have arrived!',
-            'Receipt of your payment for appointment on 02/09/22',
-            'You have a new message from Dr. Ortega!'
-        ],
-        labResults: [
-            {
-                date: new Date('February 10, 2022'),
-                name: 'Radiology - Chest X Ray',
-                doctor: 'Dr. Ortega',
-                status: 'Available'
-            },
-            {
-                date: new Date('January 4, 2022'),
-                name: 'Sonography - Ultrasound',
-                doctor: 'Dr. Montgomery',
-                status: 'Complete'
-            }
-        ],
-        medications: [
-            {
-                date: new Date('February 9, 2022'),
-                name: 'Amoxicillin (Amoxil)',
-                doctor: 'Dr. Ortega',
-                status: 'Active'
-            },
-            {
-                date: new Date('January 17, 2022'),
-                name: 'Fluoxetine (Prozac)',
-                doctor: 'Dr. Cain',
-                status: 'Active'
-            },
-            {
-                date: new Date('November 21, 2021'),
-                name: 'Doxyxycline',
-                doctor: 'Dr. Martinez',
-                status: 'Inactive'
-            }
-        ],
-        doctorNotes: {
-            date: '02/09/2021',
-            body: 'Mrs. Wang is a 40 year old woman with complaints of fatigue and a sore throat since yesterday morning. She has no difficulty swallowing, but doing so makes the pain worse. Reported recording a temp of 100.7 last night. ' +
-                'Probable infection, Mrs. Wang reported no allergies or sick contacts at work, but her daughter recently stayed home from school because of strep throat.',
-            doctor: 'Dr. Ortega'
-        },
-        appointments: [
-            { name: 'Follow up with Dr. Ortega', date: new Date('February 12, 2022') },
-            { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022') }
-        ],
-        isAdmin: true
-    },
-    {
+        index: 1,
         firstName: 'Daughter',
         lastName: 'Wang',
         img: daughter,
@@ -101,6 +46,7 @@ const USER_INFO = [
         isAdmin: false
     },
     {
+        index: 2,
         firstName: 'Grandma',
         lastName: 'Wang',
         img: grandma,
@@ -134,6 +80,7 @@ const USER_INFO = [
         isAdmin: false
     },
     {
+        index: 3,
         firstName: 'Imposter',
         lastName: 'Grandma',
         img: grandma,
@@ -149,6 +96,7 @@ const USER_INFO = [
         isAdmin: false
     },
     {
+        index: 4,
         firstName: 'Sus',
         lastName: 'Grandma',
         img: grandma,
@@ -160,6 +108,7 @@ const USER_INFO = [
         isAdmin: false
     },
     {
+        index: 5,
         firstName: 'Killer',
         lastName: 'Grandma',
         img: grandma,
@@ -172,6 +121,7 @@ const USER_INFO = [
         isAdmin: false
     },
     {
+        index: 6,
         firstName: 'Imposter',
         lastName: 'Grandma',
         img: grandma,
@@ -187,6 +137,7 @@ const USER_INFO = [
         isAdmin: false
     },
     {
+        index: 7,
         firstName: 'Sus',
         lastName: 'Grandma',
         img: grandma,
@@ -198,6 +149,7 @@ const USER_INFO = [
         isAdmin: false
     },
     {
+        index: 8,
         firstName: 'Killer',
         lastName: 'Grandma',
         img: grandma,

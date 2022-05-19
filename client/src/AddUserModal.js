@@ -10,17 +10,13 @@ export default function AddUserModal(props) {
     const [currUsersAdded, setCurrUsersAdded] = useState([]);
     
     const familyInfoArray = familyInfo.map(person => {
-
-        // Replace with index of person.
-        return person.firstName + ' ' + person.lastName;
+        return person.index;
     });
     const userInfoArray = userInfo.map((person, index) => {
         const personFullName = person.firstName + ' ' + person.lastName;
         const lowerCaseFullName = personFullName.toLowerCase();
 
-        // Change the check to see if the family array includes the person's index.
-        // This will cause a bug if the user changes their name, so we need to compare for index instead.
-        if (!familyInfoArray.includes(personFullName) && lowerCaseFullName.includes(typedName)) {
+        if (!familyInfoArray.includes(person.index) && lowerCaseFullName.includes(typedName)) {
             return <IndividualUser user={person} currUsersAdded={currUsersAdded} currUsersAddedCallback={setCurrUsersAdded} key={index} />;
         }
     });

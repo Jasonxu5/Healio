@@ -42,6 +42,7 @@ const apiEndpoint = serverEndpoint;
 // cut down this array later, keep it hardcoded for now
 const FAMILY_INFO = [
   {
+    index: 0,
     firstName: '',
     lastName: '',
     img: katie,
@@ -101,6 +102,7 @@ const FAMILY_INFO = [
     isAdmin: true
   },
   {
+    index: 1,
     firstName: 'Daughter',
     lastName: 'Wang',
     img: daughter,
@@ -134,6 +136,7 @@ const FAMILY_INFO = [
     isAdmin: false
   },
   {
+    index: 2,
     firstName: 'Grandma',
     lastName: 'Wang',
     img: grandma,
