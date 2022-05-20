@@ -177,7 +177,7 @@ function IndividualFamilyMember(props) {
         newFamilyInfoCallback([...editedFamilyInfo]);
     }
 
-    if (isEditing && currUser.isAdmin) {
+    if (isEditing && currUser.is_admin) {
         removeSymbol = <FontAwesomeIcon className="ml-4 text-[#FF0000] hover:cursor-pointer" icon={faXmark} size="lg" onClick={handleRemoveFamilyMember} aria-label="Remove a family member" />
     }
     return (

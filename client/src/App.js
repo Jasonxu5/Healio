@@ -99,7 +99,7 @@ const FAMILY_INFO = [
       { name: 'Follow up with Dr. Ortega', date: new Date('February 12, 2022'), doctor: 'Dr. Ortega' },
       { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022'), doctor: 'Dr. Osborn' }
     ],
-    isAdmin: true
+    is_admin: true
   },
   {
     index: 1,
@@ -133,7 +133,7 @@ const FAMILY_INFO = [
     appointments: [
       { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022'), doctor: 'Dr. Osborn' }
     ],
-    isAdmin: false
+    is_admin: false
   },
   {
     index: 2,
@@ -170,7 +170,7 @@ const FAMILY_INFO = [
       { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022'), doctor: 'Dr. Osborn' },
       { name: 'Follow up with Dr. Valera', date: new Date('February 21, 2022'), doctor: 'Dr. Valera' }
     ],
-    isAdmin: false
+    is_admin: false
   }
 ];
 
@@ -231,6 +231,8 @@ function App() {
     FAMILY_INFO[0].firstName = user.first_name;
     FAMILY_INFO[0].lastName = user.last_name;
     FAMILY_INFO[0].email = user.email;
+
+    FAMILY_INFO[0].is_admin = user.is_admin
 
     FAMILY_INFO[0].allergies = user.allergies.map((item, index) => {
       return {

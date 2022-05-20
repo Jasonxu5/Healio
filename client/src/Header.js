@@ -43,7 +43,7 @@ const USER_INFO = [
         appointments: [
             { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022') }
         ],
-        isAdmin: false
+        is_admin: false
     },
     {
         index: 2,
@@ -77,12 +77,12 @@ const USER_INFO = [
             { name: 'Yearly check-up with Dr. Osborn', date: new Date('February 15, 2022') },
             { name: 'Follow up with Dr. Valera', date: new Date('February 21, 2022') }
         ],
-        isAdmin: false
+        is_admin: false
     },
     {
         index: 3,
-        firstName: 'Imposter',
-        lastName: 'Grandma',
+        firstName: 'Grandma',
+        lastName: '1',
         img: grandma,
         notifications: [
         ],
@@ -93,24 +93,24 @@ const USER_INFO = [
         },
         appointments: [
         ],
-        isAdmin: false
+        is_admin: false
     },
     {
         index: 4,
-        firstName: 'Sus',
-        lastName: 'Grandma',
+        firstName: 'Grandma',
+        lastName: '2',
         img: grandma,
         notifications: [],
         labResults: [],
         medications: [],
         doctorNotes: {},
         appointments: [],
-        isAdmin: false
+        is_admin: false
     },
     {
         index: 5,
-        firstName: 'Killer',
-        lastName: 'Grandma',
+        firstName: 'Grandma',
+        lastName: '3',
         img: grandma,
         notifications: [
         ],
@@ -118,12 +118,12 @@ const USER_INFO = [
         medications: [],
         doctorNotes: {},
         appointments: [],
-        isAdmin: false
+        is_admin: false
     },
     {
         index: 6,
-        firstName: 'Imposter',
-        lastName: 'Grandma',
+        firstName: 'Grandma',
+        lastName: '4',
         img: grandma,
         notifications: [
         ],
@@ -134,24 +134,24 @@ const USER_INFO = [
         },
         appointments: [
         ],
-        isAdmin: false
+        is_admin: false
     },
     {
         index: 7,
-        firstName: 'Sus',
-        lastName: 'Grandma',
+        firstName: 'Grandma',
+        lastName: '5',
         img: grandma,
         notifications: [],
         labResults: [],
         medications: [],
         doctorNotes: {},
         appointments: [],
-        isAdmin: false
+        is_admin: false
     },
     {
         index: 8,
-        firstName: 'Killer',
-        lastName: 'Grandma',
+        firstName: 'Grandma',
+        lastName: '6',
         img: grandma,
         notifications: [
         ],
@@ -159,7 +159,7 @@ const USER_INFO = [
         medications: [],
         doctorNotes: {},
         appointments: [],
-        isAdmin: false
+        is_admin: false
     }
 ];
 
@@ -195,8 +195,8 @@ export default function Header(props) {
         }
     }, [isMenuOpen, isAddUserClicked]);
 
-    if (currUser.isAdmin) {
-        const verySpecialKey = familyInfoArray.length  + 1;
+    if (currUser.is_admin) {
+        const verySpecialKey = familyInfoArray.length + 1;
         familyInfoArray.push(<AddAnotherUser addUserCallback={setIsAddUserClicked} key={verySpecialKey} />);
     }
 
@@ -231,6 +231,8 @@ function IndividualFamilyMember(props) {
 }
 
 function AddAnotherUser(props) {
+
+
     const { addUserCallback } = props;
     const handleShow = () => addUserCallback(true);
 
